@@ -1,6 +1,6 @@
 # 4 Key Digital Functionalities
 
-At a high level, these are the key functionalities that must or should be provided by any software implementation that plays the role of an Information Mediator. These key digital functionalities have been cross-checked and validated with those provided by the OpenHIE community (see [below](./) for details) and the “OpenHIE” column in the yellow table provides a cross-reference to the corresponding OpenHIE specification.
+At a high level, these are the key functionalities that must or should be provided by any software implementation that plays the role of an Information Mediator. These key digital functionalities have been cross-checked and validated with those provided by the OpenHIE community (see [below](4-key-digital-functionalities.md#4.3.3.1-openhie-comparison) for details) and the “OpenHIE” column in the yellow table provides a cross-reference to the corresponding OpenHIE specification.
 
 ## **4.1 Summary**
 
@@ -26,7 +26,7 @@ Please note that the source/master-copy of these tables are maintained on this [
 
 GovStack provided an initial set of key digital functionalities as recommendations for the IM building block. The following table provides updated KDFs, striking-out and refining those that are no longer required and/or in scope.
 
-| ID   | Explanation                                                                                                                                                                     | Status      | Bucket         | OpenHIE?    | Comments                                                                                                                              |
+| ID   | Explanation                                                                                                                                                                     | Status      | Bucket         | Open HIE?   | Comments                                                                                                                              |
 | ---- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- | -------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------- |
 | KDF1 | Routes requests to the correct provider after necessary message transformation functionalities and protocol conversion                                                          | REQUIRED    | Service Access | IOLF-2      | The IM does not do message transformation or protocol conversion.                                                                     |
 | KDF2 | Connects the service requestor to the service provider and its underlying solution platforms, realizing the requested service                                                   | REQUIRED    | Service Access | IOLF-2      | Maybe IOLF-6, but not orchestration                                                                                                   |
