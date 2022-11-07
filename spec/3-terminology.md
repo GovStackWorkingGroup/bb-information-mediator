@@ -18,13 +18,13 @@ A **use case** is a piece of functionality described as a sequence of actions (s
 
 Each use case may involve a collection of modules, or BBs. A relatively small set of these BBs can be readily applied to a wide variety of use cases in low-resource settings.
 
-## **3.3** [**API**](https://en.wikipedia.org/wiki/API)****
+## **3.3** **API**
 
-An application programming interface (**API**) is a connection between computers or between computer programs. It is a type of software interface, offering a service to other pieces of software. A document or standard that describes how to build such a connection or interface is called an API specification. A computer system that meets this standard is said to implement or expose an API. The term API may refer either to the specification or to the implementation.
+An application programming interface ([**API**](https://en.wikipedia.org/wiki/API)) is a connection between computers or between computer programs. It is a type of software interface, offering a service to other pieces of software. A document or standard that describes how to build such a connection or interface is called an API specification. A computer system that meets this standard is said to implement or expose an API. The term API may refer either to the specification or to the implementation.
 
-## **3.4** [**Webhook**](https://sendgrid.com/blog/whats-webhook)****
+## **3.4** **Webhook**
 
-A **Webhook** (also called a web callback or HTTP push API) is a way for an application to provide other applications with real-time information. A webhook delivers data to other applications as it happens, meaning you get data immediately.
+A [**Webhook**](https://sendgrid.com/blog/whats-webhook) **** (also called a web callback or HTTP push API) is a way for an application to provide other applications with real-time information. A webhook delivers data to other applications as it happens, meaning you get data immediately.
 
 In a sense, a “webhook” is just a way of making an HTTP post to a URL when something important happens.
 
@@ -53,9 +53,9 @@ A **service** is a minimal piece of functionality provided by a building block o
 
 A security server is the main piece of software that is responsible for implementing the “service access” layer of the Information Mediator. This software acts as a gateway, and is responsible for mediating requests between various members, applications, and services.
 
-### **3.6** [**PubSub**](https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe\_pattern)****
+### **3.6** **PubSub**
 
-In software architecture, publish–subscribe (**PubSub**) is a messaging pattern where senders of messages, called publishers, do not program the messages to be sent directly to specific receivers, called subscribers, but instead categorize published messages into classes without knowledge of which subscribers, if any, there may be. Similarly, subscribers express interest in one or more classes and only receive messages that are of interest, without knowledge of which publishers, if any, there are.
+In software architecture, publish–subscribe ([**PubSub**](https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe\_pattern)) is a messaging pattern where senders of messages, called publishers, do not program the messages to be sent directly to specific receivers, called subscribers, but instead categorize published messages into classes without knowledge of which subscribers, if any, there may be. Similarly, subscribers express interest in one or more classes and only receive messages that are of interest, without knowledge of which publishers, if any, there are.
 
 PubSub is a sibling of the message queue paradigm, and is typically one part of a larger message-oriented middleware system. Most messaging systems support both the PubSub and message queue models in their API; e.g. Java Message Service (JMS), which is especially useful to handle multiple retries in case a recipient application is offline due to connectivity issues, in a typical low resource region.
 
@@ -72,5 +72,3 @@ A **Room** is an PubSub entity that handles the distribution of events. Each Roo
 #### **3.6.3 Subscriber**
 
 A **Subscriber** can process events of a certain event type. Subscribers are independent of each other and their business logic is different (as rule). Each subscriber processes events from their own perspective.
-
-### ****
