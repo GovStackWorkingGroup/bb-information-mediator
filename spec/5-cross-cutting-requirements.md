@@ -1,6 +1,6 @@
-# 5 Cross-cutting requirements
+# 5 Cross-Cutting Requirements
 
-The cross-cutting requirements described in this section are an extension of the cross-cutting requirements defined in the [Architecture Blueprint document](../../architecture-and-nonfunctional-requirements/) and the [Security BB definition](../security-requirements/). This section will describe any additional cross-cutting requirements that apply to this building block or differences with the Architecture Blueprint.
+The cross-cutting requirements described in this section are an extension of the cross-cutting requirements defined in the [Architecture Blueprint document](https://govstack.gitbook.io/specification/building-blocks/architecture-and-nonfunctional-requirements) and the [Security BB definition](https://govstack.gitbook.io/specification/building-blocks/security-requirements). This section will describe any additional cross-cutting requirements that apply to this building block or differences with the Architecture Blueprint.
 
 ## **5.1 Architecture Blueprint**
 
@@ -17,6 +17,6 @@ The cross-cutting requirements described in this section are an extension of the
 
 ## **5.2 Security Specification**
 
-| Topic number in Security specs document | Name of requirement in arch document                                                                            | remarks |
+| Topic number in Security specs document | Name of requirement in arch document                                                                            | Remarks |
 | --------------------------------------- | --------------------------------------------------------------------------------------------------------------- | ------- |
 |                                         | MUST allow the provisioning/management of admin users via the SSO/IAM application specified by the Security BB. |         |
