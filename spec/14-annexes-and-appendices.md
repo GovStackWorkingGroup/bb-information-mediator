@@ -12,7 +12,7 @@ A “member” on the <mark style="background-color:purple;">information mediato
 
 The security server client registration passes following states:
 
-<figure><img src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/diagrams/state-machine-diagram-for-registration-requests.png" alt=""><figcaption><p>Draw.io source: <a href="../diagrams/state-machine-diagram-for-registration-requests.png">https://github.com/GovStackWorkingGroup/bb-information-mediator/blob/main/diagrams/state-machine-diagram-for-registration-requests.png</a></p></figcaption></figure>
+![Source in github: https://github.com/GovStackWorkingGroup/BuildingBlockAPI/blob/main/IM/diagrams/state-machine-diagram-for-registration-requests.png](<.gitbook/assets/dd1 (1).png>)
 
 ### 14.1.3 Adding a Security Server Client
 
