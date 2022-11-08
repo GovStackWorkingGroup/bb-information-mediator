@@ -2,7 +2,7 @@
 
 The resource model shows the relationship between data objects that are used by the Information Mediator building block.
 
-The data elements provide detail for the resource model. All data element schemas can be viewed, commented on, and modified in the [schemas section](https://github.com/GovStackWorkingGroup/bb-information-mediator/tree/main/schemas) of the IM BB Github repository.
+The data elements provide detail for the resource model. All data element schemas can be viewed, commented on, and modified in the [schemas section](https://github.com/aleksander-reitsakas/InformationMediatorAPI/tree/main/IM/schemas) of the IM BB Github repository.
 
 ## 9.1 Standards
 
@@ -18,7 +18,7 @@ The following standards are applicable to data structures in the BB:
 
 The Mediator BB key element is Service. The Service is used by a consuming building block or an application and offered by a provider building block or Application. Both Provider and Consumer MUST be Members of Mediator BB. Members of the mediator BB can be an organization (governmental or not, business or not) or a person (citizen as a rule).
 
-<figure><img src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/diagrams/Mediator-BB-entities.drawio.png" alt=""><figcaption><p>Draw.io source: <a href="../diagrams/Mediator-BB-entities.drawio.png">https://github.com/GovStackWorkingGroup/bb-information-mediator/blob/main/diagrams/Mediator-BB-entities.drawio.png</a></p></figcaption></figure>
+![Draw.io source in github: https://github.com/aleksander-reitsakas/InformationMediatorAPI/blob/main/IM/diagrams/Mediator-BB-entities.drawio.png.](<.gitbook/assets/Mediator-BB-entities.drawio (1).png>)
 
 To become a Member of Mediator BB participant must fulfil declared requirements and apply for onboarding. In the process of onboarding a Member is registered with Mediator BB and gets credentials to connect to Mediator BB. Normally it is done the way that a Member provides a certificate of recognized CA and requests signed with this certificate are considered as legitimate requests of the Member. A member entity can access the PubSub configuration and register a room to publish its own event type as a publisher through its own admin.
 
@@ -28,45 +28,45 @@ Members can browse a directory of Services available in Mediator BB. Each servic
 
 #### 9.2.2.1 Member
 
-Member: [https://github.com/GovStackWorkingGroup/bb-information-mediator/blob/main/schemas/member.json](../schemas/member.json)
+Member: [https://github.com/GovStackWorkingGroup/BuildingBlockAPI/blob/main/IM/schemas/member.json](https://github.com/GovStackWorkingGroup/BuildingBlockAPI/blob/main/IM/schemas/member.json)
 
 Member:
 
-&#x20;   Member Class enumeration
+Member Class enumeration
 
-&#x20;   Member Code string
+Member Code string
 
-&#x20;   Signing Key:
+Signing Key:
 
-&#x20;       Token enumeration (where to put)
+Token enumeration (where to put)
 
-&#x20;       Name string
+Name string
 
-&#x20;       Name of CA enumeration
+Name of CA enumeration
 
 #### 9.2.2.2 Application
 
-Application: [https://github.com/GovStackWorkingGroup/bb-information-mediator/blob/main/schemas/application.json](../schemas/application.json)
+Application: [https://github.com/GovStackWorkingGroup/BuildingBlockAPI/blob/main/IM/schemas/application.json](https://github.com/GovStackWorkingGroup/BuildingBlockAPI/blob/main/IM/schemas/application.json)
 
 Application:
 
-&#x20;   Connection type enum http/https
+Connection type enum http/https
 
-&#x20;    TLS certificate cert
+TLS certificate cert
 
 #### 9.2.2.3 Service
 
-Service: [https://github.com/GovStackWorkingGroup/bb-information-mediator/blob/main/schemas/service.json](../schemas/service.json)
+Service: [https://github.com/GovStackWorkingGroup/BuildingBlockAPI/blob/main/IM/schemas/service.json](https://github.com/GovStackWorkingGroup/BuildingBlockAPI/blob/main/IM/schemas/service.json)
 
 Services:
 
-&#x20;   Service Code string
+Service Code string
 
-&#x20;   Description URL url OpenAPI spec
+Description URL url OpenAPI spec
 
-&#x20;   Service URL url base address for endpoint (prefix)
+Service URL url base address for endpoint (prefix)
 
-&#x20;   Access Rights ACL
+Access Rights ACL
 
 ## **9.3 PubSub Layer**
 
@@ -74,7 +74,7 @@ Services:
 
 Resource Model is extension of Access Layer model:
 
-<figure><img src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/diagrams/Mediator-BB-PubSub-entities.drawio.png" alt=""><figcaption><p>Draw.io source: <a href="../diagrams/Mediator-BB-PubSub-entities.drawio.png">https://github.com/GovStackWorkingGroup/bb-information-mediator/blob/main/diagrams/Mediator-BB-PubSub-entities.drawio.png</a></p></figcaption></figure>
+![Draw.io source in github: https://github.com/aleksander-reitsakas/InformationMediatorAPI/blob/main/IM/diagrams/Mediator-BB-PubSub-entities.drawio.png](.gitbook/assets/dsgsd.png)
 
 ### 9.3.2 Data Elements
 
@@ -98,4 +98,4 @@ A **room** is a GovStack application that handles the distribution of events. Ea
 
 A subscriber is a GovStack application that can process events. Subscribers are independent of each other and their business logic is different (as rule). Each subscriber processes events from their own perspective.
 
-Schema description: [https://github.com/GovStackWorkingGroup/bb-information-mediator/blob/main/schemas/broadcast.json](../schemas/broadcast.json)
+Schema description: [https://github.com/GovStackWorkingGroup/BuildingBlockAPI/blob/main/IM/schemas/broadcast.json](https://github.com/GovStackWorkingGroup/BuildingBlockAPI/blob/main/IM/schemas/broadcast.json)

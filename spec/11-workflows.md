@@ -6,7 +6,7 @@ Note that for the Information Mediator, the primary workflow for the Service Acc
 
 ## 11.1 Broadcast Data to Multiple Services <a href="#docs-internal-guid-911e5942-7fff-642b-4c6a-5b48f3133e80" id="docs-internal-guid-911e5942-7fff-642b-4c6a-5b48f3133e80"></a>
 
-This workflow describes how data about a particular event is broadcast to multiple services. Note that in this case, and in all PubSub implementations, the sender of the data does not know who will receive the data or what they will do with it. Likewise, the recipient of the data does not know who broadcast the data.\\
+This workflow describes how data about a particular event is broadcast to multiple services. Note that in this case, and in all PubSub implementations, the sender of the data does not know who will receive the data or what they will do with it. Likewise, the recipient of the data does not know who broadcast the data.
 
 For example, “Clinic System A” wishes to broadcast data about a new birth so that it can be used to trigger asynchronous actions in several other systems. A webhook is configured in Clinic System A that makes an HTTP POST request corresponding to the type of event and some valid JSON in the body to the PubSub provider. The provider maintains a list of active “Subscribers” for that event type. Without manipulating the body, that message is effectively forwarded on to each subscriber, so that REST services in the “Demographics Tracker”, “Insurance Registry”, and “Early Childhood Education” applications can consume that data and do things based on it.\\
 
