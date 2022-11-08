@@ -78,23 +78,23 @@ These functional requirements do not define specific APIs - they provide a list 
 
         **Example Only:**\
         _Sample GET Request:_\
-        `url-of-local-information-mediator-security-server/r1/INDIA/GOV/ministry-of-agriculture-karnataka/market-linkages-app/inventory-service/v1/check-level/apples?fresh=true`\
+        <mark style="background-color:purple;">url-of-local-information-mediator-security-server</mark>/r1/<mark style="background-color:orange;">INDIA</mark>/<mark style="background-color:blue;">GOV/ministry-of-agriculture-karnataka</mark>/<mark style="background-color:green;">market-linkages-app</mark>/<mark style="background-color:red;">inventory-service</mark>/v1/<mark style="background-color:yellow;">check-level/apples?fresh=true</mark>\
         _Response_: { data: 7 }\
         \
         _Sample POST Request:_\
-        `url-of-local-information-mediator-security-server/r1/INDIA/PVT/tata-buyers-corp-karnataka/small-farmer-buyers-app/inventory-service/v1/supply/apples`\
+        <mark style="background-color:purple;">url-of-local-information-mediator-security-server</mark>/r1/<mark style="background-color:orange;">INDIA</mark>/<mark style="background-color:blue;">PVT/tata-buyers-corp-karnataka</mark>/<mark style="background-color:green;">small-farmer-buyers-app</mark>/<mark style="background-color:red;">inventory-service</mark>/v1/<mark style="background-color:yellow;">supply/apples</mark>\
         _With body_: {“qtyAvailable”: 4}\
         _Response_: { result: “Stock level report created.” }\
         \
         _How to interpret the above request paths:_\
-        `SECURITY-SERVER-URL/r1/INSTANCE/DOMAIN/MEMBER/APPLICATION/SERVICE/PATH`
+        <mark style="background-color:purple;">SECURITY-SERVER-URL</mark>/r1/<mark style="background-color:orange;">INSTANCE</mark>/<mark style="background-color:blue;">DOMAIN/MEMBER</mark>/<mark style="background-color:green;">APPLICATION</mark>/<mark style="background-color:red;">SERVICE</mark>/<mark style="background-color:yellow;">PATH</mark>
 
 
 
     * Note that all applications are making requests to the security server, which runs on their own network, rather than making requests to other applications directly over the public internet. (This is one of the main points of the security server and Information Mediator architecture.)
 2. The Information Mediator signs & sends the request from application A to the security server for application B.
-   * Replace: “`url-of-local-information-mediator-security-server/r1/INDIA`” `with “https://api.moh.kn.in/security-server`”, for example.
-   * The payload includes: `/GOV/ministry-of-agriculture-karnataka/market-linkages-app/inventory-service/v1/check-level/apples?fresh=true`
+   * Replace: “<mark style="background-color:purple;">url-of-local-information-mediator-security-server</mark>/r1/<mark style="background-color:orange;">INDIA</mark>” `with “https://api.moh.kn.in/security-server`”, for example.
+   * The payload includes: /<mark style="background-color:blue;">GOV/ministry-of-agriculture-karnataka</mark>/<mark style="background-color:green;">market-linkages-app</mark>/<mark style="background-color:red;">inventory-service</mark>/v1/<mark style="background-color:yellow;">check-level/apples?fresh=true</mark>
 3. Security server for application B receives the request and validates the signature then forwards it to the application/service/endpoint.
 4. The application/service/endpoint responds to this GET with { “status”: 200, “body”: { “apples”: 47 } }
 5. Security server for application B signs the response and sends it back to the security server for application A.
@@ -103,12 +103,12 @@ These functional requirements do not define specific APIs - they provide a list 
 
 ### **6.1.5 Directory Service**
 
-1. At development time, to see which organizations are available on GovStack, the administrator of application A sends a GET request to the security server: `url-of-security-server/listClients[?instanceId=INDIA]`
+1. At development time, to see which organizations are available on GovStack, the administrator of application A sends a GET request to the security server: <mark style="background-color:purple;">url-of-security-server</mark>/<mark style="background-color:yellow;">listClients</mark>\[?instanceId=<mark style="background-color:orange;">INDIA</mark>]
    * Response is an array of organizations with descriptions.
    * Parameter instanceId is needed only if a federated GovStack ecosystem is requested.
-2. At development time, to learn which applications are available, the administrator/developer at application A sends a GET request to the security server `url-of-security-server/r1/INDIA/GOV/MEMBER/APPLICATION/{listMethods || allowedMethods}`
+2. At development time, to learn which applications are available, the administrator/developer at application A sends a GET request to the security server <mark style="background-color:purple;">url-of-security-server</mark>/r1/<mark style="background-color:orange;">INDIA</mark>/<mark style="background-color:blue;">GOV/MEMBER</mark>/<mark style="background-color:green;">APPLICATION</mark>/<mark style="background-color:yellow;">{listMethods || allowedMethods}</mark>
    * Response is an array of services (either all services, or services that the requester is authorized to access via “allowedMethods”).
-3. At development time, to learn about an available service, administrator at application A sends a GET request to the security server: `url-of-security-server/r1/INDIA/GOV/MEMBER/APPLICATION/getOpenApi?serviceCode=SERVICE`
+3. At development time, to learn about an available service, administrator at application A sends a GET request to the security server: <mark style="background-color:purple;">url-of-security-server</mark>/r1/<mark style="background-color:orange;">INDIA</mark>/<mark style="background-color:blue;">GOV/MEMBER</mark>/<mark style="background-color:green;">APPLICATION</mark>/<mark style="background-color:yellow;">getOpenApi</mark>?serviceCode=<mark style="background-color:red;">SERVICE</mark>
    * Response is an OpenAPI specification, detailing the endpoints and requirements for that service/API.
 4. A view layer allowing for easy exploration of ALL clients, applications, and services should be provided. (Note that, “under the hood”, this layer may make use of the APIs described above or be implemented via a separate API.)
 
