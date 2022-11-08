@@ -6,13 +6,13 @@ The detailed flows section is a description of how various clients (members, app
 
 ### 14.1.1 Registering a Member
 
-A “member” of the <mark style="background-color:purple;">information mediator</mark> (e.g. “<mark style="background-color:blue;">Ministry of Agriculture</mark>”) is the organization (maybe with their own network) which runs a number of applications (e.g., “<mark style="background-color:green;">Market Linkage</mark>”, “Rural Agricultural Advisory Services”) which have their own services (e.g., “/api/refer :: Create Education Referral Webservice”, “<mark style="background-color:red;">/api/inventory-service :: Update Market Inventory</mark>”).
+A “member” on the <mark style="background-color:purple;">information mediator</mark> (e.g. “<mark style="background-color:blue;">Ministry of Agriculture</mark>”) is the organization (maybe with their own network) which runs a number of applications (e.g., “<mark style="background-color:green;">Market Linkage</mark>”, “Rural Agricultural Advisory Services”) which have their own services (e.g., “/api/refer :: Create Education Referral Webservice”, “<mark style="background-color:red;">/api/inventory-service :: Update Market Inventory</mark>”).
 
 ### 14.1.2 Security Server Client States <a href="#docs-internal-guid-9b3ae46c-7fff-b8c0-13dc-b063ccee2b16" id="docs-internal-guid-9b3ae46c-7fff-b8c0-13dc-b063ccee2b16"></a>
 
 The security server client registration passes following states:
 
-<figure><img src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/diagrams/state-machine-diagram-for-registration-requests.png" alt=""><figcaption><p>Draw.io source: <a href="../diagrams/state-machine-diagram-for-registration-requests.png">https://github.com/GovStackWorkingGroup/bb-information-mediator/blob/main/diagrams/state-machine-diagram-for-registration-requests.png</a></p></figcaption></figure>
+![Source in github: https://github.com/GovStackWorkingGroup/BuildingBlockAPI/blob/main/IM/diagrams/state-machine-diagram-for-registration-requests.png](<.gitbook/assets/dd1 (1).png>)
 
 ### 14.1.3 Adding a Security Server Client
 
@@ -81,15 +81,11 @@ HTTP version 1.1 is used by the protocol as described in \[[RFC2616](https://too
 
 **Request format**
 
-```
-{http-request-method} /{protocol-version}/{serviceId}[/path][?query-parameters]
-```
+{http-request-method} /{protocol-version}/{serviceId}\[/path]\[?query-parameters]
 
 **HTTP request headers**
 
-```
 X-GovStack-Client: {client}
-```
 
 * **{http-request-method}** can be one of the request methods defined in \[[RFC7231](https://tools.ietf.org/html/rfc7231)]. For example GET, POST, PUT and DELETE.s
 * **{protocol-version}**: specifies the major version of the Service Access gateway Message Protocol for REST. For the initial version r1 MUST be used.
@@ -104,15 +100,11 @@ Here is a practical example of an Service Access gateway REST call.
 
 **Request example**
 
-```
 GET /r1/INSTANCE/CLASS2/MEMBER2/APPLICATION2/BARSERVICE/v1/bar/zyggy?quu=1
-```
 
 **HTTP request headers**
 
-```
 X-GovStack-Client: INSTANCE/CLASS1/MEMBER1/APPLICATION1
-```
 
 Breakdown of the request URI:
 
@@ -137,9 +129,8 @@ Note. HTTP headers are not case-sensitive. X-GovStack-Client and x-govstack-clie
 
 **X-GovStack-Client**: Specifies the member/application that is used as a service client - an entity that initiates the service call. The identifier consists of the following parts: \[GovStack instance]/\[member class]/\[member code]/\[application code]. Including the application code is OPTIONAL. The identifier parts MUST be represented as UTF-8 and encoded using percent encoding.
 
-```
+\
 X-GovStack-Client: INSTANCE/CLASS/MEMBER/APPLICATION
-```
 
 **Service Access gateway specific headers returned in the response**
 
@@ -151,14 +142,17 @@ The response contains some Service Access gateway specific headers that are set 
 * **X-GovStack-Request-Hash**: For responses, this field contains sha-512 encoded hash of the request message
 * **X-GovStack-Error**: This header is provided in case there was an error processing the request and it occurred somewhere in Service Access gateway (on the consumer or provider Security Server)
 
-```
 X-GovStack-Request-Id: Unique identifier for the request
+
 X-GovStack-Client: INSTANCE/CLASS/MEMBER/APPLICATION
+
 X-GovStack-Service: INSTANCE/CLASS/MEMBER/APPLICATION/PETSTORE
+
 X-GovStack-Id: fa2e18a5-c2cb-4d09-b994-f57727f7c3fb
+
 X-GovStack-Request-Hash: 4c519cf0-0e5e-4ccf-b72b-8ed6fe289e6e
+
 X-GovStack-Request-Id: f92591a3-6bf0-49b1-987b-0dd78c034cc3
-```
 
 **Request hash header**
 
@@ -166,11 +160,8 @@ X-GovStack-Request-Id: f92591a3-6bf0-49b1-987b-0dd78c034cc3
 * The request hash header MUST be automatically created by the service provider's Security Server and it MUST be verified by the service client's Security Server
 * The request message SHOULD NOT contain the request hash header.
 
-The response message returned by a service provider SHOULD NOT contain the request hash header. If the response message contains the request hash header, the service provider's Security Server MUST ignore the field and replace it with the created field.
-
-```
-X-GovStack-Request-Hash: 14sEri8SmLNy/DJyTob0ZddAskmdRy5ZUyhbr33iLkaA+gLpWcivUH16...
-```
+The response message returned by a service provider SHOULD NOT contain the request hash header. If the response message contains the request hash header, the service provider's Security Server MUST ignore the field and replace it with the created field.\
+X-GovStack-Request-Hash: 14sEri8SmLNy/DJyTob0ZddAskmdRy5ZUyhbr33iLkaA+gLpWcivUH16fzbuIs7hhs2AnA4lJDloyIihXMlVQA==
 
 **Content-Type header**
 
@@ -178,15 +169,10 @@ X-GovStack-Request-Hash: 14sEri8SmLNy/DJyTob0ZddAskmdRy5ZUyhbr33iLkaA+gLpWcivUH1
 * The REST messages originating from the Security Server (e.g. error messages) MUST include the header and indicate the content's type and character encoding with it.
 * If Content-Type header is included in the request message by the consumer information system, it MUST be transported unmodified through Service Access gateway to the provider information system
 
-If Content-Type header is included in the response message by the provider information system, it MUST be transported unmodified through Service Access gateway to the consumer information system
-
-```
+If Content-Type header is included in the response message by the provider information system, it MUST be transported unmodified through Service Access gateway to the consumer information system\
 Content-Type: application/json; charset=utf-8
-```
 
-```
 Content-Type: multipart/form-data; boundary=something
-```
 
 In case the service consumer does not provide the Content-Type header (or some of its components), the request message is anyhow passed to the provider service which can decide what to do with it.
 
@@ -204,11 +190,8 @@ In case the service consumer does not provide the Accept header, the Security Se
 * **X-GovStack-Security-Server**: To send the request to a specific Security Server this header needs to be included. It contains the following parts
   * \[GovStack instance]/\[member class]/\[member code]/\[server code]
 
-Other Service Access gateway extension headers are not defined in this document. Rather they are just contracts between information systems and Service Access gateway handles them like any user defined header.
-
-```
+Other Service Access gateway extension headers are not defined in this document. Rather they are just contracts between information systems and Service Access gateway handles them like any user defined header.\
 X-GovStack-Security-Server: INSTANCE/MEMBERCLASS/MEMBERCODE/SERVERCODE
-```
 
 **Optional X-GovStack headers**
 
@@ -216,36 +199,33 @@ X-GovStack-Security-Server: INSTANCE/MEMBERCLASS/MEMBERCODE/SERVERCODE
 * **X-GovStack-UserId**: User whose action initiated the request. The user ID should be prefixed with two-letter ISO country code (e.g., EE12345678901).
 * **X-GovStack-Issue**: Identifies received application, issue or document that was the cause of the service request. This field may be used by the client information system to connect service requests (and responses) to working procedures.
 
-```
+\
 X-GovStack-Id: fa2e18a5-c2cb-4d09-b994-f57727f7c3fb
+
 X-GovStack-UserId: EE12345678901
+
 X-GovStack-Issue: MT324223MSD
-```
 
 **X-GovStack error header**
 
-* **X-GovStack-Error**: This header is provided in case there was an error processing the request and it occurred somewhere in Service Access gateway (on the consumer or provider Security Server). With it the client can easily distinguish between the errors occurring on provider services and errors on Security Servers. Note that the header does not contain detailed error information but is more like a flag indicator to the interested parties. The header contains only the error type and the more detailed information such as the HTTP response code, error message body etc. need to be read from the response body.\
+* **X-GovStack-Erro**r: This header is provided in case there was an error processing the request and it occurred somewhere in Service Access gateway (on the consumer or provider Security Server). With it the client can easily distinguish between the errors occurring on provider services and errors on Security Servers. Note that the header does not contain detailed error information but is more like a flag indicator to the interested parties. The header contains only the error type and the more detailed information such as the HTTP response code, error message body etc. need to be read from the response body.\
   Server.ServerProxy.DatabaseError
 
 **User defined headers**
 
-User defined HTTP headers (i.e. the headers not mentioned in \[[https://en.wikipedia.org/wiki/List\_of\_HTTP\_header\_fields](https://en.wikipedia.org/wiki/List\_of\_HTTP\_header\_fields)] or this document) MUST be passed to the recipient unmodified by Security Server.
-
-```
+User defined HTTP headers (i.e. the headers not mentioned in \[[https://en.wikipedia.org/wiki/List\_of\_HTTP\_header\_fields](https://en.wikipedia.org/wiki/List\_of\_HTTP\_header\_fields)] or this document) MUST be passed to the recipient unmodified by Security Server.\
 X-Powered-By: PHP/5.2.17
+
 X-Pingback: https://example.com/xmlrpc.php
-```
 
 **Cache headers**
 
 Service Access gateway does not cache messages.
 
-Cache headers MUST be passed as-is and the consumer/provider MAY take advantage of this information.
-
-```
+Cache headers MUST be passed as-is and the consumer/provider MAY take advantage of this information.\
 Cache-Control: no-cache, no-store, must-revalidate
+
 Pragma: no-cache
-```
 
 **Cross-origin resource sharing**
 
@@ -290,16 +270,11 @@ REQUEST
 
 Service called directly
 
-```
 curl -X GET "https://petstore.niis.org/v2/pets/1124" -H "accept: application/json"
-```
 
 Service called through Service Access gateway
 
-```
-curl -X GET "https://{securityserver}/r1/{serviceId}/v2/pets/1124" \
--H "accept: application/json" -H "X-GovStack-Client: {client}"
-```
+curl -X GET "https://{securityserver}/r1/{serviceId}/v2/pets/1124" -H "accept: application/json" -H "X-GovStack-Client: {client}"
 
 Service response
 
@@ -315,22 +290,25 @@ Service response
 
 Service response code
 
-```
-200
-```
+200\\
 
 Service response headers
 
-```
 Content-Type: application/json;charset=utf-8
+
 Date: Thu, 21 Mar 2019 12:36:39 GMT
+
 X-GovStack-id: 29f4d011-ef17-4f2f-9bb1-0452ce17d3f5
+
 X-GovStack-client: DEV/COM/222/TESTCLIENT
+
 X-GovStack-service: DEV/COM/222/TESTSERVICE/petstore
+
 X-GovStack-request-id: f92591a3-6bf0-49b1-987b-0dd78c034cc3
+
 X-GovStack-request-hash: Xvx9V2U5c5RhDUiXpVLtW7L8vTd5cM2IOBU2n9efEk7/m3ECKyGAp7yTpJpTWpo6HcmwSaGO+cinxMVKjxJTOQ==
-Content-Length: 1148
-```
+
+Content-Length: 1148\\
 
 **PUT Request and Response**
 
@@ -342,64 +320,69 @@ REQUEST
 
 Service called directly
 
-```
-curl -X PUT "https://petstore.niis.org/v2/pets/5657082955040009" \
--H "accept: application/json" -H "Content-Type: application/json" \
--d '{ "id": 0, "category": { "id": 0, "name": "string" }, "name": "doggie", \
-"photoUrls": [ "string" ], "tags": [ { "id": 0, "name": "string" } ], \
-"status": "available"}'
-```
+curl -X PUT "https://petstore.niis.org/v2/pets/5657082955040009" -H "accept: application/json" -H "Content-Type: application/json" -d '{ "id": 0, "category": { "id": 0, "name": "string" }, "name": "doggie", "photoUrls": \[ "string" ], "tags": \[ { "id": 0, "name": "string" } ], "status": "available"}'
 
 Service called through Service Access gateway
 
-```
-curl -X PUT "https://{securityserver}/r1/{serviceId}/v2/pets/5657082955040009" \
--H "accept: application/json" -H "Content-Type: application/json" \
--H "X-GovStack-Client: {client}" -d '{ "id": 0, "category": { "id": 0, \
-"name": "string" }, "name": "doggie", "photoUrls": [ "string" ], "tags": [ { "id": 0, \
-"name": "string" } ], "status": "available"}'
-```
+curl -X PUT "https://{securityserver}/r1/{serviceId}/v2/pets/5657082955040009" -H "accept: application/json" -H "Content-Type: application/json" -H "X-GovStack-Client: {client}" -d '{ "id": 0, "category": { "id": 0, "name": "string" }, "name": "doggie", "photoUrls": \[ "string" ], "tags": \[ { "id": 0, "name": "string" } ], "status": "available"}'
 
 Service response
 
-```
 {
-  "id": 5657082955040009,
-  "category": {
-    "id": 0,
-    "name": "string"
-  },
-  "name": "doggie",
-  "photoUrls": [
-    "string"
-  ],
-  "tags": [
-    {
-      "id": 0,
-      "name": "string"
-    }
-  ],
-  "status": "available"
+
+"id": 5657082955040009,
+
+"category": {
+
+"id": 0,
+
+"name": "string"
+
+},
+
+"name": "doggie",
+
+"photoUrls": \[
+
+"string"
+
+],
+
+"tags": \[
+
+{
+
+"id": 0,
+
+"name": "string"
+
 }
-```
+
+],
+
+"status": "available"
+
+}
 
 Service response code
 
-```
 200
-```
 
 Service response headers
 
-```
 Date: Thu, 21 Mar 2019 12:43:33 GMT
+
 X-GovStack-id: acdb2c7a-c705-41c2-b595-4cd62e78316e
+
 X-GovStack-client: DEV/COM/222/TESTCLIENT
+
 X-GovStack-service: DEV/COM/222/TESTSERVICE/petstore
+
 X-GovStack-request-id: f92591a3-6bf0-49b1-987b-0dd78c034cc3
+
 X-GovStack-request-hash: MOEfTqBjdqYiX3db9hxJ6JvHvCpYqfA6t0Uhdv6g2I29fMY8ld4CbN8tslj6mUQPXoRaUdPm7NdZeAYTg6zi+A==
+
 Content-Length: 0
-```
 
 **POST Request and Response**
 
@@ -411,63 +394,69 @@ REQUEST
 
 Service called directly
 
-```
-curl -X POST "https://petstore.niis.org/v2/pets" -H "accept: application/json" \
--H "Content-Type: application/json" -d '{ "id": 0, "category": { "id": 0, "name": \
-"string" }, "name": "doggie", "photoUrls": [ "string" ], "tags": [ { "id": 0, \
-"name": "string" } ], "status": "available"}'
-```
+curl -X POST "https://petstore.niis.org/v2/pets" -H "accept: application/json" -H "Content-Type: application/json" -d '{ "id": 0, "category": { "id": 0, "name": "string" }, "name": "doggie", "photoUrls": \[ "string" ], "tags": \[ { "id": 0, "name": "string" } ], "status": "available"}'
 
 Service called through Service Access gateway
 
-```
-curl -X POST "https://{securityserver}/r1/{serviceId}/v2/pets" -H "accept: \
-application/json" -H "Content-Type: application/json" -H "X-GovStack-Client: \
-{client}" -d '{ "id": 0, "category": { "id": 0, "name": "string" }, "name": "doggie", \
-"photoUrls": [ "string" ], "tags": [ { "id": 0, "name": "string" } ], \
-"status": "available"}'
-```
+curl -X POST "https://{securityserver}/r1/{serviceId}/v2/pets" -H "accept: application/json" -H "Content-Type: application/json" -H "X-GovStack-Client: {client}" -d '{ "id": 0, "category": { "id": 0, "name": "string" }, "name": "doggie", "photoUrls": \[ "string" ], "tags": \[ { "id": 0, "name": "string" } ], "status": "available"}'
 
 Service response
 
-```
 {
-  "id": 5657082955040122,
-  "category": {
-    "id": 0,
-    "name": "string"
-  },
-  "name": "doggie",
-  "photoUrls": [
-    "string"
-  ],
-  "tags": [
-    {
-    "id": 0,
-    "name": "string"
-    }
-  ],
-  "status": "available"
+
+"id": 5657082955040122,
+
+"category": {
+
+"id": 0,
+
+"name": "string"
+
+},
+
+"name": "doggie",
+
+"photoUrls": \[
+
+"string"
+
+],
+
+"tags": \[
+
+{
+
+"id": 0,
+
+"name": "string"
+
 }
-```
+
+],
+
+"status": "available"
+
+}
 
 Service response code
 
-```
-200
-```
+200\\
 
 Service response headers
 
-```
 Date: Thu, 21 Mar 2019 12:49:38 GMT
+
 X-GovStack-id: dcaaa3a2-a158-41e1-8775-309848052358
+
 X-GovStack-client: DEV/COM/222/TESTCLIENT
+
 X-GovStack-service: DEV/COM/222/TESTSERVICE/petstore
+
 X-GovStack-request-id: f92591a3-6bf0-49b1-987b-0dd78c034cc3
+
 X-GovStack-request-hash: VCNZdwTxl7m3XC6Mpfw1H6qJUtBcm3Y6tfCvg5b3W/fb2RRXsLF9wftR3u6ElclE+RFaiAN/OkSz02fAYbNKaw==
-Content-Length: 0
-```
+
+Content-Length: 0\\
 
 **DELETE Request and Response**
 
@@ -479,39 +468,35 @@ REQUEST
 
 Service called directly
 
-```
 curl -X DELETE "https://petstore.niis.org/v2/pets/1124" -H "accept: application/json"
-```
 
 Service called through Service Access gateway
 
-```
-curl -X DELETE "https://{securityserver}/r1/{serviceId}/v2/pets/1124" \
--H "accept: application/json" -H "X-GovStack-Client: {client}"
-```
+curl -X DELETE "https://{securityserver}/r1/{serviceId}/v2/pets/1124" -H "accept: application/json" -H "X-GovStack-Client: {client}"
 
 Service response
 
-```
-```
-
 Service response code
 
-```
 200
-```
+
+\\
 
 Service response headers
 
-```
 Date: Thu, 21 Mar 2019 12:49:38 GMT
+
 X-GovStack-id: 6209d61b-6ab5-4443-a09a-b8d2a7c491b2
+
 X-GovStack-client: DEV/COM/222/TESTCLIENT
+
 X-GovStack-service: DEV/COM/222/TESTSERVICE/petstore
+
 X-GovStack-request-id: f92591a3-6bf0-49b1-987b-0dd78c034cc3
+
 X-GovStack-request-hash: lQBoldcyuI3BerjHfkleRQ45AyYoFlF7zXSN6yH/RwvTNWEcsTQM18EfqMxYfdkyGGB26oxAjAWv/AcfmZF7og==
-Content-Length: 0
-```
+
+Content-Length: 0\\
 
 **POST Request with Attachments and Response**
 
@@ -523,49 +508,45 @@ REQUEST
 
 Service called directly
 
-```
-curl -X POST "https://petstore.niis.org/v2/pets/1124/images" \
--H "accept: application/json" -H "Content-Type: multipart/form-data" \
--F "file=@A-fluffy-cat-looking-funny-surprised-or-concerned.jpg;type=image/jpeg"
-```
+curl -X POST "https://petstore.niis.org/v2/pets/1124/images" -H "accept: application/json" -H "Content-Type: multipart/form-data" -F "file=@A-fluffy-cat-looking-funny-surprised-or-concerned.jpg;type=image/jpeg"
 
 Service called through Service Access gateway
 
-```
-curl -X POST "https://{securityserver}/r1/{serviceId}/v2/pets/1124/images" \
--H "accept: application/json" -H "Content-Type: multipart/form-data" \
--H "X-GovStack-client: {client}" \
--F "file=@A-fluffy-cat-looking-funny-surprised-or-concerned.jpg;type=image/jpeg"
-```
+curl -X POST "https://{securityserver}/r1/{serviceId}/v2/pets/1124/images" -H "accept: application/json" -H "Content-Type: multipart/form-data" -H "X-GovStack-client: {client}" -F "file=@A-fluffy-cat-looking-funny-surprised-or-concerned.jpg;type=image/jpeg"
 
 Service response
 
-```
 {
-  "code":200,
-  "type":null,
-  "message":"additionalMetadata: null\nFile uploaded to ./file, 170025 bytes"
+
+"code":200,
+
+"type":null,
+
+"message":"additionalMetadata: null\nFile uploaded to ./file, 170025 bytes"
+
 }
-```
 
 Service response code
 
-```
-200
-```
+200\\
 
 Service response headers
 
-```
 Content-Type: application/json;charset=utf-8
+
 Date: Thu, 21 Mar 2019 13:02:29 GMT
+
 X-GovStack-id: 86e081a6-ec16-4b8d-b729-963f9659a80c
+
 X-GovStack-client: DEV/COM/222/TESTCLIENT
+
 X-GovStack-service: DEV/COM/222/TESTSERVICE/petstore
+
 X-GovStack-request-id: f92591a3-6bf0-49b1-987b-0dd78c034cc3
+
 X-GovStack-request-hash: EycIkZAz4WMvbKgnBvd0wUcN4A4w0RZMvugD36ZJ2PpwwGZuMGfxCoO4C0ZC3c4LBGF0rh61vunL3ssZV6TB3Q==
+
 Content-Length: 100
-```
 
 ### 14.1.7 Directory Services (Meta Services)
 
@@ -612,15 +593,11 @@ The query parameters must contain serviceCode=xxx where xxx is the service code 
 
 Request example
 
-```
-GET /r1/INSTANCE/CLASS2/MEMBER2/APPLICATION2/getOpenAPI?serviceCode=listFirms
-```
+GET /r1/INSTANCE/CLASS2/MEMBER2/APPLICATION2/getOpenAPI?serviceCode=listFirms\\
 
 HTTP request headers
 
-```
 X-GovStack-Client: INSTANCE/CLASS1/MEMBER1/APPLICATION1
-```
 
 The body of the response MUST contain the OpenAPI service description of the REST service indicated by the query parameters.
 
