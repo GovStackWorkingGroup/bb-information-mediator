@@ -1,0 +1,151 @@
+{
+  "uuid": "a11d79ca-aee0-468b-92c0-e52293cf2b6f",
+  "lastMigration": 24,
+  "name": "Mockoon bb information mediator",
+  "endpointPrefix": "",
+  "latency": 0,
+  "port": 3004,
+  "hostname": "0.0.0.0",
+  "routes": [
+    {
+      "uuid": "b90a7160-a318-40b3-b216-bdebbc6f3551",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "listClients",
+      "responses": [
+        {
+          "uuid": "96813ac5-6ea1-46b4-a382-8b54eb063054",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "224e9fd8-74f8-4ece-b11f-a8ebddea756a",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "{GovStackInstance}/{memberClass}/{memberCode}/{applicationCode}/listMethods",
+      "responses": [
+        {
+          "uuid": "c5856d8f-d1ce-4b66-893a-f4607dc7e324",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "8b7983c3-cab2-4499-80f4-4b2b27461bb6",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "{GovStackInstance}/{memberClass}/{memberCode}/{applicationCode}/allowedMethods",
+      "responses": [
+        {
+          "uuid": "4af5f446-2e22-4eb3-b97d-3638fa7a1f65",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "f76233cd-2ad3-4e58-a89d-9edcf614fdd2",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "{GovStackInstance}/{memberClass}/{memberCode}/{applicationCode}/getOpenAPI",
+      "responses": [
+        {
+          "uuid": "e297ce41-dfa2-4ca2-a951-6d6c9a43d9bf",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    }
+  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": true,
+  "headers": [
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    }
+  ],
+  "proxyReqHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "proxyResHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "data": []
+}

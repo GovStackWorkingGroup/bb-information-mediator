@@ -1,0 +1,18 @@
+version: '3.3'
+
+services:
+  app:
+    image: bb-information-mediator-api-image
+    ports:
+      - 3366:3003
+    networks:
+      - web
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - ./mockoon-bb-information-mediator.json:/mockoon-bb-information-mediator.json
+
+networks:
+  web:
+    driver: bridge
