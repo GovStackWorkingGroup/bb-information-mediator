@@ -1,6 +1,6 @@
 {
   "uuid": "a11d79ca-aee0-468b-92c0-e52293cf2b6f",
-  "lastMigration": 24,
+  "lastMigration": 25,
   "name": "Mockoon bb information mediator",
   "endpointPrefix": "",
   "latency": 0,
@@ -63,23 +63,52 @@
     },
     {
       "uuid": "8b7983c3-cab2-4499-80f4-4b2b27461bb6",
-      "documentation": "",
+      "documentation": "List of allowed REST services and endpoints for a service provider",
       "method": "get",
-      "endpoint": "{GovStackInstance}/{memberClass}/{memberCode}/{applicationCode}/allowedMethods",
+      "endpoint": ":GovStackInstance/:memberClass/:memberCode/:applicationCode/allowedMethods",
       "responses": [
         {
           "uuid": "4af5f446-2e22-4eb3-b97d-3638fa7a1f65",
-          "body": "{}",
+          "body": "{\n  \"member\": [\n    {\n      \"objectType\": {\n        \"object_type\": \"MEMBER\"\n      },\n      \"serviceType\": \"string\",\n      \"GovStackInstance\": \"string\",\n      \"memberClass\": \"string\",\n      \"memberCode\": \"string\",\n      \"applicationCode\": \"string\",\n      \"serviceCode\": \"string\",\n      \"serviceVersion\": \"string\",\n      \"endpointList\": {\n        \"member\": [\n          {\n            \"method\": \"string\",\n            \"path\": \"string\"\n          }\n        ]\n      }\n    }\n  ]\n}",
           "latency": 0,
           "statusCode": 200,
-          "label": "",
+          "label": "List of allowed REST services and endpoints for a service provider",
           "headers": [],
           "bodyType": "INLINE",
           "filePath": "",
           "databucketID": "",
           "sendFileAsBody": false,
-          "rules": [],
-          "rulesOperator": "OR",
+          "rules": [
+            {
+              "target": "params",
+              "modifier": "GovStackInstance",
+              "value": "^.{1,}$",
+              "invert": false,
+              "operator": "regex"
+            },
+            {
+              "target": "params",
+              "modifier": "memberClass",
+              "value": "^.{1,}$",
+              "invert": false,
+              "operator": "regex"
+            },
+            {
+              "target": "params",
+              "modifier": "memberCode",
+              "value": "^.{1,}$",
+              "invert": false,
+              "operator": "regex"
+            },
+            {
+              "target": "params",
+              "modifier": "applicationCode",
+              "value": "^.{1,}$",
+              "invert": false,
+              "operator": "regex"
+            }
+          ],
+          "rulesOperator": "AND",
           "disableTemplating": false,
           "fallbackTo404": false,
           "default": true
@@ -147,5 +176,24 @@
       "value": ""
     }
   ],
-  "data": []
+  "data": [],
+  "folders": [],
+  "rootChildren": [
+    {
+      "type": "route",
+      "uuid": "b90a7160-a318-40b3-b216-bdebbc6f3551"
+    },
+    {
+      "type": "route",
+      "uuid": "224e9fd8-74f8-4ece-b11f-a8ebddea756a"
+    },
+    {
+      "type": "route",
+      "uuid": "8b7983c3-cab2-4499-80f4-4b2b27461bb6"
+    },
+    {
+      "type": "route",
+      "uuid": "f76233cd-2ad3-4e58-a89d-9edcf614fdd2"
+    }
+  ]
 }
