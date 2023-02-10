@@ -4,21 +4,21 @@
   "name": "Mockoon bb information mediator",
   "endpointPrefix": "",
   "latency": 0,
-  "port": 3004,
+  "port": 3003,
   "hostname": "0.0.0.0",
   "routes": [
     {
       "uuid": "b90a7160-a318-40b3-b216-bdebbc6f3551",
-      "documentation": "",
+      "documentation": "List of Clients of GovStack",
       "method": "get",
       "endpoint": "listClients",
       "responses": [
         {
           "uuid": "96813ac5-6ea1-46b4-a382-8b54eb063054",
-          "body": "{}",
+          "body": "{\n  \"member\": [\n    {\n      \"objectType\": {\n        \"object_type\": \"MEMBER\"\n      },\n      \"serviceType\": \"string\",\n      \"GovStackInstance\": \"string\",\n      \"memberClass\": \"string\",\n      \"memberCode\": \"string\",\n      \"applicationCode\": \"string\",\n      \"serviceCode\": \"string\",\n      \"serviceVersion\": \"string\",\n      \"endpointList\": {\n        \"member\": [\n          {\n            \"method\": \"string\",\n            \"path\": \"string\"\n          }\n        ]\n      }\n    }\n  ]\n}",
           "latency": 0,
           "statusCode": 200,
-          "label": "",
+          "label": "Successfully retrieve the list of Clients of GovStack",
           "headers": [],
           "bodyType": "INLINE",
           "filePath": "",
