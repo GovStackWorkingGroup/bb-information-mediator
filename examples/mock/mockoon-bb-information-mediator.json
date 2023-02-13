@@ -55,28 +55,28 @@
             {
               "target": "params",
               "modifier": "GovStackInstance",
-              "value": "^.{1,}$",
+              "value": "^([a-zA-Z][a-zA-Z\\d]*)$",
               "invert": false,
               "operator": "regex"
             },
             {
               "target": "params",
               "modifier": "memberClass",
-              "value": "^.{1,}$",
+              "value": "^([a-zA-Z][a-zA-Z\\d]*)$",
               "invert": false,
               "operator": "regex"
             },
             {
               "target": "params",
               "modifier": "memberCode",
-              "value": "^.{1,}$",
+              "value": "^[a-zA-Z\\d]+$",
               "invert": false,
               "operator": "regex"
             },
             {
               "target": "params",
               "modifier": "applicationCode",
-              "value": "^.{1,}$",
+              "value": "^[a-zA-Z\\d]+$",
               "invert": false,
               "operator": "regex"
             }
