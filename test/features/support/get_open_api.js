@@ -36,23 +36,23 @@ When(
 
 Then('User receives a resonse', async () => await specGetOpenAPI.toss());
 
-Then('The response should have status 200', () =>
-  specGetOpenAPI.response().to.have.status(200)
-);
-
-// Scenario: Retrieve the openAPI description of the specified REST service
-Then('The response should be returned in a timely manner', () =>
-  specGetOpenAPI
-    .response()
-    .to.have.responseTimeLessThan(defaultExpectedResponseTime)
-);
-
 Then('The response should match json schema', () =>
   chai
     .expect(specGetOpenAPI._response.json)
     .to.be.jsonSchema(getOpenApiExpectedSchema)
 );
 
+Then('The response should have status 200', () =>
+  specGetOpenAPI.response().to.have.status(200)
+);
+
+Then('The response should be returned in a timely manner', () =>
+  specGetOpenAPI
+    .response()
+    .to.have.responseTimeLessThan(defaultExpectedResponseTime)
+);
+
+// Scenario: Retrieve the openAPI description of the specified REST service
 Then('The response header content-type should be {string}', expected =>
   specGetOpenAPI.response().to.have.header('content-type', expected)
 );
