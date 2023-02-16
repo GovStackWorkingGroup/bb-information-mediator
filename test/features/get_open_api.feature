@@ -8,10 +8,10 @@ Feature: Retrieve openAPI description of the specified REST service
 
     Given User wants to retrieve the openAPI description of the specified REST service
     When User sends GET request with given "identifier" as GovStackInstance "identifier" as memberClass "alp4aNum3r1c" as memberCode "alp4aNum3r1c" as applicationCode
-    Then User receives a resonse
-    And The response should match json schema
-    And The response should have status 200
+    Then User receives a response
     And The response should be returned in a timely manner
+    And The response should have status 200
+    And The response should match json schema
 
 
   @unit @happyregression
@@ -19,12 +19,11 @@ Feature: Retrieve openAPI description of the specified REST service
 
     Given User wants to retrieve the openAPI description of the specified REST service
     When User sends GET request with given "<GovStackInstance>" as GovStackInstance "<memberClass>" as memberClass "<memberCode>" as memberCode "<applicationCode>" as applicationCode
-    Then User receives a resonse
-    And The response should match json schema
-    And The response should have status 200
+    Then User receives a response
     And The response should be returned in a timely manner
+    And The response should have status 200
     And The response header content-type should be "application/json; charset=utf-8"
-    
+    And The response should match json schema
     
     Examples: Valid data
     | GovStackInstance | memberClass | memberCode   | applicationCode |
@@ -39,10 +38,10 @@ Feature: Retrieve openAPI description of the specified REST service
 
     Given User wants to retrieve the openAPI description of the specified REST service
     When User sends GET request with given "<GovStackInstance>" as GovStackInstance "<memberClass>" as memberClass "<memberCode>" as memberCode "<applicationCode>" as applicationCode
-    Then User receives a resonse
-    And The response should match json schema
-    And The response should have status 400
+    Then User receives a response
     And The response should be returned in a timely manner
+    And The response should have status 400
+    And The response should match json schema
     
     Examples: Invalid data
     | GovStackInstance | memberClass | memberCode   | applicationCode |

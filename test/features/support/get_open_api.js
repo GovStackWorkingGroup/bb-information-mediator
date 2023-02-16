@@ -20,7 +20,8 @@ Before(() => {
 // Scenario: Retrieve the openAPI description of the specified REST service smoke type test
 Given(
   'User wants to retrieve the openAPI description of the specified REST service',
-  () => ''
+  () =>
+    'User wants to retrieve the openAPI description of the specified REST service'
 );
 
 When(
@@ -34,22 +35,22 @@ When(
     })
 );
 
-Then('User receives a resonse', async () => await specGetOpenAPI.toss());
+Then('User receives a response', async () => await specGetOpenAPI.toss());
 
-Then('The response should match json schema', () =>
-  chai
-    .expect(specGetOpenAPI._response.json)
-    .to.be.jsonSchema(getOpenApiExpectedSchema)
+Then('The response should be returned in a timely manner', () =>
+  specGetOpenAPI
+    .response()
+    .to.have.responseTimeLessThan(defaultExpectedResponseTime)
 );
 
 Then('The response should have status 200', () =>
   specGetOpenAPI.response().to.have.status(200)
 );
 
-Then('The response should be returned in a timely manner', () =>
-  specGetOpenAPI
-    .response()
-    .to.have.responseTimeLessThan(defaultExpectedResponseTime)
+Then('The response should match json schema', () =>
+  chai
+    .expect(specGetOpenAPI._response.json)
+    .to.be.jsonSchema(getOpenApiExpectedSchema)
 );
 
 // Scenario: Retrieve the openAPI description of the specified REST service
