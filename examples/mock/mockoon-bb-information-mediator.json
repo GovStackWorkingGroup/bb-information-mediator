@@ -82,14 +82,14 @@
             {
               "target": "params",
               "modifier": "GovStackInstance",
-              "value": "^([a-zA-Z][a-zA-Z\\d]*)$",
+              "value": "^([a-zA-Z][a-zA-Z\\d_\\-.]*)$",
               "invert": false,
               "operator": "regex"
             },
             {
               "target": "params",
               "modifier": "memberClass",
-              "value": "^([a-zA-Z][a-zA-Z\\d]*)$",
+              "value": "^([a-zA-Z][a-zA-Z\\d_\\-.]*)$",
               "invert": false,
               "operator": "regex"
             },
