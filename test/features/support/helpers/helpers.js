@@ -1,6 +1,6 @@
 module.exports = {
   localhost: 'http://localhost:3366/',
-  getOpenApiUrl:
+  getOpenApiEndpoint:
     '{GovStackInstance}/{memberClass}/{memberCode}/{applicationCode}/getOpenAPI',
   defaultExpectedResponseTime: 15000,
   getOpenApiExpectedSchema: {

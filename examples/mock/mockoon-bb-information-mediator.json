@@ -138,6 +138,13 @@
               "value": "^[a-zA-Z\\d]+$",
               "invert": false,
               "operator": "regex"
+            },
+            {
+              "target": "query",
+              "modifier": "serviceCode",
+              "value": "^[a-zA-Z\\d]+$",
+              "invert": false,
+              "operator": "regex"
             }
           ],
           "rulesOperator": "AND",
@@ -181,6 +188,13 @@
             {
               "target": "params",
               "modifier": "applicationCode",
+              "value": "^[a-zA-Z\\d]+$",
+              "invert": true,
+              "operator": "regex"
+            },
+            {
+              "target": "query",
+              "modifier": "serviceCode",
               "value": "^[a-zA-Z\\d]+$",
               "invert": true,
               "operator": "regex"

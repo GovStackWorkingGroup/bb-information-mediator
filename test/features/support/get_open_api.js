@@ -3,7 +3,7 @@ const { spec } = require('pactum');
 const { Before, Given, When, Then, After } = require('@cucumber/cucumber');
 const {
   localhost,
-  getOpenApiUrl,
+  getOpenApiEndpoint,
   defaultExpectedResponseTime,
   getOpenApiExpectedSchema,
 } = require('./helpers/helpers');
@@ -11,9 +11,10 @@ const {
 chai.use(require('chai-json-schema'));
 
 let specGetOpenAPI;
-const baseUrl = localhost + getOpenApiUrl;
+const baseUrl = localhost + getOpenApiEndpoint;
+const tag = { tags: `@endpoint=/${getOpenApiEndpoint}` };
 
-Before(() => {
+Before(tag, () => {
   specGetOpenAPI = spec();
 });
 
@@ -35,6 +36,10 @@ When(
     })
 );
 
+When('User provides query parameter {string} as serviceCode', serviceCode => {
+  specGetOpenAPI.withQueryParams('serviceCode', serviceCode);
+});
+
 Then('User receives a response', async () => await specGetOpenAPI.toss());
 
 Then('The response should be returned in a timely manner', () =>
@@ -53,16 +58,20 @@ Then('The response should match json schema', () =>
     .to.be.jsonSchema(getOpenApiExpectedSchema)
 );
 
-// Scenario: Retrieve the openAPI description of the specified REST service
+// Scenario Outline: Retrieve the openAPI description of the specified REST service
 Then('The response header content-type should be {string}', expected =>
   specGetOpenAPI.response().to.have.header('content-type', expected)
 );
 
-// Scenario: Unable to retrieve the openAPI description of the specified REST service
+// Scenario Outline: Unable to retrieve the openAPI description of the specified REST service of an invalid path parameter
 Then('The response should have status 400', () =>
   specGetOpenAPI.response().to.have.status(400)
 );
 
-After(() => {
+// Scenario Outline: Unable to retrieve the openAPI description of the specified REST service of an invalid serviceCode parameter
+
+// Scenario: Unable to retrieve the openAPI description of the specified REST service because of missing serviceCode parameter
+
+After(tag, () => {
   specGetOpenAPI.end();
 });

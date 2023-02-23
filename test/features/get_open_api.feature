@@ -1,4 +1,4 @@
-# @method=GET @endpoint=/{GovStackInstance}/{memberClass}/{memberCode}/{applicationCode}/getOpenAPI
+@method=GET @endpoint=/{GovStackInstance}/{memberClass}/{memberCode}/{applicationCode}/getOpenAPI
 Feature: Retrieve openAPI description of the specified REST service
 
   Retrieve openAPI description of the specified REST service
@@ -8,17 +8,19 @@ Feature: Retrieve openAPI description of the specified REST service
 
     Given User wants to retrieve the openAPI description of the specified REST service
     When User sends GET request with given "identifier" as GovStackInstance "identifier" as memberClass "alp4aNum3r1c" as memberCode "alp4aNum3r1c" as applicationCode
+    And User provides query parameter "alp4aNum3r1c" as serviceCode
     Then User receives a response
     And The response should be returned in a timely manner
     And The response should have status 200
     And The response should match json schema
 
 
-  @unit @happyregression
+  @unit @positive
   Scenario Outline: Retrieve the openAPI description of the specified REST service
 
     Given User wants to retrieve the openAPI description of the specified REST service
     When User sends GET request with given "<GovStackInstance>" as GovStackInstance "<memberClass>" as memberClass "<memberCode>" as memberCode "<applicationCode>" as applicationCode
+    And User provides query parameter "alp4aNum3r1c" as serviceCode
     Then User receives a response
     And The response should be returned in a timely manner
     And The response should have status 200
@@ -33,11 +35,12 @@ Feature: Retrieve openAPI description of the specified REST service
     | valid1dentifi3r  | rand0mid3nt | str1ng       | azxcv55         |
 
 
-  @unit @negativeregression
-  Scenario Outline: Unable to retrieve the openAPI description of the specified REST service
+  @unit @negative
+  Scenario Outline: Unable to retrieve the openAPI description of the specified REST service because of an invalid path parameter
 
     Given User wants to retrieve the openAPI description of the specified REST service
     When User sends GET request with given "<GovStackInstance>" as GovStackInstance "<memberClass>" as memberClass "<memberCode>" as memberCode "<applicationCode>" as applicationCode
+    And User provides query parameter "alp4aNum3r1c" as serviceCode
     Then User receives a response
     And The response should be returned in a timely manner
     And The response should have status 400
@@ -50,3 +53,31 @@ Feature: Retrieve openAPI description of the specified REST service
     | identifier       | identifier  | _invalid     | alp4aNum3r1c    |
     | identifier       | identifier  | str1ng       | _invalid        |
     | 1nval1d          | 1nval1d     | _invalid     | _invalid        |
+
+
+  @unit @negative
+  Scenario Outline: Unable to retrieve the openAPI description of the specified REST service because of an invalid serviceCode parameter
+
+    Given User wants to retrieve the openAPI description of the specified REST service
+    When User sends GET request with given "identifier" as GovStackInstance "identifier" as memberClass "alp4aNum3r1c" as memberCode "alp4aNum3r1c" as applicationCode
+    And User provides query parameter "<serviceCode>" as serviceCode
+    Then User receives a response
+    And The response should be returned in a timely manner
+    And The response should have status 400
+    And The response should match json schema
+    
+    Examples: Invalid data
+    | serviceCode   |
+    | _invalid      |
+    |               |
+
+
+  @unit @negative
+  Scenario: Unable to retrieve the openAPI description of the specified REST service because of missing serviceCode parameter
+
+    Given User wants to retrieve the openAPI description of the specified REST service
+    When User sends GET request with given "identifier" as GovStackInstance "identifier" as memberClass "alp4aNum3r1c" as memberCode "alp4aNum3r1c" as applicationCode
+    Then User receives a response
+    And The response should be returned in a timely manner
+    And The response should have status 400
+    And The response should match json schema
