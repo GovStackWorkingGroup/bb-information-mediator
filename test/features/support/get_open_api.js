@@ -69,8 +69,10 @@ Then('The response should have status 400', () =>
 );
 
 // Scenario Outline: Unable to retrieve the openAPI description of the specified REST service of an invalid serviceCode parameter
+// Code for this scenario is taken from the aforementioned steps, based on .feature file
 
 // Scenario: Unable to retrieve the openAPI description of the specified REST service because of missing serviceCode parameter
+// Code for this scenario is taken from the aforementioned steps, based on .feature file
 
 After(tag, () => {
   specGetOpenAPI.end();
