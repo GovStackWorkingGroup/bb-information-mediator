@@ -36,23 +36,52 @@
     },
     {
       "uuid": "224e9fd8-74f8-4ece-b11f-a8ebddea756a",
-      "documentation": "",
+      "documentation": "List of REST services and endpoints for a service provider",
       "method": "get",
-      "endpoint": "{GovStackInstance}/{memberClass}/{memberCode}/{applicationCode}/listMethods",
+      "endpoint": ":GovStackInstance/:memberClass/:memberCode/:applicationCode/listMethods",
       "responses": [
         {
           "uuid": "c5856d8f-d1ce-4b66-893a-f4607dc7e324",
-          "body": "{}",
+          "body": "{\n  \"member\": [\n    {\n      \"objectType\": {\n        \"object_type\": \"MEMBER\"\n      },\n      \"serviceType\": \"string\",\n      \"GovStackInstance\": \"string\",\n      \"memberClass\": \"string\",\n      \"memberCode\": \"string\",\n      \"applicationCode\": \"string\",\n      \"serviceCode\": \"string\",\n      \"serviceVersion\": \"string\",\n      \"endpointList\": {\n        \"member\": [\n          {\n            \"method\": \"string\",\n            \"path\": \"string\"\n          }\n        ]\n      }\n    }\n  ]\n}",
           "latency": 0,
           "statusCode": 200,
-          "label": "",
+          "label": "List of REST services and endpoints for a service provider",
           "headers": [],
           "bodyType": "INLINE",
           "filePath": "",
           "databucketID": "",
           "sendFileAsBody": false,
-          "rules": [],
-          "rulesOperator": "OR",
+          "rules": [
+            {
+              "target": "params",
+              "modifier": "GovStackInstance",
+              "value": "^([a-zA-Z][a-zA-Z\\d_:\\-.]*)$",
+              "invert": false,
+              "operator": "regex"
+            },
+            {
+              "target": "params",
+              "modifier": "memberClass",
+              "value": "^([a-zA-Z][a-zA-Z\\d_:\\-.]*)$",
+              "invert": false,
+              "operator": "regex"
+            },
+            {
+              "target": "params",
+              "modifier": "memberCode",
+              "value": "^[a-zA-Z\\d]+$",
+              "invert": false,
+              "operator": "regex"
+            },
+            {
+              "target": "params",
+              "modifier": "applicationCode",
+              "value": "^[a-zA-Z\\d]+$",
+              "invert": false,
+              "operator": "regex"
+            }
+          ],
+          "rulesOperator": "AND",
           "disableTemplating": false,
           "fallbackTo404": false,
           "default": true
