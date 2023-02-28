@@ -1,1 +1,1 @@
-docker-compose up app
+docker-compose up -d test-app
