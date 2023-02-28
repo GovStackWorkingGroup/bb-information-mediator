@@ -148,22 +148,116 @@
     },
     {
       "uuid": "f76233cd-2ad3-4e58-a89d-9edcf614fdd2",
-      "documentation": "",
+      "documentation": "OpenAPI description of the specified REST service",
       "method": "get",
-      "endpoint": "{GovStackInstance}/{memberClass}/{memberCode}/{applicationCode}/getOpenAPI",
+      "endpoint": ":GovStackInstance/:memberClass/:memberCode/:applicationCode/getOpenAPI",
       "responses": [
         {
           "uuid": "e297ce41-dfa2-4ca2-a951-6d6c9a43d9bf",
-          "body": "{}",
+          "body": "\"string\"",
           "latency": 0,
           "statusCode": 200,
-          "label": "",
+          "label": "Retrieved OpenAPI description of the specified REST service",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "params",
+              "modifier": "GovStackInstance",
+              "value": "^([a-zA-Z][a-zA-Z\\d_:\\-.]*)$",
+              "invert": false,
+              "operator": "regex"
+            },
+            {
+              "target": "params",
+              "modifier": "memberClass",
+              "value": "^([a-zA-Z][a-zA-Z\\d_:\\-.]*)$",
+              "invert": false,
+              "operator": "regex"
+            },
+            {
+              "target": "params",
+              "modifier": "memberCode",
+              "value": "^[a-zA-Z\\d]+$",
+              "invert": false,
+              "operator": "regex"
+            },
+            {
+              "target": "params",
+              "modifier": "applicationCode",
+              "value": "^[a-zA-Z\\d]+$",
+              "invert": false,
+              "operator": "regex"
+            },
+            {
+              "target": "query",
+              "modifier": "serviceCode",
+              "value": "^[a-zA-Z\\d]+$",
+              "invert": false,
+              "operator": "regex"
+            }
+          ],
+          "rulesOperator": "AND",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "ebcfccd5-4ace-467a-9c29-1c7d13cd9a5c",
+          "body": "",
+          "latency": 0,
+          "statusCode": 400,
+          "label": "Error in request",
           "headers": [],
           "bodyType": "INLINE",
           "filePath": "",
           "databucketID": "",
           "sendFileAsBody": false,
-          "rules": [],
+          "rules": [
+            {
+              "target": "params",
+              "modifier": "GovStackInstance",
+              "value": "^([a-zA-Z][a-zA-Z\\d_:\\-.]*)$",
+              "invert": true,
+              "operator": "regex"
+            },
+            {
+              "target": "params",
+              "modifier": "memberClass",
+              "value": "^([a-zA-Z][a-zA-Z\\d_:\\-.]*)$",
+              "invert": true,
+              "operator": "regex"
+            },
+            {
+              "target": "params",
+              "modifier": "memberCode",
+              "value": "^[a-zA-Z\\d]+$",
+              "invert": true,
+              "operator": "regex"
+            },
+            {
+              "target": "params",
+              "modifier": "applicationCode",
+              "value": "^[a-zA-Z\\d]+$",
+              "invert": true,
+              "operator": "regex"
+            },
+            {
+              "target": "query",
+              "modifier": "serviceCode",
+              "value": "^[a-zA-Z\\d]+$",
+              "invert": true,
+              "operator": "regex"
+            }
+          ],
           "rulesOperator": "OR",
           "disableTemplating": false,
           "fallbackTo404": false,
