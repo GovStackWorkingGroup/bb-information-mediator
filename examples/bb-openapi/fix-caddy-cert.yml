@@ -1,0 +1,75 @@
+---
+- hosts: caddy_servers
+  connection: community.docker.docker
+
+  vars:
+    user: xrd
+    password: secret
+    apikey: "{{ apikey_json['key'] }}"
+    protocol: HTTP
+
+  tasks:
+
+  - name: Fetch intermediate cert from caddy
+    fetch:
+      src: /data/caddy/pki/authorities/local/intermediate.crt
+      dest: "{{inventory_hostname}}/intermediate.crt"
+      flat: yes
+    when: protocol==HTTPS
+
+  - name: Fetch intermediate key from caddy
+    fetch:
+      src: /data/caddy/pki/authorities/local/intermediate.key
+      dest: "{{inventory_hostname}}/intermediate.key"
+      flat: yes
+    when: protocol==HTTPS
+
+  - name: Fetch localhost key from caddy
+    fetch:
+      src: /data/caddy/certificates/local/localhost/localhost.key
+      dest: "{{inventory_hostname}}/localhost.key"
+      flat: yes
+    when: protocol==HTTPS
+
+  - name: Generate an OpenSSL Certificate Signing Request
+    community.crypto.openssl_csr_pipe:
+      privatekey_path: "{{ inventory_hostname }}/localhost.key"
+      organization_name: Abrahadabra
+      subject_alt_name: DNS:localhost,IP:{{ ansible_facts.default_ipv4.address }}
+      subject_alt_name_critical: yes
+      key_usage:
+        - digitalSignature
+      key_usage_critical: yes
+      extended_key_usage:
+        - clientAuth
+        - serverAuth
+      extended_key_usage_critical: yes
+    delegate_to: localhost
+    register: csr_result
+    when: protocol==HTTPS
+
+  - name: Generate an OpenSSL certificate signed with caddy intermediate certificate
+    community.crypto.x509_certificate:
+      path: "{{ inventory_hostname }}/localhost.crt"
+      csr_content: "{{ csr_result.csr }}"
+      ownca_path: "{{ inventory_hostname }}/intermediate.crt"
+      ownca_privatekey_path: "{{ inventory_hostname }}/intermediate.key"
+      provider: ownca
+    delegate_to: localhost
+    when: protocol==HTTPS
+
+  - name: Copy localhost cert to caddy
+    copy:
+      src: "{{inventory_hostname }}/localhost.crt"
+      dest: /data/caddy/certificates/local/localhost/localhost.crt
+    notify: restart Caddy
+    when: protocol==HTTPS
+
+  handlers:
+
+  - name: restart Caddy
+    uri:
+      method: POST
+      url: http://localhost:2019/stop
+      status_code: [200, 201, 409]
+
