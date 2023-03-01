@@ -12,5 +12,5 @@ USER mockoon
 
 EXPOSE 3003
 RUN ls
-RUN echo xxxxxxx
+
 ENTRYPOINT ["/entrypoint.sh"]
