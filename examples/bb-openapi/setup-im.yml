@@ -2,14 +2,19 @@
 - hosts: ss_servers
   connection: community.docker.docker
 
-  #vars_files: vars_with_secret.yml
+  vars_files:
+    - vars.yml
+    - vault.yml
   vars:
-    user: xrd
-    password: secret
     apikey: "{{ apikey_json['key'] }}"
-    protocol: HTTP
+    repo_name: "{{ lookup('ansible.builtin.env', 'BB_REPOSITORY_NAME') }}"
 
   tasks:
+
+  - name: Change Security Server UI password
+    user:
+      name: xrd
+      password: "{{ password | password_hash }}"
 
   - name: Get the cert from github
     community.crypto.get_certificate:
@@ -24,7 +29,7 @@
       name: im_caddy_1
     delegate_to: localhost
     register: caddy_info_result
-    when: protocol=='HTTPS'
+    when: protocol=='https'
 
   - name: Get TLS cert from caddy
     community.crypto.get_certificate:
@@ -33,13 +38,13 @@
     delegate_to: localhost
     run_once: true
     register: caddy_cert
-    when: protocol=='HTTPS'
+    when: protocol=='https'
 
   - name: Output result
     debug:
       var: caddy_cert
       verbosity: 2
-    when: protocol=='HTTPS'
+    when: protocol=='https'
 
   - name: Create API key
     uri:
@@ -67,6 +72,14 @@
     ansible.builtin.set_fact:
       apikey_json: "{{ apikey_result.stdout | from_json }}"
 
+  - name: Clone {{ repo_name }} repo
+    git:
+      repo: https://github.com/GovStackWorkingGroup/{{ repo_name }}.git
+      dest: "{{ repo_name }}"
+      force: yes
+    delegate_to: localhost
+    run_once: true
+
   - name: Register github cert as service TLS cert
     uri:
       method: POST
@@ -84,14 +97,14 @@
       var: cert_registration_result
       verbosity: 2
 
-  - name: Set internal server connection protocol to HTTP/HTTPS
+  - name: Set internal server connection protocol to http/https
     uri:
       method: PATCH
       url: https://localhost:4000/api/v1/clients/CS:ORG:1111:TestService
       headers:
         authorization: X-Road-ApiKey token={{ apikey }}
       body:
-        connection_type: "{{ protocol }}"
+        connection_type: "{{ protocol | upper }}"
       body_format: json
       status_code: [200, 201]
       validate_certs: no
@@ -102,25 +115,24 @@
       var: service_https_result
       verbosity: 2
 
-  - name: Register services described in BB
+  - name: Register services described in {{ repo_name }}
     uri:
       method: POST
       url: https://localhost:4000/api/v1/clients/CS:ORG:1111:TestService/service-descriptions
       headers:
         authorization: X-Road-ApiKey token={{ apikey }}
-      body: '{{ api_body | to_json }}'
+      body:
+        url: https://raw.githubusercontent.com/GovStackWorkingGroup/{{ repo_name }}/main/api/{{ api_name }}
+        rest_service_code: "{{ api_name }}"
+        ignore_warnings: false
+        type: OPENAPI3
       body_format: json
       status_code: [200, 201]
       validate_certs: no
     vars:
       api_name: "{{ item | basename }}"
-      api_body:
-          url: https://raw.githubusercontent.com/GovStackWorkingGroup/bb-workflow/main/api/{{ api_name }}
-          rest_service_code: "{{ api_name }}"
-          ignore_warnings: false
-          type: OPENAPI3
-    # loop over API description filenames in BB repo
-    with_fileglob: "../../api/*"
+    # loop over API description filenames in {{ repo_name }} repo
+    with_fileglob: "{{ repo_name }}/api/*"
     register: registration_result
 
   - name: Output result
@@ -128,21 +140,19 @@
       var: registration_result
       verbosity: 2
 
-  - name: Set service URL of registered services
+  - name: Set server URL of registered services
     uri:
       method: PATCH
       url: https://localhost:4000/api/v1/services/CS:ORG:1111:TestService:{{ item[0].service_code }}
       headers:
         authorization: X-Road-ApiKey token={{ apikey }}
-      body: '{{ api_body | to_json }}'
-      body_format: json
-      status_code: [200, 201, 400]
-      validate_certs: no
-    vars:
-      api_body:
+      body:
         url: "{{ protocol }}://caddy"
         timeout: 60
-        ssl_auth: false
+        ssl_auth: "{{ protocol=='https' }}"
+      body_format: json
+      status_code: [200, 201]
+      validate_certs: no
     loop: "{{ registration_result.results | map(attribute='json') | map(attribute='services') }}"
     register: setting_result
 
@@ -162,20 +172,20 @@
       status_code: [200, 201, 409]
       validate_certs: no
     register: caddy_registration_result
-    when: protocol=='HTTPS'
+    when: protocol=='https'
 
   - name: Output result
     debug:
       var: caddy_registration_result
       verbosity: 2
-    when: protocol=='HTTPS'
+    when: protocol=='https'
 
   - name: Enable all just registered services
     uri:
       method: PUT
       url: https://localhost:4000/api/v1/service-descriptions/{{ item }}/enable
       headers:
-              authorization: X-Road-ApiKey token={{ apikey }}
+        authorization: X-Road-ApiKey token={{ apikey }}
       status_code: [200, 201]
       validate_certs: no
     loop: "{{ registration_result.results | map(attribute='json') | map(attribute='id') }}"
@@ -186,19 +196,17 @@
       var: enabling_result
       verbosity: 2
 
-  - name: Set member client protocol to HTTP/HTTPS
+  - name: Set member client protocol to http/https
     uri:
       method: PATCH
       url: https://localhost:4000/api/v1/clients/CS:ORG:1111
       headers:
         authorization: X-Road-ApiKey token={{ apikey }}
-      body: '{{ api_body | to_json }}'
+      body:
+        connection_type: "{{ protocol | upper }}"
       body_format: json
       status_code: [200, 201]
       validate_certs: no
-    vars:
-      api_body:
-        connection_type: "{{ protocol }}"
     register: sethttp_result
 
   - name: Output result
@@ -212,14 +220,12 @@
       url: https://localhost:4000/api/v1/clients/CS:ORG:1111:TestService/service-clients/CS:ORG:1111:TestClient/access-rights
       headers:
         authorization: X-Road-ApiKey token={{ apikey }}
-      body: '{{ api_body | to_json }}'
+      body:
+        items:
+          - service_code: "{{ item[0].service_code }}"
       body_format: json
       status_code: [200, 201]
       validate_certs: no
-    vars:
-      api_body:
-        items:
-          - service_code: "{{ item[0].service_code }}"
     loop: "{{ registration_result.results | map(attribute='json') | map(attribute='services') }}"
     register: rights_result
 

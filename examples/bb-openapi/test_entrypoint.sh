@@ -11,6 +11,10 @@ echo "Ready. Continuing with setup"
 # Fix Caddy cert issue
 ansible-playbook fix-caddy-cert.yml -i inventory-docker.yml
 
+set -a
+. .env
+set +a
+
 # Initialize IM security server
-ansible-playbook setup-im.yml -i inventory-docker.yml
+ansible-playbook setup-im.yml -i inventory-docker.yml --ask-vault-pass
 echo "IM initialization finished"

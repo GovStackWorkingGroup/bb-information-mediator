@@ -2,11 +2,9 @@
 - hosts: caddy_servers
   connection: community.docker.docker
 
+  vars_files: vars.yml
   vars:
-    user: xrd
-    password: secret
-    apikey: "{{ apikey_json['key'] }}"
-    protocol: HTTP
+    ansible_python_interpreter: auto_silent
 
   tasks:
 
@@ -15,21 +13,21 @@
       src: /data/caddy/pki/authorities/local/intermediate.crt
       dest: "{{inventory_hostname}}/intermediate.crt"
       flat: yes
-    when: protocol==HTTPS
+    when: protocol=='https'
 
   - name: Fetch intermediate key from caddy
     fetch:
       src: /data/caddy/pki/authorities/local/intermediate.key
       dest: "{{inventory_hostname}}/intermediate.key"
       flat: yes
-    when: protocol==HTTPS
+    when: protocol=='https'
 
   - name: Fetch localhost key from caddy
     fetch:
       src: /data/caddy/certificates/local/localhost/localhost.key
       dest: "{{inventory_hostname}}/localhost.key"
       flat: yes
-    when: protocol==HTTPS
+    when: protocol=='https'
 
   - name: Generate an OpenSSL Certificate Signing Request
     community.crypto.openssl_csr_pipe:
@@ -46,7 +44,7 @@
       extended_key_usage_critical: yes
     delegate_to: localhost
     register: csr_result
-    when: protocol==HTTPS
+    when: protocol=='https'
 
   - name: Generate an OpenSSL certificate signed with caddy intermediate certificate
     community.crypto.x509_certificate:
@@ -56,14 +54,14 @@
       ownca_privatekey_path: "{{ inventory_hostname }}/intermediate.key"
       provider: ownca
     delegate_to: localhost
-    when: protocol==HTTPS
+    when: protocol=='https'
 
   - name: Copy localhost cert to caddy
     copy:
       src: "{{inventory_hostname }}/localhost.crt"
       dest: /data/caddy/certificates/local/localhost/localhost.crt
     notify: restart Caddy
-    when: protocol==HTTPS
+    when: protocol=='https'
 
   handlers:
 
