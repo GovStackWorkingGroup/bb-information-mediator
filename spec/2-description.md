@@ -1,10 +1,10 @@
 # 2 Description
 
-The functional requirements section lists the technical capabilities that this building block should have. These requirements should be suﬃcient to deliver all functionality that is listed in the Key Digital Functionalities section.
+The functional requirements section lists the technical capabilities that this Building Block should have. These requirements should be suﬃcient to deliver all functionality that is listed in the [Key Digital Functionalities section](4-key-digital-functionalities.md).
 
-The information mediator (IM) building block (BB) provides a gateway for exchange of data and services among GovStack Building blocks through open-API rest based interfaces to ensure interoperability and implementation of standards. The IM provides mechanisms for applications/BBs to publish and consume services and event notifications among other GovStack BBs.
+The Information Mediator Building Blocking provides a gateway for exchange of data and services among GovStack Building Blocks through open-API rest-based interfaces to ensure interoperability and implementation of standards. The Information Mediator provides mechanisms for applications/Building Blocks to publish and consume services and event notifications among other GovStack Building Blocks.
 
-IM services act as a channel through which BBs and external applications can connect to services exposed by other BBs such as registry services, identity services and payment services. The IM BB provides a second service, as a broadcasting channel for notification of events among the connected applications in a publisher-subscriber (PubSub) model. The IM BB also maintains a log of transactions (e.g., requests, events), as well as handling communication errors between BBs and/or other applications via the PubSub service. This component may employ other core components, such as registries, repositories, etc. By allowing different applications to exchange information, it can act as a mechanism to encourage or enforce best practices, data standards around PubSub, and data-sharing policies in cross-facility work-flows among business processes.
+Information Mediator services act as a channel through which Building Blocks and external applications can connect to services exposed by other Building Blocks such as registry services, identity services, and payment services. The Information Mediator Building Blocking provides a second service, as a broadcasting channel for notification of events among the connected applications in a publisher-subscriber (PubSub) model.  And also maintains a log of transactions (e.g., requests, events), as well as handling communication errors between Building Blocks and/or other applications via the PubSub service. This component may employ other core components, such as registries, repositories, etc. By allowing different applications to exchange information, it can act as a mechanism to encourage or enforce best practices, data standards around PubSub, and data-sharing policies in cross-facility workflows among business processes.
 
 ## **2.1 Use Case Applicability**
 
@@ -12,9 +12,9 @@ The Information Mediator, through the “Service Access Layer” and the “Pubs
 
 ## **2.2 What Is Out of Scope**
 
-The IM BB does NOT handle communication between human users and applications.
+The Information Mediator Building Blocking does NOT handle communication between human users and applications.
 
-The IM BB does NOT handle ingress and egress access from external applications to and from GovStack’s internal components. (This may be handled by a public API Gateway in the domain of the Security BB.)
+The Information Mediator Building Blocking does NOT handle ingress and egress access from external applications to and from GovStack’s internal components (This may be handled by a public API Gateway in the domain of the Security Building Block).
 
 ## **2.3 Future Scope**
 

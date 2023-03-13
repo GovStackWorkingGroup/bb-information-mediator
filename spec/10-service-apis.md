@@ -1,13 +1,13 @@
 # 10 Service APIs
 
-This section describes external APIs that must be implemented by the IM building block. Additional APIs may be implemented by the building block (all APIs must adhere to the standards and protocols defined), but the listed APIs define a minimal set that must be provided by any implementation.
+This section describes external APIs that must be implemented by the Information Mediator Building Block. Additional APIs may be implemented by the Building Block (all APIs must adhere to the standards and protocols defined), but the listed APIs define a minimal set that must be provided by any implementation.
 
-The majority of functions provided by the IM building block are either defined in the “service access flow” or configured by the administrator via the web UI. There is, however, a “Directory Service” which can provide listings of clients, methods, and available API specs for services on the information mediator. The directory is managed by admins of members. The directory service centralizes and offers knowledge of all enrolled members and their services along with information necessary to bind a third party application as a consumer of that service. These services are described here:
+The majority of functions provided by the Information Mediator Building Block are either defined in the “service access flow” or configured by the administrator via the web User Interface. There is, however, a “Directory Service” which can provide listings of clients, methods, and available API specifications for services on the Information Mediator. The directory is managed by admins of members. The directory service centralizes and offers knowledge of all enrolled members and their services along with information necessary to bind a third-party application as a consumer of that service. These services are described here:
 
-* [https://github.com/GovStackWorkingGroup/bb-information-mediator/blob/main/api/govstack\_im\_service\_metadata\_api-0.3-swagger.json](../api/govstack\_im\_service\_metadata\_api-0.3-swagger.json)
+* [API metadata](../api/govstack\_im\_service\_metadata\_api-0.3-swagger.json)
 
 and changes to the API definitions can be made by submitting a pull request on this repository.[\
-](https://github.com/GovStackWorkingGroup/BuildingBlockAPI/blob/main/IM/govstack\_im\_service\_metadata\_api-0.3-swagger.jsonhttps://github.com/GovStackWorkingGroup/BuildingBlockAPI/tree/main/IM)The Swagger variant is available here: [https://app.swaggerhub.com/apis/GovStack/gov-stack\_im\_service\_metadata\_api/0.3](https://app.swaggerhub.com/apis/GovStack/gov-stack\_im\_service\_metadata\_api/0.3)
+](https://github.com/GovStackWorkingGroup/BuildingBlockAPI/blob/main/IM/govstack\_im\_service\_metadata\_api-0.3-swagger.jsonhttps://github.com/GovStackWorkingGroup/BuildingBlockAPI/tree/main/IM)The [Swagger variant](https://app.swaggerhub.com/apis/GovStack/gov-stack\_im\_service\_metadata\_api/0.3) is available.&#x20;
 
 The services can be accessed via the following Service APIs:
 
@@ -25,7 +25,7 @@ The response is an **array of organizations** with descriptions.
 
 At development time, an administrator at application A sends a GET request to the security server: <mark style="background-color:purple;">url-of-local-information-mediator-security-server</mark>/r1/<mark style="background-color:orange;">INDIA</mark>/<mark style="background-color:blue;">GOV/MEMBER</mark>/<mark style="background-color:green;">APPLICATION</mark>/<mark style="background-color:yellow;">{listMethods || allowedMethods}</mark>
 
-The response is an **array of services** (either all services, or services that the requester is authorized to access via “allowedMethods”).
+The response is an **array of services** (either all services or services that the requester is authorized to access via “allowedMethods”).
 
 {% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/BuildingBlockAPI/main/IM/govstack_im_service_metadata_api-0.3-swagger.json" path="/{GovStackInstance}/{memberClass}/{memberCode}/{applicationCode}/listMethods" method="get" %}
 [https://raw.githubusercontent.com/GovStackWorkingGroup/BuildingBlockAPI/main/IM/govstack_im_service_metadata_api-0.3-swagger.json](https://raw.githubusercontent.com/GovStackWorkingGroup/BuildingBlockAPI/main/IM/govstack_im_service_metadata_api-0.3-swagger.json)
@@ -39,7 +39,7 @@ The response is an **array of services** (either all services, or services that 
 
 At development time, to learn about an available service, an administrator at application A sends a GET request to the security server: <mark style="background-color:purple;">url-of-local-information-mediator-security-server</mark>/r1/<mark style="background-color:orange;">INDIA</mark>/<mark style="background-color:blue;">GOV/MEMBER</mark>/<mark style="background-color:green;">APPLICATION</mark>/<mark style="background-color:yellow;">getOpenApi</mark>?serviceCode=SERVICE
 
-The response is an **OpenAPI specification**, detailing the endpoints and requirements for that service/API of requested Service of Application.
+The response is an **OpenAPI specification**, detailing the endpoints and requirements for that service/API of the requested Service of Application.
 
 {% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/BuildingBlockAPI/main/IM/govstack_im_service_metadata_api-0.3-swagger.json" path="/{GovStackInstance}/{memberClass}/{memberCode}/{applicationCode}/getOpenAPI" method="get" %}
 [https://raw.githubusercontent.com/GovStackWorkingGroup/BuildingBlockAPI/main/IM/govstack_im_service_metadata_api-0.3-swagger.json](https://raw.githubusercontent.com/GovStackWorkingGroup/BuildingBlockAPI/main/IM/govstack_im_service_metadata_api-0.3-swagger.json)
@@ -47,13 +47,13 @@ The response is an **OpenAPI specification**, detailing the endpoints and requir
 
 ## 10.4 Reporting API
 
-At debugging time, to learn about system performance or retrieve an audit log, an administrator may send a request to the reporting API.
+At the debugging time, to learn about system performance or retrieve an audit log, an administrator may send a request to the reporting API.
 
 The response is \<audit trail>, \<metrics>, etc.
 
 ## 10.5 Service Access API
 
-At debugging time, to learn about system performance or retrieve an audit log, an administrator may send a request to the reporting API.
+At the debugging time, to learn about system performance or retrieve an audit log, an administrator may send a request to the reporting API.
 
 The response is `<audit trail>`, `<metrics>`, etc.
 

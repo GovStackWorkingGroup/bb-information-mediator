@@ -6,11 +6,11 @@ The detailed flows section is a description of how various clients (members, app
 
 ### 14.1.1 Registering a Member
 
-A “member” on the <mark style="background-color:purple;">information mediator</mark> (e.g. “<mark style="background-color:blue;">Ministry of Agriculture</mark>”) is the organization (maybe with their own network) which runs a number of applications (e.g., “<mark style="background-color:green;">Market Linkage</mark>”, “Rural Agricultural Advisory Services”) which have their own services (e.g., “/api/refer :: Create Education Referral Webservice”, “<mark style="background-color:red;">/api/inventory-service :: Update Market Inventory</mark>”).
+A “member” of the <mark style="background-color:purple;">information mediator</mark> (e.g. “<mark style="background-color:blue;">Ministry of Agriculture</mark>”) is an organization (maybe with their own network) that runs a number of applications (e.g., “<mark style="background-color:green;">Market Linkage</mark>”, “Rural Agricultural Advisory Services”) that have their own services (e.g., “/api/refer :: Create Education Referral Webservice”, “<mark style="background-color:red;">/api/inventory-service :: Update Market Inventory</mark>”).
 
 ### 14.1.2 Security Server Client States <a href="#docs-internal-guid-9b3ae46c-7fff-b8c0-13dc-b063ccee2b16" id="docs-internal-guid-9b3ae46c-7fff-b8c0-13dc-b063ccee2b16"></a>
 
-The security server client registration passes following states:
+The security server client registration passes the following states:
 
 ![Source in github: https://github.com/GovStackWorkingGroup/BuildingBlockAPI/blob/main/IM/diagrams/state-machine-diagram-for-registration-requests.png](<.gitbook/assets/dd1 (1).png>)
 
@@ -20,9 +20,9 @@ The security server client registration passes following states:
 
 Follow these steps.
 
-1. There is a formal business/legal process which is a precondition for adding a new “client” (Security Server)
+1. There is a formal business/legal process that is a precondition for adding a new “client” (Security Server)
    1. It is never one person simply adding a new app or service by their own will. A traceable formal request from an authorized authority of the entity to register this application/service into IM will be there.
-   2. This request will need approval from the IM governance authorized person, before it gets into the system. The request and approval documents may be by email or hard copy. In either case a copy of those documents must be mandatory attachments to this registration/registration process of members, apps, services.
+   2. This request will need approval from the IM governance authorized person before it gets into the system. The request and approval documents may be by email or hard copy. In either case a copy of those documents must be mandatory attachments to this registration/registration process of members, apps, services.
    3. Once the formal approval is acquired and properly documented, the technical steps (carried out by an authorized system administrator) are outlined below.
 2. In the **CLIENTS** view, click **ADD CLIENT**.
 3. In the wizard that opens
@@ -213,7 +213,7 @@ X-GovStack-Issue: MT324223MSD
 
 **User defined headers**
 
-User defined HTTP headers (i.e. the headers not mentioned in \[[https://en.wikipedia.org/wiki/List\_of\_HTTP\_header\_fields](https://en.wikipedia.org/wiki/List\_of\_HTTP\_header\_fields)] or this document) MUST be passed to the recipient unmodified by Security Server.\
+User-defined HTTP headers (i.e. the headers not mentioned in \[[https://en.wikipedia.org/wiki/List\_of\_HTTP\_header\_fields](https://en.wikipedia.org/wiki/List\_of\_HTTP\_header\_fields)] or this document) MUST be passed to the recipient unmodified by Security Server.\
 X-Powered-By: PHP/5.2.17
 
 X-Pingback: https://example.com/xmlrpc.php
