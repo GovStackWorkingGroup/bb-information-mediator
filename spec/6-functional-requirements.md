@@ -6,8 +6,6 @@ These functional requirements do not define specific APIs - they provide a list 
 
 ## **6.1 Service Access Layer**
 
-![(github repo / image - link)](.gitbook/assets/j2.png)
-
 ### **6.1.1 Administrative Interface**
 
 1. There must be an administrative portal that allows an Information Mediator administrator (with appropriate authentication) to register/deregister members, applications, and services.
@@ -17,61 +15,45 @@ These functional requirements do not define specific APIs - they provide a list 
 
 ### **6.1.2 Administrative User Roles**
 
-1. There must be different types of administrative roles that provide different levels of access:
-   * System Administrator — is responsible for the installation, configuration, and maintenance of the Building Block.
-   * Service Administrator — determine which services are available and what are the access rights.
-   * Security officer — must be able to manage key settings, keys, and certificates.
-   * Registration Officer – registration/removal of members/applications
-   * PubSub manager — must be able to manually add/remove PubSub subscriptions and manage PubSub event “types” (with associated formats/standards).
-   * Observer - can view the status of the security server without having access rights to edit the configuration.
+1. There must be different types of administrative roles that provide different levels of access.
 
 ### **6.1.3 Registration**
 
 1. Registering a **member/organization** requires:
-   * That the new **member** provides:
-     * [ ] Organization Name (entity that may provide or consume services of Information Mediator Building Block or its member applications)
-     * [ ] Certificate of member/organization signing key issued by Certificate Authority which is trusted by the state (e.g., In Estonia, the “Estonian CA” keeps a list of valid certificates)
-     * [ ] Access to signing key (HSM or Token storing a private key)
-     * [ ] The public IP address of this security server
+   * That the new **member** provides details for registration.
    * That the **administrator** verifies and accepts the request for registration.
-2. Registering an **application** (All applications have their own TLS certificate) requires:
-   * That the new **member** provides:
-     * [ ] Application Name
-     * [ ] Certificate of transport key of an application (all subsequent requests will use the private key associated with this certificate to secure connection
-     * [ ] \*\*Note that when configuring the application to interact with the Information Mediator, the public certificate of the Information Mediator (which is made available) must be added to a list of known/trusted certificates of the application.
+2. Registering an **application** requires:
+   * That the new **member** provides details for registration.
    * That the **administrator** verifies and accepts the request for registration.
 3. Registering a **service** requires (in terms of API endpoints):
    * That the owner of the application provides:
-     * [ ] OpenAPI 3.0 specification document (i.e., includes base paths like “/api/patients”, “/api/visits”, etc.)
-     * [ ] Description
-     * [ ] List of enabled endpoints of OpenAPI spec (the requirement is that we can enable/disable endpoints)
+     * OpenAPI 3.0 specification document (i.e., includes base paths like “/api/patients”, “/api/visits”, etc.)
+     * Description
+     * List of enabled endpoints of OpenAPI spec (the requirement is that we can enable/disable endpoints)
 4. Managing a list of **allowed consumers for services** requires:
    * Application developers MAY access the directory service (described below) to select the services that they want to consume.
    * The request/approval/addition of allowed consumers process is a business-first process with manual steps (The hard part is negotiating data sharing agreements and signing contracts when that is completed the Information Mediator administrator can easily modify the allowed consumers' list manually).
    * An application must specify which member/application/service they want to access.
    * The provider of that service must decide if the consumer is allowed to.
    * Once approved, the requesting application will be added to the list of allowed applications for the requested service.
-     * [ ] The list of consuming applications may change.
-     * [ ] When the service is first designed and made available, there may be no consumers on the access list.
-     * [ ] When a consumer decides that they want to access a service, if it is determined allowable they must be added to this list.
 
 ### **6.1.4 Accessing Services**
 
 1. To make a request to another service via the Information Mediator, an application **MUST**:
    * Using REST, make a valid HTTPS request to the local Information Mediator security server with headers that identifies itself at the application level.
-   *   The components of the request must be:
+   *   The components of the request must be (with color code):
 
-       * [ ] Security server URL
-       * [ ] API version
-       * [ ] Instance (e.g., Country)
-       * [ ] Domain of member
-       * [ ] Member (e.g., Ministry of X)
-       * [ ] Application
-       * [ ] Service (OpenAPI file)
-       *   [ ] Path
+       * <mark style="background-color:purple;">Security server URL</mark>
+       * API version
+       * <mark style="background-color:orange;">Instance (e.g., Country)</mark>
+       * <mark style="background-color:blue;">Domain of member</mark>
+       * <mark style="background-color:blue;">Member (e.g., Ministry of X)</mark>
+       * <mark style="background-color:green;">Application</mark>
+       * <mark style="background-color:red;">Service (OpenAPI file)</mark>
+       * <mark style="background-color:yellow;">Path</mark>
 
-           * Endpoint
-           * Query parameters
+           * <mark style="background-color:yellow;">Endpoint</mark>
+           * <mark style="background-color:yellow;">Query parameters</mark>
 
            ***
 
@@ -85,27 +67,16 @@ These functional requirements do not define specific APIs - they provide a list 
        _With body_: {“qtyAvailable”: 4}\
        _Response_: { result: “Stock level report created.” }\
        \
-       _How to interpret the above request paths:_\
+       _How to interpret the above request paths:_\V
        <mark style="background-color:purple;">SECURITY-SERVER-URL</mark>/r1/<mark style="background-color:orange;">INSTANCE</mark>/<mark style="background-color:blue;">DOMAIN/MEMBER</mark>/<mark style="background-color:green;">APPLICATION</mark>/<mark style="background-color:red;">SERVICE</mark>/<mark style="background-color:yellow;">PATH</mark>
-   * Note that all applications are making requests to the security server, which runs on their own network, rather than making requests to other applications directly over the public internet. (This is one of the main points of the security server and Information Mediator architecture.)
-2. The Information Mediator signs & sends the request from application A to the security server for application B.
-   * Replace: “<mark style="background-color:purple;">url-of-local-information-mediator-security-server</mark>/r1/<mark style="background-color:orange;">INDIA</mark>” `with “https://api.moh.kn.in/security-server`”, for example.
-   * The payload includes: /<mark style="background-color:blue;">GOV/ministry-of-agriculture-karnataka</mark>/<mark style="background-color:green;">market-linkages-app</mark>/<mark style="background-color:red;">inventory-service</mark>/v1/<mark style="background-color:yellow;">check-level/apples?fresh=true</mark>
-3. Security server for application B receives the request and validates the signature then forwards it to the application/service/endpoint.
-4. The application/service/endpoint responds to this GET with { “status”: 200, “body”: { “apples”: 47 } }
-5. Security server for application B signs the response and sends it back to the security server for application A.
-6. Security server for application A validates the signature and forwards the response to application A.
-7. Note that this is all synchronous. Application A’s GET request is open/unresponded-to until step 6.
+   * Note that all applications are making requests to the security server, which runs over the private network segment, rather than making requests to other applications directly over the public internet. (This is one of the main points of the security server and Information Mediator architecture.)
 
 ### **6.1.5 Directory Service**
 
-1. At development time, to see which organizations are available on GovStack, the administrator of application A sends a GET request to the security server: <mark style="background-color:purple;">url-of-security-server</mark>/<mark style="background-color:yellow;">listClients</mark>\[?instanceId=<mark style="background-color:orange;">INDIA</mark>]
-   * Response is an array of organizations with descriptions.
-   * Parameter instanceId is needed only if a federated GovStack ecosystem is requested.
-2. At development time, to learn which applications are available, the administrator/developer at application A sends a GET request to the security server <mark style="background-color:purple;">url-of-security-server</mark>/r1/<mark style="background-color:orange;">INDIA</mark>/<mark style="background-color:blue;">GOV/MEMBER</mark>/<mark style="background-color:green;">APPLICATION</mark>/<mark style="background-color:yellow;">{listMethods || allowedMethods}</mark>
-   * Response is an array of services (either all services, or services that the requester is authorized to access via “allowedMethods”).
-3. At development time, to learn about an available service, administrator at application A sends a GET request to the security server: <mark style="background-color:purple;">url-of-security-server</mark>/r1/<mark style="background-color:orange;">INDIA</mark>/<mark style="background-color:blue;">GOV/MEMBER</mark>/<mark style="background-color:green;">APPLICATION</mark>/<mark style="background-color:yellow;">getOpenApi</mark>?serviceCode=<mark style="background-color:red;">SERVICE</mark>
-   * Response is an OpenAPI specification, detailing the endpoints and requirements for that service/API.
+1. At development time, to see which resources are available on GovStack, the administrator/developer of application A sends requests to the security server to see:
+   * organizations with descriptions;
+   * services (either all services, or services that the requester is authorized to access);
+   * an OpenAPI specification, detailing the endpoints and requirements for the service/API.
 4. A view layer allowing for easy exploration of ALL clients, applications, and services should be provided. (Note that, “under the hood”, this layer may make use of the APIs described above or be implemented via a separate API.)
 
 ## 6.2 Pub-Sub Layer
@@ -141,8 +112,8 @@ Any implementation of a PubSub layer is subjective—it will contain required sh
 8. The Room distributes an event as follows:
    * A reference to publisher and event id is added to the event dataset.
    * For each Subscriber:
-     * [ ] (alt) If the mode is ‘push’, make a POST call to Subscriber GovStack service of the event type;
-     * [ ] (alt) If the mode is ‘pull’, enqueue an event for request from the Subscriber;
+     * (alt) If the mode is ‘push’, make a POST call to Subscriber GovStack service of the event type;
+     * (alt) If the mode is ‘pull’, enqueue an event for request from the Subscriber;
        * There is a queue of events waiting to be processed per the Subscriber, such that the Subscriber might periodically check to see events waiting in their own queue, process those events, and clear the queue.
        * A pull mechanism is essential for resilience to network dropouts and traffic load balance at servers and for differentiating urgent/emergency events from normal events (this can be decided during implementation).
 9. (opt - if mode is PULL) The Subscriber pulls an event:
