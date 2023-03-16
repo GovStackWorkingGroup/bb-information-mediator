@@ -95,6 +95,20 @@
               "value": "^[a-zA-Z\\d]+$",
               "invert": false,
               "operator": "regex"
+            },
+            {
+              "target": "query",
+              "modifier": "serviceId",
+              "value": "^([a-zA-Z][a-zA-Z\\\\d_:\\\\-.]*)$",
+              "invert": false,
+              "operator": "equals"
+            },
+            {
+              "target": "header",
+              "modifier": "content-type",
+              "value": "application/json",
+              "invert": false,
+              "operator": "equals"
             }
           ],
           "rulesOperator": "AND",
