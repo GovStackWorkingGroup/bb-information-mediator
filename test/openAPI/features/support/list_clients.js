@@ -25,7 +25,17 @@ Given(
   () => 'User wants to retrieve the the list of Clients of GovStack'
 );
 
-When('User sends GET request', () => specListClients.get(baseUrl));
+When(
+  'User sends GET request with given {string} as serviceId, {string} as instanceId and header',
+  (serviceId, instanceId) =>
+    specListClients
+      .get(baseUrl)
+      .withHeaders('Accept', 'aplication/json')
+      .withQueryParams({
+        serviceId: serviceId,
+        instanceId: instanceId,
+      })
+);
 
 Then('User receives a response from the listClients endpoint', async () => {
   await specListClients.toss();
@@ -48,12 +58,13 @@ Then('The listClients endpoint response should match json schema', async () => {
   chai.expect(specListClients._response.json).to.be.jsonSchema(responseSchema);
 });
 
-// Scenario:Successfully retrieved the list of clients from GovStack with optional parameters in the request
+// Scenario: Successfully retrieved the list of clients from GovStack
 When(
-  'User provides optional query parameters {string} as serviceId, {string} as instanceId and optional header {string} as X-GovStack-Client',
-  (serviceId, instanceId, XGovStackClient) =>
+  'User sends GET request with given "<serviceId>" as serviceId, "<instanceId>" as instanceId and header',
+  (serviceId, instanceId) =>
     specListClients
-      .withHeaders('X-GovStack-Client', XGovStackClient)
+      .get(baseUrl)
+      .withHeaders('Accept', 'aplication/json')
       .withQueryParams({
         serviceId: serviceId,
         instanceId: instanceId,
