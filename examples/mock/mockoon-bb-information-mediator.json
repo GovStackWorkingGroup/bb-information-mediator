@@ -27,7 +27,7 @@
           "rules": [
             {
               "target": "header",
-              "modifier": "Accept",
+              "modifier": "content-type",
               "value": "application/json",
               "invert": false,
               "operator": "equals"
@@ -76,8 +76,8 @@
           "sendFileAsBody": false,
           "rules": [
             {
-              "target": "params",
-              "modifier": "GovStackInstance",
+              "target": "header",
+              "modifier": "",
               "value": "^([a-zA-Z][a-zA-Z\\d_:\\-.]*)$",
               "invert": false,
               "operator": "regex"

@@ -1,7 +1,7 @@
 @method=GET @endpoint=/listClients
 Feature: This endpoint is used to retrieve the list of clients from GovStack.
 
-  @smoke @unit @positive
+  @smoke
   Scenario: Successfully retrieved the list of clients from GovStack
 
     Given User wants to retrieve the the list of Clients of GovStack
@@ -9,6 +9,7 @@ Feature: This endpoint is used to retrieve the list of clients from GovStack.
     Then User receives a response from the listClients endpoint
     And The listClients endpoint response should be returned in a timely manner
     And The listClients endpoint response should have status 200
+    And The listClients endpoint response should have content-type header
     And The listClients endpoint response should match json schema
 
   @unit @positive
@@ -18,6 +19,7 @@ Feature: This endpoint is used to retrieve the list of clients from GovStack.
     Then User receives a response from the listClients endpoint
     And The listClients endpoint response should be returned in a timely manner
     And The listClients endpoint response should have status 200
+    And The listClients endpoint response should have content-type header
     And The listClients endpoint response should match json schema
 
     Examples: Valid data

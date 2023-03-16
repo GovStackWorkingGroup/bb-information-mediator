@@ -6,6 +6,7 @@ const {
   listClientsEndpoint,
   defaultExpectedResponseTime,
   responseSchema,
+  acceptHeader,
 } = require('./helpers/helpers');
 
 chai.use(require('chai-json-schema'));
@@ -30,7 +31,7 @@ When(
   (serviceId, instanceId) =>
     specListClients
       .get(baseUrl)
-      .withHeaders('Accept', 'aplication/json')
+      .withHeaders(acceptHeader.key, acceptHeader.value)
       .withQueryParams({
         serviceId: serviceId,
         instanceId: instanceId,
@@ -54,6 +55,15 @@ Then('The listClients endpoint response should have status 200', () => {
   specListClients.response().to.have.status(200);
 });
 
+Then(
+  'The listClients endpoint response should have content-type header',
+  () => {
+    specListClients
+      .response()
+      .should.have.header('content-type', acceptHeader.value);
+  }
+);
+
 Then('The listClients endpoint response should match json schema', async () => {
   chai.expect(specListClients._response.json).to.be.jsonSchema(responseSchema);
 });
@@ -64,7 +74,7 @@ When(
   (serviceId, instanceId) =>
     specListClients
       .get(baseUrl)
-      .withHeaders('Accept', 'aplication/json')
+      .withHeaders(acceptHeader.key, acceptHeader.value)
       .withQueryParams({
         serviceId: serviceId,
         instanceId: instanceId,
