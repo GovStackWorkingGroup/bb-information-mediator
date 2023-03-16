@@ -20,22 +20,19 @@ Before(endpointTag, () => {
   specListClients = spec();
 });
 
-// Scenario: Successfully retrieved the list of Clients of GovStack
+// Scenario: Successfully retrieved the list of Clients of GovStack smoke type test
 Given(
   'User wants to retrieve the the list of Clients of GovStack',
   () => 'User wants to retrieve the the list of Clients of GovStack'
 );
 
 When(
-  'User sends GET request with given {string} as serviceId, {string} as instanceId and header',
+  'User sends GET request with given {string} as serviceId, {string} as instanceId',
   (serviceId, instanceId) =>
-    specListClients
-      .get(baseUrl)
-      .withHeaders(acceptHeader.key, acceptHeader.value)
-      .withQueryParams({
-        serviceId: serviceId,
-        instanceId: instanceId,
-      })
+    specListClients.get(baseUrl).withQueryParams({
+      serviceId: serviceId,
+      instanceId: instanceId,
+    })
 );
 
 Then('User receives a response from the listClients endpoint', async () => {
@@ -56,11 +53,11 @@ Then('The listClients endpoint response should have status 200', () => {
 });
 
 Then(
-  'The listClients endpoint response should have content-type header',
+  'The listClients endpoint response should have content-type: application\\/json header',
   () => {
     specListClients
       .response()
-      .should.have.header('content-type', acceptHeader.value);
+      .should.have.header(acceptHeader.key, acceptHeader.value);
   }
 );
 
@@ -68,20 +65,9 @@ Then('The listClients endpoint response should match json schema', async () => {
   chai.expect(specListClients._response.json).to.be.jsonSchema(responseSchema);
 });
 
-// Scenario: Successfully retrieved the list of clients from GovStack
-When(
-  'User sends GET request with given "<serviceId>" as serviceId, "<instanceId>" as instanceId and header',
-  (serviceId, instanceId) =>
-    specListClients
-      .get(baseUrl)
-      .withHeaders(acceptHeader.key, acceptHeader.value)
-      .withQueryParams({
-        serviceId: serviceId,
-        instanceId: instanceId,
-      })
-);
+// Scenario Outline: Successfully retrieved the list of clients from GovStack
 
-// "Then" already written above
+// "When" and "Then" already written above
 
 After(endpointTag, () => {
   specListClients.end();
