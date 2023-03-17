@@ -17,7 +17,7 @@ const baseUrl = localhost + allowedMethodsEndpoint;
 const endpointTag = { tags: `@endpoint=/${allowedMethodsEndpoint}` };
 
 Before(endpointTag, () => {
-  specAllowedMethods = spec().inspect();
+  specAllowedMethods = spec();
 });
 
 // Scenario: Successfully retrieved the list of allowed REST services and endpoints for a service provider smoke type test
@@ -47,16 +47,15 @@ Then(
 
 Then(
   'The allowedMethods endpoint response should be returned in a timely manner',
-  () => {
+  () =>
     specAllowedMethods
       .response()
-      .to.have.responseTimeLessThan(defaultExpectedResponseTime);
-  }
+      .to.have.responseTimeLessThan(defaultExpectedResponseTime)
 );
 
-Then('The allowedMethods endpoint response should have status 200', () => {
-  specAllowedMethods.response().to.have.status(200);
-});
+Then('The allowedMethods endpoint response should have status 200', () =>
+  specAllowedMethods.response().to.have.status(200)
+);
 
 Then(
   'The allowedMethods endpoint response should have content-type: application\\/json header',
