@@ -14,6 +14,7 @@ Feature: This endpoint is used to retrieve the list of clients from GovStack.
 
   @unit @positive
   Scenario Outline: Successfully retrieved the list of clients from GovStack
+  
     Given User wants to retrieve the the list of Clients of GovStack
     When User sends GET request with given "<serviceId>" as serviceId, "<instanceId>" as instanceId
     Then User receives a response from the listClients endpoint
