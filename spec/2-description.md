@@ -1,3 +1,7 @@
+---
+description: This section provides context for this Building Block.
+---
+
 # 2 Description
 
 The functional requirements section lists the technical capabilities that this Building Block should have. These requirements should be suﬃcient to deliver all functionality that is listed in the [Key Digital Functionalities section](4-key-digital-functionalities.md).

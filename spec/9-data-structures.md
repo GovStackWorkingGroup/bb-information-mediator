@@ -1,4 +1,10 @@
-# 9 Data Structures
+---
+description: >-
+  This section provides information on the core data structures/data models that
+  are used by this Building Block.
+---
+
+# 7 Data Structures
 
 The resource model shows the relationship between data objects that are used by the Information Mediator Building Block.
 
@@ -16,11 +22,11 @@ The following standards are applicable to data structures in the Building Block:
 
 ### 9.2.1 Resource Model
 
-The Mediator Building Block key element is Service. The Service is used by a consuming Building Block or an application and offered by a provider building block or Application. Both Provider and Consumer MUST be Members of Mediator Building Block. Members of the mediator BB can be an organization (governmental or not, business or not) or a person (citizen as a rule).
+The Mediator Building Block key element is Service. The Service is used by a consuming Building Block or an application and offered by a provider Building Block or Application. Both Provider and Consumer MUST be Members of Mediator Building Block. Members of the Information Mediator Building Block can be an organization (governmental or not, business or not) or a person (citizen as a rule).
 
 ![Draw.io source in github: https://github.com/aleksander-reitsakas/InformationMediatorAPI/blob/main/IM/diagrams/Mediator-BB-entities.drawio.png.](<.gitbook/assets/Mediator-BB-entities.drawio (1).png>)
 
-To become a Member of Mediator Building Block participants must fulfill declared requirements and apply for onboarding. In the process of onboarding a Member is registered with Mediator Building Block and gets credentials to connect to Mediator Building Block. Normally it is done the way that a Member provides a certificate of recognized CA, and requests signed with this certificate are considered legitimate requests of the Member. A member entity can access the PubSub configuration and register a room to publish its own event type as a publisher through its own admin.
+To become a Member of Mediator Building Block participants must fulfill declared requirements and apply for onboarding. In the process of onboarding a Member is registered with Mediator Building Block and gets credentials to connect to Mediator Building Block. Normally it is done the way that a Member provides a certificate of recognized Certification Authority (CA), and requests signed with this certificate are considered legitimate requests of the Member. A member entity can access the PubSub configuration and register a room to publish its own event type as a publisher through its own admin.
 
 Members can browse a directory of Services available in the Mediator Building Block. Each service is described in OpenAPI.
 
