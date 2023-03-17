@@ -27,19 +27,18 @@ Given(
 );
 
 When(
-  'User sends GET request with given {string} as serviceId, required path params and header',
-  serviceId =>
+  'User sends GET request with given {string} as serviceId, {string} as GovStackInstance {string} as memberClass {string} as memberCode {string} as applicationCode',
+  (serviceId, GovStackInstance, memberClass, memberCode, applicationCode) =>
     specListMethods
       .get(baseUrl)
-      .withHeaders(acceptHeader.key, acceptHeader.value)
       .withQueryParams({
         serviceId: serviceId,
       })
       .withPathParams({
-        GovStackInstance: 'string',
-        memberClass: 'string',
-        memberCode: 'string',
-        applicationCode: 'string',
+        GovStackInstance: GovStackInstance,
+        memberClass: memberClass,
+        memberCode: memberCode,
+        applicationCode: applicationCode,
       })
 );
 
@@ -61,11 +60,11 @@ Then('The listMethods endpoint response should have status 200', () => {
 });
 
 Then(
-  'The listMethods endpoint response should have content-type header',
+  'The listMethods endpoint response should have content-type: application\\/json header',
   () => {
     specListMethods
       .response()
-      .should.have.header('content-type', acceptHeader.value);
+      .should.have.header(acceptHeader.key, acceptHeader.value);
   }
 );
 
@@ -73,26 +72,9 @@ Then('The listMethods endpoint response should match json schema', () => {
   chai.expect(specListMethods._response.json).to.be.jsonSchema(responseSchema);
 });
 
-// Successfully retrieved the list of REST services and endpoints for a service provider
-When(
-  'User sends GET request with given {string} as serviceId, {string} as GovStackInstance {string} as memberClass {string} as memberCode {string} as applicationCode',
-  (serviceId, GovStackInstance, memberClass, memberCode, applicationCode) => {
-    specListMethods
-      .get(baseUrl)
-      .withHeaders(acceptHeader.key, acceptHeader.value)
-      .withQueryParams({
-        serviceId: serviceId,
-      })
-      .withPathParams({
-        GovStackInstance: GovStackInstance,
-        memberClass: memberClass,
-        memberCode: memberCode,
-        applicationCode: applicationCode,
-      });
-  }
-);
+// Scenario Outline: Successfully retrieved the list of REST services and endpoints for a service provider
 
-// "Then" already written above
+// "When", "Then" already written above
 
 After(endpointTag, () => {
   specListMethods.end();
