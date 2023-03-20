@@ -1,11 +1,11 @@
 {
   "uuid": "a11d79ca-aee0-468b-92c0-e52293cf2b6f",
-  "lastMigration": 25,
+  "lastMigration": 27,
   "name": "Mockoon bb information mediator",
   "endpointPrefix": "",
   "latency": 0,
   "port": 3003,
-  "hostname": "0.0.0.0",
+  "hostname": "",
   "routes": [
     {
       "uuid": "b90a7160-a318-40b3-b216-bdebbc6f3551",
@@ -32,7 +32,8 @@
         }
       ],
       "enabled": true,
-      "responseMode": null
+      "responseMode": null,
+      "type": "http"
     },
     {
       "uuid": "224e9fd8-74f8-4ece-b11f-a8ebddea756a",
@@ -88,7 +89,8 @@
         }
       ],
       "enabled": true,
-      "responseMode": null
+      "responseMode": null,
+      "type": "http"
     },
     {
       "uuid": "8b7983c3-cab2-4499-80f4-4b2b27461bb6",
@@ -111,14 +113,14 @@
             {
               "target": "params",
               "modifier": "GovStackInstance",
-              "value": "^([a-zA-Z][a-zA-Z\\d_\\-.]*)$",
+              "value": "^([a-zA-Z][a-zA-Z\\d_:\\-.]*)$",
               "invert": false,
               "operator": "regex"
             },
             {
               "target": "params",
               "modifier": "memberClass",
-              "value": "^([a-zA-Z][a-zA-Z\\d_\\-.]*)$",
+              "value": "^([a-zA-Z][a-zA-Z\\d_:\\-.]*)$",
               "invert": false,
               "operator": "regex"
             },
@@ -135,6 +137,13 @@
               "value": "^[a-zA-Z\\d]+$",
               "invert": false,
               "operator": "regex"
+            },
+            {
+              "target": "query",
+              "modifier": "serviceId",
+              "value": "^([a-zA-Z][a-zA-Z\\d_:\\-.]*)$",
+              "invert": false,
+              "operator": "regex"
             }
           ],
           "rulesOperator": "AND",
@@ -144,7 +153,8 @@
         }
       ],
       "enabled": true,
-      "responseMode": null
+      "responseMode": null,
+      "type": "http"
     },
     {
       "uuid": "f76233cd-2ad3-4e58-a89d-9edcf614fdd2",
@@ -265,7 +275,8 @@
         }
       ],
       "enabled": true,
-      "responseMode": null
+      "responseMode": null,
+      "type": "http"
     }
   ],
   "proxyMode": false,
