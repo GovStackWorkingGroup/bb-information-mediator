@@ -92,7 +92,7 @@
             {
               "target": "query",
               "modifier": "serviceId",
-              "value": "^([a-zA-Z][a-zA-Z\\\\d_:\\\\-.]*)$",
+              "value": "^([a-zA-Z][a-zA-Z\\d_:\\-.]*)$",
               "invert": false,
               "operator": "equals"
             }
