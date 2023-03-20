@@ -35,35 +35,34 @@ When(
     })
 );
 
-Then('User receives a response from the listClients endpoint', async () => {
-  await specListClients.toss();
-});
+Then(
+  'User receives a response from the listClients endpoint',
+  async () => await specListClients.toss()
+);
 
 Then(
   'The listClients endpoint response should be returned in a timely manner',
-  () => {
+  () =>
     specListClients
       .response()
-      .to.have.responseTimeLessThan(defaultExpectedResponseTime);
-  }
+      .to.have.responseTimeLessThan(defaultExpectedResponseTime)
 );
 
-Then('The listClients endpoint response should have status 200', () => {
-  specListClients.response().to.have.status(200);
-});
+Then('The listClients endpoint response should have status 200', () =>
+  specListClients.response().to.have.status(200)
+);
 
 Then(
   'The listClients endpoint response should have content-type: application\\/json header',
-  () => {
+  () =>
     specListClients
       .response()
-      .should.have.header(acceptHeader.key, acceptHeader.value);
-  }
+      .should.have.header(acceptHeader.key, acceptHeader.value)
 );
 
-Then('The listClients endpoint response should match json schema', async () => {
-  chai.expect(specListClients._response.json).to.be.jsonSchema(responseSchema);
-});
+Then('The listClients endpoint response should match json schema', () =>
+  chai.expect(specListClients._response.json).to.be.jsonSchema(responseSchema)
+);
 
 // Scenario Outline: Successfully retrieved the list of clients from GovStack
 
