@@ -26,3 +26,17 @@ The cross-cutting requirements described in this section are an extension of the
 | Topic number in Security specs document | Name of requirement in arch document                                                                            | Remarks |
 | --------------------------------------- | --------------------------------------------------------------------------------------------------------------- | ------- |
 |                                         | MUST allow the provisioning/management of admin users via the SSO/IAM application specified by the Security BB. |         |
+
+## **5.3** Performance Requirements
+
+The Performance Requirements specify the basic parameters that an implementing government might use to establish performance requirements for scalability, throughput, and response times when reasonable/necessary. For example:
+
+* Minimum Throughput = 100 requests/sec
+* Maximum Latency = 1sec
+* Concurrency = 1000 concurrent requests
+* All solutions MUST be able to monitor and report, including but not limited to, resource consumption, throughput, latency, average latency, queue depth/backlogs, etc.
+  * All of these indicators MUST be available through an administrative API.
+  * Ideally, all Building Blocks should be able to run a “monitoring agent” which handles reporting out logs, requests, Building Block-specific indicators, etc. to a monitoring service (e.g., [Datadog](https://www.datadoghq.com/))
+  * The local monitoring agent should be configurable via web interface.
+* Retries and back-off strategies must be configurable.
+* Specific “[Scaling/Throughput](6-functional-requirements.md#6.5-scaling-throughput)” requirements are in the functional requirements section.
