@@ -1,50 +1,73 @@
+const chai = require('chai');
 const { spec } = require('pactum');
 const { Given, When, Then, Before, After } = require('@cucumber/cucumber');
-const { localhost, responseSchema } = require('./helpers/helpers');
+const {
+  localhost,
+  listClientsEndpoint,
+  defaultExpectedResponseTime,
+  responseSchema,
+  acceptHeader,
+} = require('./helpers/helpers');
+
+chai.use(require('chai-json-schema'));
 
 let specListClients;
 
-const baseUrl = `${localhost}listClients`;
+const baseUrl = localhost + listClientsEndpoint;
+const endpointTag = { tags: `@endpoint=/${listClientsEndpoint}` };
 
-Before(() => {
-  specListClients = spec().expectResponseTime(15000);
+Before(endpointTag, () => {
+  specListClients = spec();
 });
 
-// Scenario: Successfully retrieved the list of Clients of GovStack
+// Scenario: Successfully retrieved the list of Clients of GovStack smoke type test
 Given(
-  'Wants to retrieve the the list of Clients of GovStack',
-  () => 'No route parameters were specified'
-);
-
-When('The request to retrieve the list of Clients of GovStack is sent', () =>
-  specListClients.get(baseUrl)
-);
-
-Then('The operation returns the list of Clients of GovStack', async () => {
-  specListClients.expectStatus(200).expectJsonSchema(responseSchema);
-  await specListClients.toss();
-});
-
-// Scenario: Successfully retrieved the list of clients from GovStack with optional parameters in the request
-Given(
-  'Wants to retrieve the list of clients from GovStack with optional parameters specified',
-  () => 'Optional parameters for the route were specified'
+  'User wants to retrieve the the list of Clients of GovStack',
+  () => 'User wants to retrieve the the list of Clients of GovStack'
 );
 
 When(
-  'The request with optional parameters to retrieve the list of Clients of GovStack is sent',
-  () =>
-    specListClients
-      .get(baseUrl)
-      .withHeaders('X-GovStack-Client', 'string')
-      .withPathParams({
-        serviceId: 'string',
-        instanceId: 'string',
-      })
+  'User sends GET request with given {string} as serviceId, {string} as instanceId',
+  (serviceId, instanceId) =>
+    specListClients.get(baseUrl).withQueryParams({
+      serviceId: serviceId,
+      instanceId: instanceId,
+    })
 );
 
-// "Then" already written in line 83-86
+Then(
+  'User receives a response from the listClients endpoint',
+  async () => await specListClients.toss()
+);
 
-After(() => {
+Then(
+  'The listClients endpoint response should be returned in a timely manner',
+  () =>
+    specListClients
+      .response()
+      .to.have.responseTimeLessThan(defaultExpectedResponseTime)
+);
+
+Then('The listClients endpoint response should have status 200', () =>
+  specListClients.response().to.have.status(200)
+);
+
+Then(
+  'The listClients endpoint response should have content-type: application\\/json header',
+  () =>
+    specListClients
+      .response()
+      .should.have.header(acceptHeader.key, acceptHeader.value)
+);
+
+Then('The listClients endpoint response should match json schema', () =>
+  chai.expect(specListClients._response.json).to.be.jsonSchema(responseSchema)
+);
+
+// Scenario Outline: Successfully retrieved the list of clients from GovStack
+
+// "When" and "Then" already written above
+
+After(endpointTag, () => {
   specListClients.end();
 });

@@ -24,8 +24,23 @@
           "filePath": "",
           "databucketID": "",
           "sendFileAsBody": false,
-          "rules": [],
-          "rulesOperator": "OR",
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "serviceId",
+              "value": "^([a-zA-Z][a-zA-Z\\d_:\\-.]*)$",
+              "invert": false,
+              "operator": "regex"
+            },
+            {
+              "target": "query",
+              "modifier": "instanceId",
+              "value": "^([a-zA-Z][a-zA-Z\\d_:\\-.]*)$",
+              "invert": false,
+              "operator": "regex"
+            }
+          ],
+          "rulesOperator": "AND",
           "disableTemplating": false,
           "fallbackTo404": false,
           "default": true
@@ -54,8 +69,8 @@
           "sendFileAsBody": false,
           "rules": [
             {
-              "target": "params",
-              "modifier": "GovStackInstance",
+              "target": "header",
+              "modifier": "",
               "value": "^([a-zA-Z][a-zA-Z\\d_:\\-.]*)$",
               "invert": false,
               "operator": "regex"

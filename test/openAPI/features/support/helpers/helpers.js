@@ -1,5 +1,6 @@
 module.exports = {
   localhost: 'http://localhost:3366/',
+  listClientsEndpoint: 'listClients',
   getOpenApiEndpoint:
     '{GovStackInstance}/{memberClass}/{memberCode}/{applicationCode}/getOpenAPI',
   allowedMethodsEndpoint:

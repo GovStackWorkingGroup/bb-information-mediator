@@ -30,8 +30,8 @@ When(
 Then(
   'The operation returns the list of REST services and endpoints for a service provider',
   async () => {
-    specListMethods.expectStatus(200).expectJsonSchema(responseSchema);
     await specListMethods.toss();
+    specListMethods.expectStatus(200).expectJsonSchema(responseSchema);
   }
 );
 
