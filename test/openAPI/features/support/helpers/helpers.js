@@ -5,6 +5,8 @@ module.exports = {
     '{GovStackInstance}/{memberClass}/{memberCode}/{applicationCode}/getOpenAPI',
   allowedMethodsEndpoint:
     '{GovStackInstance}/{memberClass}/{memberCode}/{applicationCode}/allowedMethods',
+  listMethodsEndpoint:
+    '{GovStackInstance}/{memberClass}/{memberCode}/{applicationCode}/listMethods',
   defaultExpectedResponseTime: 15000,
   getOpenApiExpectedSchema: {
     type: 'string',
