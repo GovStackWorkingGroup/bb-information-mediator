@@ -69,13 +69,6 @@
           "sendFileAsBody": false,
           "rules": [
             {
-              "target": "header",
-              "modifier": "",
-              "value": "^([a-zA-Z][a-zA-Z\\d_:\\-.]*)$",
-              "invert": false,
-              "operator": "regex"
-            },
-            {
               "target": "params",
               "modifier": "memberClass",
               "value": "^([a-zA-Z][a-zA-Z\\d_:\\-.]*)$",
@@ -100,13 +93,6 @@
               "target": "query",
               "modifier": "serviceId",
               "value": "^([a-zA-Z][a-zA-Z\\\\d_:\\\\-.]*)$",
-              "invert": false,
-              "operator": "equals"
-            },
-            {
-              "target": "header",
-              "modifier": "content-type",
-              "value": "application/json",
               "invert": false,
               "operator": "equals"
             }

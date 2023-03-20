@@ -2,10 +2,10 @@
 Feature: This endpoint is used to list REST services and endpoints for a service provider.
 
   @smoke
-  Scenario: Successfully retrieved the list of REST services and endpoints for a service provider
+  Scenario: Successfully retrieved the list of REST services and endpoints for a service provider smoke type test
 
     Given Wants to retrieve the list of REST services and endpoints for a service provider
-    When User sends GET request with given "serviceId1" as serviceId, "identifier" as GovStackInstance "identifier" as memberClass "alp4aNum3r1c" as memberCode "alp4aNum3r1c" as applicationCode
+    When User sends GET request with given "serviceId1" as serviceId, "identifier" as GovStackInstance, "identifier" as memberClass, "alp4aNum3r1c" as memberCode, "alp4aNum3r1c" as applicationCode
     Then User receives a response from the listMethods endpoint
     And The listMethods endpoint response should be returned in a timely manner
     And The listMethods endpoint response should have status 200
@@ -16,7 +16,7 @@ Feature: This endpoint is used to list REST services and endpoints for a service
   Scenario Outline: Successfully retrieved the list of REST services and endpoints for a service provider
 
     Given Wants to retrieve the list of REST services and endpoints for a service provider
-    When User sends GET request with given "serviceId" as serviceId, "<GovStackInstance>" as GovStackInstance "<memberClass>" as memberClass "<memberCode>" as memberCode "<applicationCode>" as applicationCode
+    When User sends GET request with given "serviceId" as serviceId, "<GovStackInstance>" as GovStackInstance, "<memberClass>" as memberClass, "<memberCode>" as memberCode, "<applicationCode>" as applicationCode
     Then User receives a response from the listMethods endpoint
     And The listMethods endpoint response should be returned in a timely manner
     And The listMethods endpoint response should have status 200
