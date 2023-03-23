@@ -12,7 +12,7 @@ The [GovStack non-functional requirements document](https://govstack.gitbook.io/
 
 
 
-The majority of functions provided by the Information Mediator Building Block are either defined in the “service access flow” or configured by the administrator via the web User Interface. There is, however, a “Directory Service” which can provide listings of clients, methods, and available API specifications for services on the Information Mediator. The directory is managed by admins of members. The directory service centralizes and offers knowledge of all enrolled members and their services along with information necessary to bind a third-party application as a consumer of that service. These services are described here:
+The majority of functions provided by the Information Mediator Building Block are either defined in the “service access flow” or configured by the administrator via the web User Interface. There is, however, a “Directory Service” which can provide listings of clients, methods, and available API specifications for services on the Information Mediator. The directory is managed by admins of members. The directory service centralizes and offers knowledge of all enrolled members and their services along with the information necessary to bind a third-party application as a consumer of that service. These services are described here:
 
 * [API metadata](../api/govstack\_im\_service\_metadata\_api-0.3-swagger.json)
 
