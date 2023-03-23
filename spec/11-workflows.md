@@ -1,16 +1,46 @@
----
-description: >-
-  This section provides a detailed view of how this Building Block will interact
-  with other Building Blocks to support common use cases.
----
-
 # 9 Internal Workflows
 
 A workflow provides a detailed view of how the Information Mediator Building Block will interact with other building blocks to support common use cases. This section lists workflows that this building block must support. Other workflows may be implemented in addition to those listed.
 
-Note that for the Information Mediator, the primary workflow for the Service Access layer is specified in the “[Accessing Services](6-functional-requirements.md#6.1.4-accessing-services)” section above. The workflow for the “Pub/Sub layer” is outlined below.
+Note that for the Information Mediator, the primary workflow for the Service Access layer is specified in the “[Accessing Services](6-functional-requirements.md#6.1.4-accessing-services)” section above. The workflow for the “PubSub layer” is outlined below.
 
-## 11.1 Broadcast Data to Multiple Services <a href="#docs-internal-guid-911e5942-7fff-642b-4c6a-5b48f3133e80" id="docs-internal-guid-911e5942-7fff-642b-4c6a-5b48f3133e80"></a>
+### 11.1 Service Access Layer
+
+Sequence diagram for accessing service
+
+```mermaid
+sequenceDiagram
+participant Requestor﻿
+participant SS1 as IM Sequrity Server of Requestor
+participant CS as IM Central Server
+participant CA as CA
+participant TSA as TSA
+participant SS2 as IM Security Server of Responder
+participant Responder
+Requestor ->> SS1 : Message X
+SS1 ->> CS : read configuration*
+CS -->> SS1 : GovStack configuration
+SS1 ->> SS1 : find Responder
+SS1 ->> SS2 : Initiate TLS connection*
+SS2 ->> SS1 : Responder cert
+SS1 ->> CA : OCSP check Responder cert*
+CA -->> SS1 : yes/no
+SS1 ->> SS1 : compose digital document containing "Message X"
+SS1 ->> TSA : stamp document
+TSA -->> SS1: timestamp
+SS1 ->> SS1 : sign document
+SS1 ->> SS2 : send document over TLS
+SS2 ->> CA : OCSP check Requestor cert*
+CA -->> SS2 : yes/no
+SS2 ->> SS2 : check document signature
+SS2 ->> SS2 : write message to log
+SS2 ->> SS2 : check access rights
+SS2 ->> Responder : Message X
+```
+
+## 11.2 PubSub Layer <a href="#docs-internal-guid-911e5942-7fff-642b-4c6a-5b48f3133e80" id="docs-internal-guid-911e5942-7fff-642b-4c6a-5b48f3133e80"></a>
+
+## 11.2.1 Broadcast Data to Multiple Services <a href="#docs-internal-guid-911e5942-7fff-642b-4c6a-5b48f3133e80" id="docs-internal-guid-911e5942-7fff-642b-4c6a-5b48f3133e80"></a>
 
 This workflow describes how data about a particular event is broadcast to multiple services. Note that in this case, and in all Pub/Sub implementations, the sender of the data does not know who will receive the data or what they will do with it. Likewise, the recipient of the data does not know who broadcast the data.
 
@@ -18,12 +48,10 @@ For example, “Clinic System A” wishes to broadcast data about a new birth so
 
 It should be noted that the shape of the payload will be agreed upon beforehand so that the responsibility of being able to “ingest” a “newBirth” payload from Pub/Sub will fall on the REST service provider. Once an event is ingested, the responsibility to deliver the payload lies with the Information Mediator “room” based on the importance given to the event by a Subscriber. Thus, during registration of the Subscriber, parameters such as max queue depth, retries, failsafe mechanisms, and error handling have to be configured by each Subscriber as they subscribe to an event type.
 
-## 11.2 Interaction with Other Building Blocks
+## 11.2.2 Interaction with Other Building Blocks
 
 This workflow describes multicase interaction between Building Blocks.
 
-Sequence Diagram:
-
-The sequence diagram shows the flow of data between Building Blocks for this workflow.
+The diagram shows the flow of data between Building Blocks for this workflow.
 
 ![](<.gitbook/assets/Screenshot 2022-07-18 044152.png>)
