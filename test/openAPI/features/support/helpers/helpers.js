@@ -1,10 +1,19 @@
 module.exports = {
   localhost: 'http://localhost:3366/',
+  listClientsEndpoint: 'listClients',
   getOpenApiEndpoint:
     '{GovStackInstance}/{memberClass}/{memberCode}/{applicationCode}/getOpenAPI',
+  allowedMethodsEndpoint:
+    '{GovStackInstance}/{memberClass}/{memberCode}/{applicationCode}/allowedMethods',
+  listMethodsEndpoint:
+    '{GovStackInstance}/{memberClass}/{memberCode}/{applicationCode}/listMethods',
   defaultExpectedResponseTime: 15000,
   getOpenApiExpectedSchema: {
     type: 'string',
+  },
+  acceptHeader: {
+    key: 'content-type',
+    value: 'application/json; charset=utf-8',
   },
   responseSchema: {
     type: 'object',
