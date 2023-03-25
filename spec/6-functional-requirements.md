@@ -33,7 +33,7 @@ These functional requirements do not define specific APIs, they provide a list o
    * That the owner of the application provides:
      * OpenAPI 3.0 specification document (i.e., includes base paths like “/api/patients”, “/api/visits”, etc.).
      * Description.
-     * List of enabled endpoints of OpenAPI spec (the requirement is that we can enable/disable endpoints).
+     * List of enabled endpoints of OpenAPI specifications (the requirement is that we can enable/disable endpoints).
 4. Managing a list of allowed consumers for services requires:
    * Application developers MAY access the directory service (described below) to select the services that they want to consume.
    * The request/approval/addition of allowed consumers process is a business-first process with manual steps (The hard part is negotiating data sharing agreements and signing contracts when that is completed the Information Mediator administrator can easily modify the allowed consumers' list manually).
@@ -71,7 +71,7 @@ These functional requirements do not define specific APIs, they provide a list o
        _With body_: {“qtyAvailable”: 4}\
        _Response_: { result: “Stock level report created.” }\
        \
-       _How to interpret the above request paths:_\V
+       _How to interpret the above request paths:_\
        <mark style="background-color:purple;">SECURITY-SERVER-URL</mark>/r1/<mark style="background-color:orange;">INSTANCE</mark>/<mark style="background-color:blue;">DOMAIN/MEMBER</mark>/<mark style="background-color:green;">APPLICATION</mark>/<mark style="background-color:red;">SERVICE</mark>/<mark style="background-color:yellow;">PATH</mark>
    * Note that all applications are making requests to the security server, which runs over the private network segment, rather than making requests to other applications directly over the public internet. (This is one of the main points of the security server and Information Mediator architecture.)
 
