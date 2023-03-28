@@ -11,5 +11,4 @@
 * [8 Service APIs](10-service-apis.md)
 * [9 Internal Workflows](11-workflows.md)
 * [10 Other Resources](10-other-resources.md)
-* [\* Requirements Clarification](7-requirements-clarification.md)
 * [\* Annexes and Appendices](14-annexes-and-appendices.md)

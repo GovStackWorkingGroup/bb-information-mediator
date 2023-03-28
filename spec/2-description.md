@@ -65,4 +65,4 @@ This section provides an overview of the technical processes and architecture th
 
 See the section on [Gov.UK’s API Management Strategy Document](4-key-digital-functionalities.md#4.3.3.2-gov.uks-api-management-strategy-document).
 
-[^1]: [Valeria Tafoya](https://app.gitbook.com/u/OavApSyMjhf7E7ZV0QBHEZzPeX13 "mention") Pls delete this sentence
+[^1]: [Valeria Tafoya](http://localhost:5000/u/OavApSyMjhf7E7ZV0QBHEZzPeX13 "mention") Pls delete this sentence
