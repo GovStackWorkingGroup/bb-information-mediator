@@ -69,7 +69,7 @@ The response is `<audit trail>`, `<metrics>`, etc.
 
 10.5 Service Access API
 
-The full technical specification on how to call service is presented in the “Detailed Flows” section below [14.1.6 Sending a message from A to B](14-annexes-and-appendices.md#14.1.6-sending-a-message-from-a-to-b).
+The full technical specification on how to call service is presented in the “Detailed Flows” section below [14.1.6 Sending a message from A to B](broken-reference).
 
 The full API definition of all available services can be produced from the set of all available OpenAPI descriptions. For that one need in all occurrences of:
 
