@@ -54,7 +54,7 @@ These functional requirements do not define specific APIs, they provide a list o
        * <mark style="background-color:blue;">Member (e.g., Ministry of X)</mark>;
        * <mark style="background-color:green;">Application</mark>;
        * <mark style="background-color:red;">Service (OpenAPI file)</mark>;
-       * <mark style="background-color:yellow;">Path</mark>
+       *   <mark style="background-color:yellow;">Path</mark>
 
            * <mark style="background-color:yellow;">Endpoint</mark>.
            * <mark style="background-color:yellow;">Query parameters</mark>.
@@ -81,9 +81,15 @@ These functional requirements do not define specific APIs, they provide a list o
    * organizations with descriptions;
    * services (either all services, or services that the requester is authorized to access);
    * an OpenAPI specification, detailing the endpoints and requirements for the service/API.
-4. A view layer allowing for easy exploration of ALL clients, applications, and services should be provided. (Note that, “under the hood”, this layer may make use of the APIs described above or be implemented via a separate API.)
+2. A view layer allowing for easy exploration of ALL clients, applications, and services should be provided. (Note that, “under the hood”, this layer may make use of the APIs described above or be implemented via a separate API.)
 
 ## 6.2 Pub/Sub Layer
+
+In software architecture, publish–subscribe ([PubSub](https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe\_pattern) or referred to as "Pub/Sub") is a messaging pattern where senders of messages, called publishers, do not program the messages to be sent directly to specific receivers, called subscribers, but instead categorize published messages into classes without knowledge of which subscribers if any, there may be. Similarly, subscribers express interest in one or more classes and only receive messages that are of interest, without knowledge of which publishers, if there are any.
+
+Pub/Sub is a sibling of the message queue paradigm and is typically one part of a larger message-oriented middleware system. Most messaging systems support both the Pub/Sub and message queue models in their API; e.g. Java Message Service (JMS), which is especially useful to handle multiple retries in case a recipient application is offline due to connectivity issues, in a typical low-resource region.
+
+This pattern provides greater network scalability and more dynamic network topology, with a resulting decreased flexibility to modify the publisher and the structure of the published data.
 
 Any implementation of a Pub/Sub layer is subjective, it will contain required shapes for requests and specific endpoints provided by the application implementing the Pub/Sub functionality. The requirements below do not prescribe a specific implementation, rather they outline the required functionality that may be implemented in a number of common ways.
 
@@ -211,6 +217,6 @@ Note how in the above diagram, “Ambulance-B” is an Information Mediator Buil
 
 ## 6.5 Scaling/Throughput
 
-1. The  Information Mediator Building Block supports provider-side high availability setup via a so-called internal load balancing mechanism. The setup works so that the same member/member class/member code/application/service code is configured on multiple security servers and the Information Mediator Building Block will then route the request to the server that responds the fastest.
+1. The Information Mediator Building Block supports provider-side high availability setup via a so-called internal load balancing mechanism. The setup works so that the same member/member class/member code/application/service code is configured on multiple security servers and the Information Mediator Building Block will then route the request to the server that responds the fastest.
 2. Busy production systems may need a scalable performance in addition to high availability. The Information Mediator Building Block supports external load balancing mechanisms to address both of these problems simultaneously. A load balancer is added in front of a security server cluster to route the requests based on a selected algorithm.
 3. The team in charge of deploying the security server application on their hardware must consider the network infrastructure including a load balancer, etc. The requirements for network infrastructure must be handled/defined in a (yet to exist) “Network Building Block”.

@@ -85,3 +85,15 @@ Below are the key Information mediation requirements from their [OHIE architectu
 #### **4.3.3.2 Gov.UK’s API Management Strategy Document**
 
 In future iterations of this specification, we may take into consideration more broad API-management standards which include multiple domains, such as those proposed by the United Kingdom's Government in their [Defining an API management strategy](https://www.gov.uk/guidance/defining-an-api-management-strategy).&#x20;
+
+## **2.2 What Is Out of Scope**
+
+The Information Mediator Building Blocking does NOT handle communication between human users and applications.
+
+The Information Mediator Building Blocking does NOT handle ingress and egress access from external applications to and from GovStack’s internal components (This may be handled by a public API Gateway in the domain of the Security Building Block).
+
+## **2.4 Future Scope**
+
+### **2.4.1 Consider broader existing standards**
+
+See the section on [Gov.UK’s API Management Strategy Document](4-key-digital-functionalities.md#4.3.3.2-gov.uks-api-management-strategy-document).
