@@ -2,11 +2,9 @@
 
 A workflow provides a detailed view of how the Information Mediator Building Block will interact with other building blocks to support common use cases. This section lists workflows that this building block must support. Other workflows may be implemented in addition to those listed.
 
-Note that for the Information Mediator, the primary workflow for the Service Access layer is specified in the “[Accessing Services](6-functional-requirements.md#6.1.4-accessing-services)” section above. The workflow for the “PubSub layer” is outlined below.
-
 ### 9.1 Service Access Layer
 
-Sequence diagram for accessing service
+Example Sequence diagram for accessing service
 
 ```mermaid
 sequenceDiagram
@@ -37,6 +35,17 @@ SS2 ->> SS2 : write message to log
 SS2 ->> SS2 : check access rights
 SS2 ->> Responder : Message X
 ```
+
+The results of steps marked with '\*' can be cached and reused between calls. In this diagram:&#x20;
+
+1. Requestor makes a request to the local Information Mediator security server.
+2. Local Infirmation Mediator security server finds in the configuration where to send request.
+3. The Information Mediator signs & sends the request from application A to the security server for application B.
+4. The security server for application B receives the request, validates the signature, and then forwards it to the application/service/endpoint.
+5. The application/service/endpoint responds to request.
+6. The security server for application B signs the response and sends it back to the security server for application A.
+7. The security server for the application A validates the signature and forwards the response to application A.
+8. This is all synchronous. Application A’s request is open/unresponded until step 6.
 
 ## 9.2 PubSub Layer <a href="#docs-internal-guid-911e5942-7fff-642b-4c6a-5b48f3133e80" id="docs-internal-guid-911e5942-7fff-642b-4c6a-5b48f3133e80"></a>
 
