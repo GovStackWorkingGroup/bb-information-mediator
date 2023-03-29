@@ -4,11 +4,9 @@ description: This section provides context for this Building Block.
 
 # 2 Description
 
-The functional requirements section lists the technical capabilities that this Building Block should have. These requirements should be suﬃcient to deliver all functionality that is listed in the [Key Digital Functionalities section](4-key-digital-functionalities.md).
-
 The Information Mediator Building Blocking provides a gateway for exchange of data and services among GovStack Building Blocks through open-API rest-based interfaces to ensure interoperability and implementation of standards. The Information Mediator provides mechanisms for applications/Building Blocks to publish and consume services and event notifications among other GovStack Building Blocks.
 
-Information Mediator services act as a channel through which Building Blocks and external applications can connect to services exposed by other Building Blocks such as registry services, identity services, and payment services. The Information Mediator Building Blocking provides a second service, as a broadcasting channel for notification of events among the connected applications in a Publisher-Subscriber (Pub/Sub) model.  And also maintains a log of transactions (e.g., requests, events), as well as handling communication errors between Building Blocks and/or other applications via the Pub/Sub service. This component may employ other core components, such as registries, repositories, etc. By allowing different applications to exchange information, it can act as a mechanism to encourage or enforce best practices, data standards around Pub/Sub, and data-sharing policies in cross-facility workflows among business processes.
+Information Mediator services act as a channel through which Building Blocks and external applications can connect to services exposed by other Building Blocks such as registry services, identity services, and payment services. The Information Mediator Building Blocking provides a second service, as a broadcasting channel for notification of events among the connected applications in a Publisher-Subscriber (Pub/Sub) model. And also maintains a log of transactions (e.g., requests, events), as well as handling communication errors between Building Blocks and/or other applications via the Pub/Sub service. This component may employ other core components, such as registries, repositories, etc. By allowing different applications to exchange information, it can act as a mechanism to encourage or enforce best practices, data standards around Pub/Sub, and data-sharing policies in cross-facility workflows among business processes.
 
 ## **2.1 Use Case Applicability**
 
@@ -43,7 +41,7 @@ Each building block deployment SHOULD use an Information Mediator to federate an
 
 ### 2.3.2 Organizational Model
 
-In order to effectively deploy a software solution using the Information Mediator, several policies and processes will need to be applied. This section briefly describes the organizational processes that must be in place.&#x20;
+In order to effectively deploy a software solution using the Information Mediator, several policies and processes will need to be applied. This section briefly describes the organizational processes that must be in place.
 
 1. First, a central operator will be identified and created. This organization will be responsible for the overall operation of the system, including operations and onboarding new members. Policies and contractual agreements for onboarding need to be created.
 2. Trust services need to be set up internally or procured from third parties, including timestamps and certificate authorities. This provides the necessary infrastructure to support distributed deployments.
@@ -52,12 +50,12 @@ In order to effectively deploy a software solution using the Information Mediato
 
 ### 2.3.3 Technical Architecture
 
-This section provides an overview of the technical processes and architecture that must be implemented once the organizational model has been created.&#x20;
+This section provides an overview of the technical processes and architecture that must be implemented once the organizational model has been created.
 
 1. A Central Operator is responsible for maintaining a registry of members, the security policies for Building Blocks and other member instances, a list of trusted certification authorities, and a list of trusted time-stamping authorities. The member registry and security policies MUST be exposed to the Information Mediator over HTTP.
 2. Certificate authorities are responsible for issuing and revoking certificates used for securing and ensuring the integrity of federated information systems. Certificate authorities MUST support the Online Certificate Status Protocol (OCSP) so that an Information Mediator can check certificate validity.
 3. Time-stamping authorities securely facilitate the time stamping of messages. Time stamping authorities MUST support batched time stamping.
-4. The Service Registry provides a mechanism for Building Blocks to register the services that they provide and for other building blocks to discover and consume those services. Any services provided or consumed by a Building Block that leverages the Information Mediator architecture MUST use this service registry functionality.&#x20;
+4. The Service Registry provides a mechanism for Building Blocks to register the services that they provide and for other building blocks to discover and consume those services. Any services provided or consumed by a Building Block that leverages the Information Mediator architecture MUST use this service registry functionality.
 
 ## **2.4 Future Scope**
 
