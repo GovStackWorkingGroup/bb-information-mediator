@@ -36,7 +36,7 @@ Members can browse a directory of Services available in the Mediator Building Bl
 
 Member:&#x20;
 
-[member.json](https://github.com/GovStackWorkingGroup/BuildingBlockAPI/blob/main/IM/schemas/member.json)
+A detailed schema indicating the data structure of these elements is shown in [member.json](https://github.com/GovStackWorkingGroup/BuildingBlockAPI/blob/main/IM/schemas/member.json)
 
 Member:
 
@@ -56,7 +56,7 @@ Name of CA enumeration
 
 Application:&#x20;
 
-[application.json](https://github.com/GovStackWorkingGroup/BuildingBlockAPI/blob/main/IM/schemas/application.json)&#x20;
+A detailed schema indicating the data structure of these elements is shown in [application.json](https://github.com/GovStackWorkingGroup/BuildingBlockAPI/blob/main/IM/schemas/application.json)&#x20;
 
 Application:
 
@@ -68,7 +68,7 @@ TLS certificate cert
 
 Service:&#x20;
 
-[service.json](https://github.com/GovStackWorkingGroup/BuildingBlockAPI/blob/main/IM/schemas/service.json)&#x20;
+A detailed schema indicating the data structure of these elements is shown in [service.json](https://github.com/GovStackWorkingGroup/BuildingBlockAPI/blob/main/IM/schemas/service.json)&#x20;
 
 Services:
 
@@ -110,6 +110,4 @@ A room is a GovStack application that handles the distribution of events. Each R
 
 A subscriber is a GovStack application that can process events. Subscribers are independent of each other and their business logic is different (as rule). Each subscriber processes events from their own perspective.
 
-Schema description:&#x20;
-
-[broadcast.json](https://github.com/GovStackWorkingGroup/BuildingBlockAPI/blob/main/IM/schemas/broadcast.json)
+Schema description:  The various data elements of PUBSUB discussed above may have one or more fields that specify specific properties. A detailed schema that capture minimum data elements and their properties is described in a JSON Schema, available at [broadcast.json](https://github.com/GovStackWorkingGroup/BuildingBlockAPI/blob/main/IM/schemas/broadcast.json)
