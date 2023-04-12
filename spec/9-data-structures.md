@@ -6,6 +6,14 @@ description: >-
 
 # 7 Data Structures
 
+A detailed schema indicating the data structure of these elements is shown in [member.json](https://github.com/GovStackWorkingGroup/BuildingBlockAPI/blob/main/IM/schemas/member.json)
+
+[application.json](https://github.com/GovStackWorkingGroup/BuildingBlockAPI/blob/main/IM/schemas/application.json)&#x20;
+
+[service.json](https://github.com/GovStackWorkingGroup/BuildingBlockAPI/blob/main/IM/schemas/service.json)&#x20;
+
+Schema description:&#x20;
+
 The resource model shows the relationship between data objects that are used by the Information Mediator Building Block.
 
 The data elements provide detail for the resource model. All data element schemas can be viewed, commented on, and modified in the [schemas section](https://github.com/aleksander-reitsakas/InformationMediatorAPI/tree/main/IM/schemas) of the Information Mediator Building Block GitHub repository.
@@ -34,57 +42,43 @@ Members can browse a directory of Services available in the Mediator Building Bl
 
 #### 7.2.2.1 Member
 
-Member:&#x20;
+| Data Element | Default format | description                                              |
+| ------------ | -------------- | -------------------------------------------------------- |
+| class        | enumerator     | namespace for member\_code, e.g. GOV or COM              |
+| code         | string         | unique id of member in registry defined by member\_class |
+| signing\_key | string         | name of key used to sign on behalf of Member             |
+| certificate  | certificate    | certificate of member issued by trusted CA               |
 
-A detailed schema indicating the data structure of these elements is shown in [member.json](https://github.com/GovStackWorkingGroup/BuildingBlockAPI/blob/main/IM/schemas/member.json)
-
-Member:
-
-Member Class enumeration
-
-Member Code string
-
-Signing Key:
-
-Token enumeration (where to put)
-
-Name string
-
-Name of CA enumeration
+Schema reference is here: [member.json](https://github.com/GovStackWorkingGroup/BuildingBlockAPI/blob/main/IM/schemas/member.json)
 
 #### 7.2.2.2 Application
 
-Application:&#x20;
+| Data Element     | Default format | description                                 |
+| ---------------- | -------------- | ------------------------------------------- |
+| code             | string         | unique name of application in member scope  |
+| connection\_type | string         | protocol used for connection: http or https |
+| certificate      | certificate    | TLS certificate                             |
 
-A detailed schema indicating the data structure of these elements is shown in [application.json](https://github.com/GovStackWorkingGroup/BuildingBlockAPI/blob/main/IM/schemas/application.json)&#x20;
-
-Application:
-
-Connection type enum http/https
-
-TLS certificate cert
+Schema reference is here: [application.json](https://github.com/GovStackWorkingGroup/BuildingBlockAPI/blob/main/IM/schemas/application.json)&#x20;
 
 #### 7.2.2.3 Service
 
 Service:&#x20;
 
-A detailed schema indicating the data structure of these elements is shown in [service.json](https://github.com/GovStackWorkingGroup/BuildingBlockAPI/blob/main/IM/schemas/service.json)&#x20;
+| Data Element     | Default format | description                                    |
+| ---------------- | -------------- | ---------------------------------------------- |
+| code             | string         | unique name of OpenAPI in scope of application |
+| description\_url | url            | location of OpenAPI service description        |
+| service\_url     | url            | service provisioning network address           |
+| ACL              | object         | description of access rights                   |
 
-Services:
-
-Service Code string
-
-Description URL url OpenAPI spec
-
-Service URL url base address for endpoint (prefix)
-
-Access Rights ACL
+Schema reference is here: [service.json](https://github.com/GovStackWorkingGroup/BuildingBlockAPI/blob/main/IM/schemas/service.json)&#x20;
 
 ## **7.3 PubSub Layer**
 
 ### 7.3.1 Resource Model
 
-The resource Model is an extension of the Access Layer model:
+The Resource Model is an extension of the Access Layer model:
 
 ![Draw.io source in github: https://github.com/aleksander-reitsakas/InformationMediatorAPI/blob/main/IM/diagrams/Mediator-BB-PubSub-entities.drawio.png](../diagrams/Mediator-BB-PubSub-entities.drawio.png)
 
@@ -92,11 +86,11 @@ The resource Model is an extension of the Access Layer model:
 
 #### 7.3.2.1 Event
 
-An event is a set of data described by event type. Each event has an id, and this is most likely a Universally Unique Identifier (UUI).
+An event is a set of data described by event type. Each event has an id, and this is most likely a Universally Unique Identifier (UUI). The event corresponds to message. Data elements of event are described by event type OpenAPI description.
 
 #### 7.3.2.2 Event type
 
-An event type is a service described by OpenAPI. Each event type is owned by a certain authority. (E.g. the Ministry of Health might own the “new\_birth” event type and define its schema.)
+An event type is a service described by OpenAPI. Each event type is owned by a Room of a certain authority. (E.g. the Ministry of Health might own Room with the “new\_birth” event type and define its schema.)
 
 #### 7.3.2.3 Publisher
 
@@ -108,6 +102,8 @@ A room is a GovStack application that handles the distribution of events. Each R
 
 #### 7.3.2.5 Subscriber
 
-A subscriber is a GovStack application that can process events. Subscribers are independent of each other and their business logic is different (as rule). Each subscriber processes events from their own perspective.
+A subscriber is a GovStack application that can process events. Subscribers are independent of each other and their business logic differs (as a rule). Each subscriber processes events from their own perspective.
 
-Schema description:  The various data elements of PUBSUB discussed above may have one or more fields that specify specific properties. A detailed schema that capture minimum data elements and their properties is described in a JSON Schema, available at [broadcast.json](https://github.com/GovStackWorkingGroup/BuildingBlockAPI/blob/main/IM/schemas/broadcast.json)
+Schema description:&#x20;
+
+[broadcast.json](https://github.com/GovStackWorkingGroup/BuildingBlockAPI/blob/main/IM/schemas/broadcast.json)
