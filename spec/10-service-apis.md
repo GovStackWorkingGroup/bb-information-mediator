@@ -61,14 +61,6 @@ The response is \<audit trail>, \<metrics>, etc.
 
 ## 8.5 Service Access API
 
-At the debugging time, to learn about system performance or retrieve an audit log, an administrator may send a request to the reporting API.
-
-The response is `<audit trail>`, `<metrics>`, etc.
-
-10.5 Service Access API
-
-The full technical specification on how to call service is presented in the “Detailed Flows” section below [14.1.6 Sending a message from A to B](broken-reference/).
-
 The full API definition of all available services can be produced from the set of all available OpenAPI descriptions. For that one need in all occurrences of:
 
 “path”: { “\<some-value>”: … }
@@ -77,6 +69,6 @@ prepend \<some-value> with
 
 {GovStackInstance}/{memberClass}/{member}/{application}/{service}/ extending this way the path with these details.
 
-## 8.6 Broadcast API
+## 8.6 PubSub API
 
 To broadcast a message to a Room, the service access API must be followed and the service requested must be the service implementing event type.
