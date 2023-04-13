@@ -6,14 +6,6 @@ description: >-
 
 # 7 Data Structures
 
-A detailed schema indicating the data structure of these elements is shown in [member.json](https://github.com/GovStackWorkingGroup/BuildingBlockAPI/blob/main/IM/schemas/member.json)
-
-[application.json](https://github.com/GovStackWorkingGroup/BuildingBlockAPI/blob/main/IM/schemas/application.json)&#x20;
-
-[service.json](https://github.com/GovStackWorkingGroup/BuildingBlockAPI/blob/main/IM/schemas/service.json)&#x20;
-
-Schema description:&#x20;
-
 The resource model shows the relationship between data objects that are used by the Information Mediator Building Block.
 
 The data elements provide detail for the resource model. All data element schemas can be viewed, commented on, and modified in the [schemas section](https://github.com/aleksander-reitsakas/InformationMediatorAPI/tree/main/IM/schemas) of the Information Mediator Building Block GitHub repository.
