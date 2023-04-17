@@ -98,10 +98,24 @@ participant Subscriber
 participant SS1 as IM Security Server of Subscriber
 participant SS2 as IM Security Server of Room
 participant Room
+opt event type discovery (design time)
+Subscriber ->> SS1: request list of Members
+SS1 -->> Subscriber: list of Members
+Subscriber ->> Subscriber: chose Member
+Subscriber ->> SS1: request list of Rooms (Applications)
+SS1 -->> Subscriber: list of Rooms (Applications)
+Subscriber ->> Subscriber: chose Room
+Subscriber ->> SS1: request list of available event types (Services)
+SS1 -->> Subscriber: list of event types
+Subscriber ->> SS1: GET description of the event type
+SS1 -->> Subscriber: OpenAPI of the event type
+Subscriber ->> SS1: register endpoint for receiving events
+SS1 -->> Subscriber: done
+end
 Subscriber ->> SS1: subscribe to event type
 SS1 ->> SS2: subscribe to event type
 SS2 ->> Room: subscribe
-Room ->> Room: reqister subscription
+Room ->> Room: register subscription
 Room -->> SS2: done
 SS2 --> SS1: done
 SS1 --> Subscriber: done
