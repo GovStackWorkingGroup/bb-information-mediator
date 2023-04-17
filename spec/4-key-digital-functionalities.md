@@ -12,7 +12,7 @@ At a high level, these are the key functionalities that MUST or SHOULD be provid
 
 In a nutshell, the Information Mediator Building Block is responsible for providing:
 
-1. **Service Access:** a managed facility through which different GovStack Building Blocks and applications may communicate securely with each other.
+1. **Service Access:** a facility through which different GovStack Building Blocks and applications may communicate securely with each other.
    * Routes requests to the correct provider after necessary message transformation functionalities and protocol conversion. (REQUIRED)
    * Connects the service requestor to the service provider and its underlying solution platforms, realizing the requested service. (REQUIRED)
    * Discovers services and, at runtime, to support the virtualization of services, so that changes to endpoints can occur without impact to service consumers and service provider. (REQUIRED)
