@@ -109,7 +109,7 @@ SS1 --> Subscriber: done
 
 1. The Subscriber requests that events of certain types be delivered to them.
 2. The Subscriber specifies the desired delivery mode (push/pull). The Room and Subscriber conclude the delivery contract. Note that:
-   * push delivery mode is when the Room sends events to the Subscriber’s API.
+   * push delivery mode is when the Room sends events to the Subscriber’s API. In this case, Subscriber MAY request some QoS/SLA parameters of delivery.
    * pull delivery mode (OPTIONAL) means that the Room keeps a queue of events and the Subscriber can check that queue.
 3. At a minimum, this Building Block MUST provide for a push delivery mode. It MAY also provide a pull mode based on convenience.
 
