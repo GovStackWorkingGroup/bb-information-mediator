@@ -115,8 +115,8 @@ SS1 --> Subscriber: done
 
 Three endpoints to be declared per event type Pub/Sub instance:
 
-* an endpoint URI to be registered by every Subscriber on a per-event type basis.
-* (OPTIONAL) an endpoint URI on the Pub/Sub where all pull requests come from various Subscribers.
+* an endpoint URL to be registered by every Subscriber on a per-event type basis.
+* (OPTIONAL) an endpoint URL on the Pub/Sub where all pull requests come from various Subscribers.
 * an endpoint in the Room to send messages for publication.
 
 #### 9.2.4 Event delivery
