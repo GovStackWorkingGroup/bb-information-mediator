@@ -103,7 +103,7 @@ These functional requirements do not define specific APIs, they provide a list o
 ### 6.3.3 Delivering Messages
 
 1. Published messages SHOULD be delivered to all subscribers.
-2. Published messages SHOULD be stored so that delivery may be retried if certain Subscribers are offline.
+2. Published messages SHOULD be stored so that delivery may be done and retried asynchronously, e.g. if certain Subscribers are offline.
    * Subscribers SHOULD be able to configure their retry strategies, overriding the default exponential backoff on retriable errors. ([Google Pub/Sub example](https://cloud.google.com/pubsub/docs/handling-failures))
 3. If an active subscription exists but an error is received when forwarding a message to that service, the Pub/Sub layer SHOULD retry N times with a standard backoff. (An exponential backoff may be the default approach.)
    * The backoff and retry strategy SHOULD be configurable by an administrator with access to the Pub/Sub layer application.
