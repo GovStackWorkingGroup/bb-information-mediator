@@ -29,6 +29,8 @@ The Information Mediator Building Blocking does NOT handle communication between
 
 The Information Mediator Building Blocking does NOT handle ingress and egress access from external applications to and from GovStack’s internal components (This may be handled by a public API Gateway in the domain of the Security Building Block).
 
+The current specification does NOT assume the possibility of different Information Mediator implementations working together. In one instance of the GovStack ecosystem, only one implementation of the Information Mediator Building Block can exist.
+
 The following requirements have been identified as “out of scope” because they fall into the realm of the Workflow Building Block or the Security Building Block.
 
 * Supports the handling of transactions and associated communication errors and exceptions.
