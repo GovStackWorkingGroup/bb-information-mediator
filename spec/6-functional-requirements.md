@@ -6,6 +6,8 @@ description: This section lists the technical capabilities of this Building Bloc
 
 The functional requirements section lists the technical capabilities that this Building Block should have. These requirements should be sufficient to deliver all functionality that is listed in the [Key Digital Functionalities](4-key-digital-functionalities.md) section.
 
+The Information Mediator is used only for interaction between Applications/Building Blocks for the transfer of data at an API level only. Look for details [Architecture and Nonfunctional Requirements](http://localhost:5000/s/39QVhd0jD6S29Isr7KGF/architecture-and-nonfunctional-requirements/6-onboarding) document.
+
 These functional requirements do not define specific APIs, they provide a list of information about functionality that must be implemented within the Building Block. Detailed design and feature lists of these blocks can be customized by developers to optimally match specific target implementation needs.
 
 <table data-view="cards"><thead><tr><th></th><th></th><th></th><th></th></tr></thead><tbody><tr><td></td><td>     Service Layer</td><td></td><td></td></tr><tr><td></td><td>   Directory Service</td><td></td><td></td></tr><tr><td></td><td>  Pub/Sub layer</td><td></td><td></td></tr><tr><td></td><td>       Logging</td><td></td><td></td></tr><tr><td></td><td>      Monitoring</td><td></td><td></td></tr><tr><td></td><td>  Scaling/Throughput</td><td></td><td></td></tr></tbody></table>
@@ -15,9 +17,13 @@ These functional requirements do not define specific APIs, they provide a list o
 ### **6.1.1 Administrative Interface**
 
 1. There SHOULD be different types of administrative roles that provide different levels of access.
-2. There SHOULD be an ecosystem-level administrative interface that allows an Information Mediator administrator (with appropriate authentication) to register/deregister members and applications.
-3. There SHOULD be a security-server-level interface that allows an administrator for a single security server to manage members, applications, and services that live under a single security server.
-4. Open IAM (or another Identity and Access Management Solution) must be able to create/edit/delete admin users for the Information Mediator interface. [Security Building Block specification 1.0.1 section 6-1](https://govstack.gitbook.io/specification/security-requirements/6-security-building-block-modules).
+2. There SHOULD be administrative roles on different levels of the ecosystem:
+   * global administrator role of the whole ecosystem,
+   * local administrator role of Member,
+   * an administrative role for configuring an Application.
+3. There SHOULD be an ecosystem-level administrative interface that allows an Information Mediator administrator (with appropriate authentication) to register/deregister members and applications.
+4. There SHOULD be a security-server-level interface that allows an administrator for a single security server to manage members, applications, and services that live under a single security server.
+5. Open IAM (or another Identity and Access Management Solution) must be able to create/edit/delete admin users for the Information Mediator interface. [Security Building Block specification 1.0.1 section 6-1](https://govstack.gitbook.io/specification/security-requirements/6-security-building-block-modules).
 
 ### **6.1.2 Registration**
 
