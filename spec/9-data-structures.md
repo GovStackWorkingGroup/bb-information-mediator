@@ -78,7 +78,7 @@ The Resource Model is an extension of the Access Layer model:
 
 #### 7.3.2.1 Event
 
-An event is a set of data described by event type. Each event has an id, and this is most likely a Universally Unique Identifier (UUI). The event corresponds to message. Data elements of event are described by event type OpenAPI description.
+An event is a set of data described by event type. Each event has an id. The event corresponds to the message. Data elements of an event are described by event type OpenAPI description.
 
 #### 7.3.2.2 Event type
 
