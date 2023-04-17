@@ -114,7 +114,6 @@ These functional requirements do not define specific APIs, they provide a list o
 1. The Pub/Sub layer should provide an admin user interface to help create/manage subscriptions with the data below.
 2. The Pub/Sub layer should allow an administrator to view a list of active subscriptions.
 3. For registration via API, an application must be able to make a POST request to a service exposed by the Pub/Sub layer which defines which endpoints certain event types should be sent to.
-4. For services that provide an OpenAPI v3 webhooks specification, the Pub/Sub layer should be able to create necessary webhooks on those applications via API.
 
 ### 6.3.5 Event Logging and Audit Trail Generation
 
