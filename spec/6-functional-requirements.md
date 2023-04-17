@@ -144,6 +144,6 @@ These functional requirements do not define specific APIs, they provide a list o
 
 ## 6.6 Scaling/Throughput
 
-1. The Information Mediator Building Block supports provider-side high availability setup via a so-called internal load balancing mechanism. The setup works so that the same member/member class/member code/application/service code is configured on multiple security servers and the Information Mediator Building Block will then route the request to the server that responds the fastest.
+1. The Information Mediator Building Block SHOULD support provider-side high availability setup if needed.
 2. Busy production systems may need a scalable performance in addition to high availability. The Information Mediator Building Block supports external load balancing mechanisms to address both of these problems simultaneously. A load balancer is added in front of a security server cluster to route the requests based on a selected algorithm.
 3. The team in charge of deploying the security server application on their hardware must consider the network infrastructure including a load balancer, etc. The requirements for network infrastructure must be handled/defined in a (yet to exist) “Network Building Block”.
