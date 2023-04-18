@@ -1,0 +1,364 @@
+openapi: 3.0.0
+servers:
+  - url: https://{securityserver}/r1
+    variables:
+      securityserver:
+        default: ''
+        description: 'security server address'
+info:
+  description: This is GovStack Information Mediator PubSub API
+  version: "1.0.0"
+  title: GovStack IM PubSub
+  contact:
+    email: bb-information-mediat-aaaafm2vhf6hnebpu3tizg3v74@govstack.slack.com
+tags:
+  - name: pub
+    description: Operations available to Publishers
+  - name: sub
+    description: Operations available to Subscribers
+paths:
+  /{GovStackInstance}/{memberClass}/{memberCode}/{roomCode}/event/{id}:
+    parameters:
+      - $ref: '#/components/parameters/GovStackInstance'
+      - $ref: '#/components/parameters/memberClass'
+      - $ref: '#/components/parameters/memberCode'
+      - $ref: '#/components/parameters/roomCode'
+      - $ref: '#/components/parameters/X-GovStack-Client'
+      - in: path
+        name: id
+        description: event id of event
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - pub
+      summary: get status
+      operationId: getStatus
+      description: Return event status info
+      responses:
+        '200':
+          description: event status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventItem'
+        '404':
+          description: event missing
+    delete:
+      tags:
+        - pub
+      summary: delete event
+      operationId: deleteEvent
+      description: Stop processing event
+      responses:
+        '200':
+          description: event processing stopped
+        '404':
+          description: event missing
+  /{GovStackInstance}/{memberClass}/{memberCode}/{roomCode}/subs:
+    parameters:
+      - $ref: '#/components/parameters/GovStackInstance'
+      - $ref: '#/components/parameters/memberClass'
+      - $ref: '#/components/parameters/memberCode'
+      - $ref: '#/components/parameters/roomCode'
+      - $ref: '#/components/parameters/X-GovStack-Client'
+    post:
+      tags:
+        - sub
+      summary: add subscription
+      operationId: addSub
+      description: Subscribe caller to event type
+      responses:
+        '201':
+          description: subscription created
+        '400':
+          description: 'invalid input, object invalid'
+        '409':
+          description: an existing item already exists
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionItem'
+        description: Subscription item to add
+    get:
+      tags:
+        - sub
+      summary: list subscriptions
+      operationId: listSub
+      description: Return list of my subscriptions
+      responses:
+        '200':
+          description: list of my subscriptions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SubscriptionItem'
+  /{GovStackInstance}/{memberClass}/{memberCode}/{roomCode}/subs/{id}:
+    parameters:
+      - $ref: '#/components/parameters/GovStackInstance'
+      - $ref: '#/components/parameters/memberClass'
+      - $ref: '#/components/parameters/memberCode'
+      - $ref: '#/components/parameters/roomCode'
+      - $ref: '#/components/parameters/X-GovStack-Client'
+      - in: path
+        name: id
+        description: subscription id
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - sub
+      summary: get subscription details
+      operationId: getSub
+      description: Return details of subscription
+      responses:
+        '200':
+          description: subscription details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionItem'
+        '404':
+          description: subscription missing
+    patch:
+      tags:
+        - sub
+      summary: update subscription details
+      operationId: patchSub
+      description: Update details of subscription
+      responses:
+        '201':
+          description: subscription details
+        '404':
+          description: subscription missing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionItem'
+        description: new details of subscription
+    delete:
+      tags:
+        - sub
+      summary: cancel subscription
+      operationId: deleteSub
+      description: Unsubscribe
+      responses:
+        '201':
+          description: subscription deleted
+        '404':
+          description: subscription missing
+  /{GovStackInstance}/{memberClass}/{memberCode}/{roomCode}/pull/{serviceCode}/{operationId}:
+    parameters:
+      - $ref: '#/components/parameters/GovStackInstance'
+      - $ref: '#/components/parameters/memberClass'
+      - $ref: '#/components/parameters/memberCode'
+      - $ref: '#/components/parameters/roomCode'
+      - $ref: '#/components/parameters/X-GovStack-Client'
+      - in: path
+        name: serviceCode
+        description: component of event type
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: operationId
+        description: component of event type
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - sub
+      summary: get next unacknowledged event
+      operationId: pullEvent
+      description: Return next unacknowledged event of type defined by {serviceCode}:{operationId}
+      responses:
+        '200':
+          description: event
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventItem'
+        '404':
+          description: no event available
+        '409':
+          description: invalid request
+  /{GovStackInstance}/{memberClass}/{memberCode}/{roomCode}/pull/{serviceCode}/{operationId}/{eventId}:
+    parameters:
+      - $ref: '#/components/parameters/GovStackInstance'
+      - $ref: '#/components/parameters/memberClass'
+      - $ref: '#/components/parameters/memberCode'
+      - $ref: '#/components/parameters/roomCode'
+      - $ref: '#/components/parameters/X-GovStack-Client'
+      - in: path
+        name: serviceCode
+        description: component of event type
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: operationId
+        description: component of event type
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: eventId
+        description: event id
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - sub
+      summary: get event by id
+      operationId: pullEventById
+      description: Return event of type by id
+      responses:
+        '200':
+          description: event
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventItem'
+        '404':
+          description: no event available
+        '409':
+          description: invalid request
+    delete:
+      tags:
+        - sub
+      summary: confirm event
+      operationId: confirmEvent
+      description: Acknowledge receiving of event
+      responses:
+        '200':
+          description: event acknowledged
+        '404':
+          description: no event available
+        '409':
+          description: invalid request
+components:
+  parameters:
+    GovStackInstance:
+      name: GovStackInstance
+      required: true
+      in: path
+      schema:
+        type: string
+    memberClass:
+      name: memberClass
+      required: true
+      in: path
+      schema:
+        type: string
+    memberCode:
+      name: memberCode
+      required: true
+      in: path
+      schema:
+        type: string
+    roomCode:
+      name: roomCode
+      required: true
+      in: path
+      schema:
+        type: string
+    X-GovStack-Client:
+      name: X-GovStack-Client
+      in: header
+      schema:
+        type: string
+  schemas:
+    SubscriptionItem:
+      type: object
+      required:
+        - id
+        - srcServiceCode
+        - srcOperationId
+        - dstServiceCode
+        - dstOperationId
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+        roomClass:
+          type: string
+          example: GOV
+        roomCode:
+          type: string
+          example: healthcare-hub
+        srcServiceCode:
+          type: string
+          example: midwife
+        srcOperationId:
+          type: string
+          example: newBirth
+        dstServiceCode:
+          type: string
+          example: citizens-registry
+        dstOperationId:
+          type: string
+          example: newRecord
+        delivery:
+          type: string
+          enum:
+            - PUSH
+            - PULL
+          default: PUSH
+        options:
+          type: object
+          properties:
+            TTL:
+              type: integer
+              default: 3600
+            FIFO:
+              type: boolean
+              default: false
+    EventItem:
+      required:
+        - id
+      properties:
+        id:
+          type: string
+          example: ABC00500012345
+        sequence:
+          type: integer
+          example: 42
+        publisher:
+          type: object
+          properties:
+            GovStackInstance:
+              type: string
+              example: neverland
+            memberClass:
+              type: string
+              example: GOV
+            memberCode:
+              type: string
+              example: capital-city
+            applicationCode:
+              type: string
+              example: police
+        srcServiceCode:
+          type: string
+          example: documents-registry
+        srcOperationID:
+          type: string
+          example: invalidate-id
+        path:
+          type: string
+          example: /lost/id
+        query:
+          type: object
+          example: { "name": "John Smith" }
+        payload:
+          type: object
+          example: { "nr": 54321 }
