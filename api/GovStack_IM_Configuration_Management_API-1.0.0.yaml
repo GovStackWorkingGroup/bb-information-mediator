@@ -9,12 +9,12 @@ info:
     email: bb-information-mediat-aaaafm2vhf6hnebpu3tizg3v74@govstack.slack.com
 servers:
   # Added by API Auto Mocking Plugin
-  - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/t6nn/GovStack_IM_BB_Mgmt/1.0.0
+  #- description: SwaggerHub API Auto Mocking
+  #  url: https://virtserver.swaggerhub.com/t6nn/GovStack_IM_BB_Mgmt/1.0.0
   - url: https://{securityserver}:{managment_port}/api/v1
     variables:
       securityserver:
-        default: ''
+        default: 'SECURITYSERVER'
         description: security server address
       management_port:
         default: xxxx
