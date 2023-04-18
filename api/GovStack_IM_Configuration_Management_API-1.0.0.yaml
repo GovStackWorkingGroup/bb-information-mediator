@@ -1,0 +1,400 @@
+openapi: 3.0.0
+info:
+  title: GovStack IM configuration management API
+  version: 1.0.0
+  description: This is a GovStack Information Mediator Building Block Configuration Management API
+  x-logo:
+    url: ''
+  contact:
+    email: bb-information-mediat-aaaafm2vhf6hnebpu3tizg3v74@govstack.slack.com
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/t6nn/GovStack_IM_BB_Mgmt/1.0.0
+  - url: https://{securityserver}:{managment_port}/api/v1
+    variables:
+      securityserver:
+        default: ''
+        description: security server address
+      management_port:
+        default: xxxx
+        description: IM management port
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/GovStack/GovStack_IM_Management_API/1.0.0
+tags:
+  - name: conf
+    description: Configuration management
+  - name: rights
+    description: Access rights management
+paths:
+  /config:
+    get:
+      tags:
+        - conf
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IMconf'
+          description: List of IM configuration
+      operationId: listIMconf
+      summary: List IM configuration
+    post:
+      requestBody:
+        description: configuration description file
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IMconf'
+        required: true
+      tags:
+        - conf
+      parameters:
+        - name: init
+          description: Creates Central Servers if init=true
+          schema:
+            type: boolean
+            default: false
+          in: query
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IMconfResponse'
+          description: IM starts configuration creation
+      operationId: createIMconf
+      summary: Initialize IM instance
+    patch:
+      requestBody:
+        description: configuration description file
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IMconf'
+        required: true
+      tags:
+        - conf
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IMconfResponse'
+          description: IM starts configuration update
+      operationId: updateIMconf
+      summary: Update IM configuration. Not described parts are not changed
+    put:
+      requestBody:
+        description: configuration description file
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IMconf'
+        required: true
+      tags:
+        - conf
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IMconfResponse'
+          description: IM starts configuration creation
+      operationId: replaceIMconf
+      summary: Replace IM configuration. Not described parts are deleted
+  /status:
+    get:
+      tags:
+        - conf
+      responses:
+        '200':
+          description: IM is OK
+      operationId: checkIMconf
+      summary: Is IM configured. up and running?
+  /rights/allow:
+    get:
+      tags:
+        - rights
+      summary: 'Retrieve configured access permissions (allow list)'
+      description: >-
+        <p>This API takes provided filters from query parameters and returns a subset of 
+        access policies configured on the IM building block, based on the filters.</p>
+        <p>The result is paged, with page size based on the number of service and allowed application
+        pairs. For example, when page_size = 10 and the IM BB defines three services: A, B and C, each
+        of which has 8 clients, the result will be split over 3 pages:<br/><br/>
+        Page 1: Service A, with all of its 8 allowed applications, Service B with 2 allowed applications.<br/>
+        Page 2: Service B, with 6 allowed applications left over, Service C with 4 applications.<br/>
+        Page 3: Service C, with 4 applications.<br/>
+        <p>
+        Implementations can define additional query parameters for result display (such as ordering) and
+        how next page tokens are implemented. It is expected that the next page token is not readable
+        by API users and will be provided verbatim when querying the next page of results.
+        </p>
+      parameters:
+        - in: query
+          name: member_class
+          description: 'Filter by member class'
+          schema:
+            type: string
+          required: false
+        - in: query
+          name: member_code
+          schema:
+            type: string
+          description: 'Filter by member code'
+          required: false
+        - in: query
+          name: application_id
+          schema:
+            type: string
+          description: 'Filter by application ID'
+          required: false
+        - in: query
+          name: service_id
+          schema:
+            type: string
+          description: 'Filter by service ID'
+          required: false
+        - in: query
+          name: page_size
+          description: 'Number of access rights returned on one page'
+          schema:
+            type: number
+            default: 100
+          required: false
+        - in: query
+          name: next_page_token
+          description: >-
+            Handle for the next page, if the result spans multiple pages.
+            If not specified, there are no more results.
+          schema:
+            type: string
+          required: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginatedResult'
+                  - type: object
+                    properties:
+                      allow_list:
+                        $ref: '#/components/schemas/ServiceAccessRights'
+        '401':
+          description: Caller does not have permissions to view access rights
+    patch:
+      tags:
+        - rights
+      summary: 'Allow access to services'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceAccessRights'
+        required: false
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Caller does not have the necessary permissions to update access rights
+  /rights/deny:
+    patch:
+      tags:
+        - rights
+      summary: 'Deny access to services'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceAccessRights'
+        required: false
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Caller does not have the necessary permissions to update access rights
+
+components:
+  schemas:
+    IMconf:
+      type: object
+      required:
+        - domain
+        - instance
+      properties:
+        domain:
+          description: Subdomain for GovStack instance to run in
+          type: string
+          example: sample.sandbox.govstack.global
+        instance:
+          description: Name of GovStack instance
+          type: string
+          example: nowhereland
+        members:
+          description: List of Member organisations
+          type: array
+          items:
+            type: object
+            required:
+              - name
+              - class
+              - code
+            properties:
+              name:
+                description: Organisation (Member) name
+                type: string
+                example: Ministry of Interior
+              class:
+                description: Kind of organisation. Namespace for organisation {code}
+                type: string
+                example: GOV
+              code:
+                description: Registration number (or identifier) of the organisation in {class} namespace
+                type: string
+                example: '7001'
+              applications:
+                description: List of applications of Member organisation
+                type: array
+                items:
+                  type: object
+                  required:
+                    - id
+                  properties:
+                    id:
+                      type: string
+                      description: Name of application
+                      example: Citizens_Registry
+                    connection:
+                      type: string
+                      description: Connection protocol of application
+                      example: http
+                      default: https
+                    services:
+                      description: List of services
+                      type: array
+                      items:
+                        type: object
+                        required:
+                          - id
+                          - spec_url
+                          - service_url
+                        properties:
+                          id:
+                            description: Name of service/API
+                            type: string
+                            example: registration
+                          spec_url:
+                            description: Location of OpenAPI spec file
+                            type: string
+                            format: uri
+                            example: https://raw.githubusercontent.com/GovStackWorkingGroup/bb-example/api/registration.json
+                          service_url:
+                            description: Location of service endpoints
+                            type: string
+                            format: uri
+                            example: http://hostname.internal/api/v1/registration
+                          rights:
+                            description: List of allowed consumers/clients
+                            type: array
+                            items:
+                              type: object
+                              required:
+                                - member
+                                - application
+                              properties:
+                                member:
+                                  description: Name of Member
+                                  type: string
+                                  example: Local_Municipality
+                                application:
+                                  description: Name of application
+                                  type: string
+                                  example: Registration_portal
+    IMconfResponse:
+      type: string 
+    ServiceAccessRights:
+      type: array
+      items:
+        type: object
+        required:
+          - member_class
+          - member_code
+          - application_id
+          - service_id
+          - rights
+        properties:
+          member_class:
+            description: Kind of organisation. Namespace for organisation {code}
+            type: string
+            example: GOV
+          member_code:
+            description: Registration number (or identifier) of the organisation in {member_class} namespace
+            type: string
+            example: '7001'
+          application_id:
+            type: string
+            description: Name of application
+            example: Citizens_Registry
+          service_id:
+            description: Name of service/API
+            type: string
+            example: registration
+          rights:
+            description: Applications that are allowed or denied access
+            type: array
+            items:
+              $ref: '#/components/schemas/AllowedApplication'
+    AllowedApplication:
+      description: >-
+        An identified member application that has the permission to access a
+        service.
+      type: object
+      x-last-modified: 1678734225326
+      required:
+        - member
+        - application
+      properties:
+        member_class:
+          description: Member or member group identifier to whom access is granted
+          type: string
+        member_code:
+          description: Member or member group identifier to whom access is granted
+          type: string
+        application_id:
+          description: Application of the member that to whom access is granted
+          type: string
+    PaginatedResult:
+      type: object
+      properties:
+        next_page_token:
+          type: string
+    
+  securitySchemes:
+    # OpenIDAuth:
+    #   openIdConnectUrl: https://{public_gateway_oidc_config}
+    #   type: openIdConnect
+    #   description: >-
+    #     OpenID Connect (OIDC) is an identity layer built on top of the OAuth 2.0
+    #     protocol.
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://example.com/oauth/authorize
+          tokenUrl: https://example.com/oauth/token
+          scopes:
+            read: Grants read access
+            write: Grants write access
+            admin: Grants access to admin operations
+  headers: {}
+  responses: {}
+  parameters: {}
+security:
+  #- OpenIDAuth: []
+  - OAuth2: []

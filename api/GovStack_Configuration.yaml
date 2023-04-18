@@ -1,0 +1,37 @@
+domain: "sample.egovstack.net"
+instance: egovstack
+members:
+- name: Management
+  class: GOV
+  code: 0
+  applications:
+  - id: misp
+    connection: http
+- name: MinistryOfInterior
+  class: GOV
+  code: 7003
+  applications:
+  - id: CitizensRegistry
+    services:
+    - id: mcts
+      spec_url: https://raw.githubusercontent.com/aleksander-reitsakas/pub/main/m3x.json
+      service_url: http://securityserver/r1/egovstack/GOV/7001/DigitalRegistries/mcts11
+      rights:
+      - member: LocalMunicipality
+        application: Registration
+      - member: Management
+        application: 0
+      - member: MinistryOfHealth
+        application: DigitalRegistries
+  - id: ID_Verification
+    services:
+    - id: authenticate
+      spec_url: https://raw.githubusercontent.com/aleksander-reitsakas/pub/main/id1.json
+      service_url: https://id1.ext.egovstack.net/api
+      rights:
+      - member: LocalMunicipality
+        application: Registration
+      - member: LocalMunicipality
+        application: test01
+      - member: Management
+        application: misp
