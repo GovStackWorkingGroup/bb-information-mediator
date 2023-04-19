@@ -119,3 +119,83 @@ To broadcast a message to a Room, the service access API must be followed and th
 [https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API-1.0.0-resolved.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API-1.0.0-resolved.yaml)
 {% endswagger %}
 
+### 8.7 Management API
+
+#### 8.7.1 Configuration Management
+
+{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml" path="/config" method="get" %}
+[https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml)
+{% endswagger %}
+
+{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml" path="/config" method="post" %}
+[https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml)
+{% endswagger %}
+
+{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml" path="/config" method="put" %}
+[https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml)
+{% endswagger %}
+
+{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml" path="/config" method="patch" %}
+[https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml)
+{% endswagger %}
+
+{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml" path="/status" method="get" %}
+[https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml)
+{% endswagger %}
+
+#### 8.7.2 Example of Configuration
+
+```
+domain: "sample.egovstack.net"
+instance: egovstack
+members:
+- name: Management
+  class: GOV
+  code: 0
+  applications:
+  - id: misp
+    connection: http
+- name: MinistryOfInterior
+  class: GOV
+  code: 7003
+  applications:
+  - id: CitizensRegistry
+    services:
+    - id: mcts
+      spec_url: https://raw.githubusercontent.com/some-repo/pub/main/m3x.json
+      service_url: http://securityserver/r1/egovstack/GOV/7001/DigitalRegistries/mcts11
+      rights:
+      - member: LocalMunicipality
+        application: Registration
+      - member: Management
+        application: 0
+      - member: MinistryOfHealth
+        application: DigitalRegistries
+  - id: ID_Verification
+    services:
+    - id: authenticate
+      spec_url: https://raw.githubusercontent.com/some-repo/pub/main/id1.json
+      service_url: https://id1.ext.egovstack.net/api
+      rights:
+      - member: LocalMunicipality
+        application: Registration
+      - member: LocalMunicipality
+        application: test01
+      - member: Management
+        application: misp
+```
+
+#### 8.7.3 Management of Access Rights
+
+{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml" path="/rights/allow" method="get" %}
+[https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml)
+{% endswagger %}
+
+{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml" path="/rights/allow" method="patch" %}
+[https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml)
+{% endswagger %}
+
+{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml" path="/rights/deny" method="patch" %}
+[https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml)
+{% endswagger %}
+
