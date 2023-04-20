@@ -71,8 +71,6 @@ prepend \<some-value> with
 
 ## 8.6 PubSub API
 
-To broadcast a message to a Room, the service access API must be followed and the service requested must be the service implementing event type.
-
 #### 8.6.1 Subscriber API
 
 {% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API-1.0.0-resolved.yaml" path="/{GovStackInstance}/{memberClass}/{memberCode}/{roomCode}/subs" method="get" %}
@@ -111,9 +109,21 @@ To broadcast a message to a Room, the service access API must be followed and th
 
 #### 8.6.3 Publisher API
 
+To broadcast a message to a Room, the service access API must be followed and the service requested must be the service implementing event type.
+
+{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Publish_example.yaml" path="/v1/newBirth" method="post" %}
+[https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Publish_example.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Publish_example.yaml)
+{% endswagger %}
+
+This POST returns `eventId` as result.
+
+To check event status one can use the:
+
 {% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API-1.0.0-resolved.yaml" path="/{GovStackInstance}/{memberClass}/{memberCode}/{roomCode}/event/{id}" method="get" %}
 [https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API-1.0.0-resolved.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API-1.0.0-resolved.yaml)
 {% endswagger %}
+
+If you want to stop event processing and cancel further distribution of specific events, you can use the:
 
 {% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API-1.0.0-resolved.yaml" path="/{GovStackInstance}/{memberClass}/{memberCode}/{roomCode}/event/{id}" method="delete" %}
 [https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API-1.0.0-resolved.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API-1.0.0-resolved.yaml)
