@@ -18,7 +18,7 @@ The following standards are applicable to data structures in the Building Block:
 * Request bodies will be valid JSON.
 * The description of specific services and the data formats they require will be specified in an OpenAPI 3.1 specification.
 
-## 7.2 Service Access Layer
+## 7.2 Resource Model
 
 ### 7.2.1 Resource Model
 
@@ -51,11 +51,11 @@ Schema reference is here: [member.json](https://github.com/GovStackWorkingGroup/
 | connection\_type | string         | protocol used for connection: http or https |
 | certificate      | certificate    | TLS certificate                             |
 
-Schema reference is here: [application.json](https://github.com/GovStackWorkingGroup/BuildingBlockAPI/blob/main/IM/schemas/application.json)&#x20;
+Schema reference is here: [application.json](https://github.com/GovStackWorkingGroup/BuildingBlockAPI/blob/main/IM/schemas/application.json)
 
 #### 7.2.2.3 Service
 
-Service:&#x20;
+Service:
 
 | Data Element     | Default format | description                                    |
 | ---------------- | -------------- | ---------------------------------------------- |
@@ -64,7 +64,7 @@ Service:&#x20;
 | service\_url     | url            | service provisioning network address           |
 | ACL              | object         | description of access rights                   |
 
-Schema reference is here: [service.json](https://github.com/GovStackWorkingGroup/BuildingBlockAPI/blob/main/IM/schemas/service.json)&#x20;
+Schema reference is here: [service.json](https://github.com/GovStackWorkingGroup/BuildingBlockAPI/blob/main/IM/schemas/service.json)
 
 ## **7.3 PubSub Layer**
 
@@ -96,6 +96,6 @@ A room is a GovStack application that handles the distribution of events. Each R
 
 A subscriber is a GovStack application that can process events. Subscribers are independent of each other and their business logic differs (as a rule). Each subscriber processes events from their own perspective.
 
-Schema description:&#x20;
+Schema description:
 
 [broadcast.json](https://github.com/GovStackWorkingGroup/BuildingBlockAPI/blob/main/IM/schemas/broadcast.json)

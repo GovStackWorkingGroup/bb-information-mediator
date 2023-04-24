@@ -1,3 +1,9 @@
+---
+description: >-
+  This section provides a detailed view of how this Building Block will interact
+  with other Building Blocks to support common use cases.
+---
+
 # 9 Internal Workflows
 
 A workflow provides a detailed view of how the Information Mediator Building Block will interact with other building blocks to support common use cases. This section lists workflows that this building block must support. Other workflows may be implemented in addition to those listed.
@@ -36,7 +42,7 @@ SS2 ->> SS2 : check access rights
 SS2 ->> Responder : Message X
 ```
 
-The results of steps marked with '\*' can be cached and reused between calls. In this diagram:&#x20;
+The results of steps marked with '\*' can be cached and reused between calls. In this diagram:
 
 1. Requestor makes a request to the local Information Mediator security server.
 2. Local Infirmation Mediator security server finds in the configuration where to send request.
