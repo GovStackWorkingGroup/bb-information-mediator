@@ -8,7 +8,7 @@ description: >-
 
 A workflow provides a detailed view of how the Information Mediator Building Block will interact with other building blocks to support common use cases. This section lists workflows that this building block must support. Other workflows may be implemented in addition to those listed.
 
-### 9.1 Service Access Layer
+### 9.1 Service Access&#x20;
 
 Example Sequence diagram for accessing service
 
@@ -53,7 +53,7 @@ The results of steps marked with '\*' can be cached and reused between calls. In
 7. The security server for the application A validates the signature and forwards the response to application A.
 8. This is all synchronous. Application A’s request is open/unresponded until step 6.
 
-## 9.2 PubSub Layer <a href="#docs-internal-guid-911e5942-7fff-642b-4c6a-5b48f3133e80" id="docs-internal-guid-911e5942-7fff-642b-4c6a-5b48f3133e80"></a>
+## 9.2 Pub/Sub <a href="#docs-internal-guid-911e5942-7fff-642b-4c6a-5b48f3133e80" id="docs-internal-guid-911e5942-7fff-642b-4c6a-5b48f3133e80"></a>
 
 #### 9.2.1 Registering a Room
 
@@ -74,9 +74,9 @@ CS -->> SS: GovStack configuration
 
 ```
 
-Room for PubSub MUST be created before events can be described and processed. Room is created by its owner organization (Member), the organization responsible for the operation of events of a certain type.
+Room for Pub/Sub must be created before events can be described and processed. Room is created by its owner organization (Member), the organization responsible for the operation of events of a certain type.
 
-Creation request SHOULD be confirmed by GovStack administrator.
+Creation request should be confirmed by GovStack administrator.
 
 #### 9.2.2 Defining event type
 
@@ -92,7 +92,7 @@ SS ->> SS: create service
 SS -->> Owner: done
 ```
 
-Event type corresponds to a service description of a service accepting events for publishing and MUST be registered before usage. A single room might host multiple event types.
+Event type corresponds to a service description of a service accepting events for publishing and must be registered before usage. A single room might host multiple event types.
 
 E.g. in India, "The Ministry Of Home Affairs" can be the "Owner" of a Room where events of type "emergency" are published by "citizens" or "entities" and entities such as "ambulance services", "Fire-fighting services", Hospitals, etc., can be Subscribers to this Room. In this scenario, an event of type "Fire emergency" can be published by any citizen enrolled in this Room. The Ministry can choose to have one "emergency" Room in each town and enroll Subscribers relevant to respective regions.
 
@@ -129,9 +129,9 @@ SS1 --> Subscriber: done
 
 1. The Subscriber requests that events of certain types be delivered to them.
 2. The Subscriber specifies the desired delivery mode (push/pull). The Room and Subscriber conclude the delivery contract. Note that:
-   * push delivery mode is when the Room sends events to the Subscriber’s API. In this case, Subscriber MAY request some QoS/SLA parameters of delivery.
+   * push delivery mode is when the Room sends events to the Subscriber’s API. In this case, Subscriber may request some QoS/SLA parameters of delivery.
    * pull delivery mode (OPTIONAL) means that the Room keeps a queue of events and the Subscriber can check that queue.
-3. At a minimum, this Building Block MUST provide for a push delivery mode. It MAY also provide a pull mode based on convenience.
+3. At a minimum, this Building Block MUST provide for a push delivery mode. It may also provide a pull mode based on convenience.
 
 Three endpoints to be declared per event type Pub/Sub instance:
 
