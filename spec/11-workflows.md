@@ -53,7 +53,7 @@ The results of steps marked with '\*' can be cached and reused between calls. In
 7. The security server for the application A validates the signature and forwards the response to application A.
 8. This is all synchronous. Application A’s request is open/unresponded until step 6.
 
-## 9.2 Pub/Sub <a href="#docs-internal-guid-911e5942-7fff-642b-4c6a-5b48f3133e80" id="docs-internal-guid-911e5942-7fff-642b-4c6a-5b48f3133e80"></a>
+### 9.2 Pub/Sub <a href="#docs-internal-guid-911e5942-7fff-642b-4c6a-5b48f3133e80" id="docs-internal-guid-911e5942-7fff-642b-4c6a-5b48f3133e80"></a>
 
 #### 9.2.1 Registering a Room
 
