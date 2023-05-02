@@ -10,11 +10,11 @@ The Information Mediator is used only for interaction between Applications/Build
 
 These functional requirements do not define specific APIs, they provide a list of information about functionality that must be implemented within the Building Block. Detailed design and feature lists of these blocks can be customized by developers to optimally match specific target implementation needs.
 
-<table data-view="cards"><thead><tr><th></th><th></th><th></th><th></th></tr></thead><tbody><tr><td></td><td>     Service Layer</td><td></td><td></td></tr><tr><td></td><td>   Directory Service</td><td></td><td></td></tr><tr><td></td><td>  Pub/Sub layer</td><td></td><td></td></tr><tr><td></td><td>       Logging</td><td></td><td></td></tr><tr><td></td><td>      Monitoring</td><td></td><td></td></tr><tr><td></td><td>  Scaling/Throughput</td><td></td><td></td></tr></tbody></table>
+<table data-view="cards"><thead><tr><th></th><th></th><th></th><th></th></tr></thead><tbody><tr><td></td><td>Service Layer</td><td></td><td></td></tr><tr><td></td><td>Directory Service</td><td></td><td></td></tr><tr><td></td><td>Pub/Sub layer</td><td></td><td></td></tr><tr><td></td><td>Logging</td><td></td><td></td></tr><tr><td></td><td>Monitoring</td><td></td><td></td></tr><tr><td></td><td>Scaling/Throughput</td><td></td><td></td></tr></tbody></table>
 
-## **6.1 Service Access Layer**
+### **6.1 Service Access Layer**
 
-### **6.1.1 Administrative Interface**
+#### **6.1.1 Administrative Interface**
 
 1. There SHOULD be different types of administrative roles that provide different levels of access.
 2. There SHOULD be administrative roles on different levels of the ecosystem:
@@ -25,7 +25,7 @@ These functional requirements do not define specific APIs, they provide a list o
 4. There SHOULD be a security-server-level interface that allows an administrator for a single security server to manage members, applications, and services that live under a single security server.
 5. Open IAM (or another Identity and Access Management Solution) must be able to create/edit/delete admin users for the Information Mediator interface. [Security Building Block specification 1.0.1 section 6-1](https://govstack.gitbook.io/specification/security-requirements/6-security-building-block-modules).
 
-### **6.1.2 Registration**
+#### **6.1.2 Registration**
 
 1. Registering a member/organization requires:
    * That the new member provides details for registration.
@@ -45,7 +45,7 @@ These functional requirements do not define specific APIs, they provide a list o
    * The provider of that service must decide if the consumer is allowed to.
    * Once approved, the requesting application will be added to the list of allowed applications for the requested service.
 
-### **6.1.3 Accessing Services**
+#### **6.1.3 Accessing Services**
 
 1. To make a request to another service via the Information Mediator, an application **MUST**:
    * Using REST, make a valid HTTPS request to the local Information Mediator security server with headers that identifies itself at the application level.
@@ -87,20 +87,20 @@ These functional requirements do not define specific APIs, they provide a list o
    * an OpenAPI specification, detailing the endpoints and requirements for the service/API.
 2. A view layer allowing for easy exploration of ALL clients, applications, and services SHOULD be provided. (Note that, “under the hood”, this layer may make use of the APIs described above or be implemented via a separate API.)
 
-## 6.3 Pub/Sub Layer
+### 6.3 Pub/Sub Layer
 
-### 6.3.1 Defining Rooms and Event Types
+#### 6.3.1 Defining Rooms and Event Types
 
 1. The Pub/Sub layer must provide a mechanism for registering Rooms.
 2. The Pub/Sub layer must provide a mechanism for registering event types.
 3. For each event type, an OpenAPI description of a service with JSON schema for the required payload shape must be defined to create an event of the type.
 4. An interface for registering and viewing event types must be provided.
 
-### **6.3.2 Publishing a Message**
+#### **6.3.2 Publishing a Message**
 
 1. An application MUST be able to make a POST request with a valid JSON payload as the body and specify the message type to a Room provided by the Pub/Sub layer service.
 
-### 6.3.3 Delivering Messages
+#### 6.3.3 Delivering Messages
 
 1. Published messages SHOULD be delivered to all subscribers.
 2. Published messages SHOULD be stored so that delivery may be done and retried asynchronously, e.g. if certain Subscribers are offline.
@@ -109,13 +109,13 @@ These functional requirements do not define specific APIs, they provide a list o
    * The backoff and retry strategy SHOULD be configurable by an administrator with access to the Pub/Sub layer application.
 4. If a message cannot be delivered the Pub/Sub layer SHOULD drop that message.
 
-### 6.3.4 Managing Subscriptions
+#### 6.3.4 Managing Subscriptions
 
 1. The Pub/Sub layer should provide an admin user interface to help create/manage subscriptions with the data below.
 2. The Pub/Sub layer should allow an administrator to view a list of active subscriptions.
 3. For registration via API, an application must be able to make a POST request to a service exposed by the Pub/Sub layer which defines which endpoints certain event types should be sent to.
 
-### 6.3.5 Event Logging and Audit Trail Generation
+#### 6.3.5 Event Logging and Audit Trail Generation
 
 1. All events received and delivered MUST have a unique ID.
 2. All events received by the Pub/Sub layer MUST be logged or added to a log sync and those log entries MUST contain event metadata including the sender, timestamp, and event type, but MAY not include the event payload.
@@ -142,7 +142,7 @@ These functional requirements do not define specific APIs, they provide a list o
    * Environmental monitoring provides a standard endpoint that can be accessed with a client (e.g. Java's console application if using Java Management Extensions).
    * It is possible to limit what allowed non-owners can request via environmental monitoring data requests. The security server owner will always get the full data set as requested.
 
-## 6.6 Scaling/Throughput
+### 6.6 Scaling/Throughput
 
 1. The Information Mediator Building Block SHOULD support provider-side high availability setup if needed.
 2. Busy production systems may need a scalable performance in addition to high availability. The Information Mediator Building Block supports external load balancing mechanisms to address both of these problems simultaneously. A load balancer is added in front of a security server cluster to route the requests based on a selected algorithm.
