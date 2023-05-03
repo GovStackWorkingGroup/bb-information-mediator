@@ -70,22 +70,50 @@ The Resource Model is an extension of the Access Layer model:
 
 #### 7.3.2.1 Event
 
-**Description:** An event is a set of data described by event type. Each event has an id. The event corresponds to the message. Data elements of an event are described by event type OpenAPI description.
+An event is a message—a set of data sent to a topic. Each event has an id. The event corresponds to the message. Data elements of an event are described by event type OpenAPI description.
 
-#### 7.3.2.2 Event type
+#### 7.3.2.2 Event Type
 
-**Description:** An event type is a service described by OpenAPI. Each event type is owned by a Room of a certain authority. (E.g. the Ministry of Health might own Room with the “new\_birth” event type and define its schema.)
+An event type is schema definition for an event. Each event type is owned by a Room of a certain authority. (E.g. the Ministry of Health might own Room with the “new\_birth” event type and define its schema.)
 
 #### 7.3.2.3 Publisher
 
-**Description:** A publisher is a GovStack application that produces events and sends them to Rooms.
+A candidate application playing the role of **IM-Publisher** must be able to emit events to a specific Room.
+
+| Data Element | Default format | Description                      |
+| ------------ | -------------- | -------------------------------- |
+| id           | string         | application id of this publisher |
+| name         | string         | OPTIONAL                         |
 
 #### **7.3.2.4 Room**
 
-**Description:** A room is a GovStack application that handles the distribution of events. Each Room has a set of connected event types (e.g., the “birth” room might contain three event types: “new\_birth”, “birth\_complication”, and “infant\_death”). A room is located in the member’s local Information Mediator Building Block implementation and the member is responsible for all types of events in that particular room.
+_(N.B., this is often called a "topic" and we may shift to that in later versions.)_
+
+A candidate application playing the role of **IM-Room** must handle the distribution of events. Each Room has a set of connected event types (e.g., the “birth” room might contain three event types: “new\_birth”, “birth\_complication”, and “infant\_death”). A room is located in the member’s local Information Mediator Building Block implementation and the member is responsible for all types of events in that particular room.
+
+| Data Element | Default format | Description                 |
+| ------------ | -------------- | --------------------------- |
+| id           | string         | application id of this room |
+| name         | string         | OPTIONAL                    |
 
 #### 7.3.2.5 Subscriber
 
-**Description:** A subscriber is a GovStack application that can process events. Subscribers are independent of each other and their business logic differs (as a rule). Each subscriber processes events from their own perspective.
+A candidate application playing the role of **IM-Subscriber** must be able to process events. It is done by defining a Service that will be called by Room to deliver an event. Subscribers are independent of each other and their business logic differs (as a rule). Each subscriber processes events from their own perspective.
+
+| Data Element | Default format | Description                       |
+| ------------ | -------------- | --------------------------------- |
+| id           | string         | application id of this subscriber |
+| name         | string         | OPTIONAL                          |
+
+#### 7.3.2.6 Subscription
+
+| Data Element   | Default format | Description                                                                                                                                    |
+| -------------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| id             | string         | subscription id                                                                                                                                |
+| room\_id       | string         | room id                                                                                                                                        |
+| subscriber\_id | string         | subscriber id                                                                                                                                  |
+| event\_type    | string         | A filter expression that allows a subscriber to subscribe to only certain message\_types that are published to the room they're subscribed to. |
+| mode           | enum           | delivery mode                                                                                                                                  |
+| details        | object         | details of delivery, like time to live, repetition policy, etc.                                                                                |
 
 Schema reference [broadcast.json](../schemas/broadcast.json)
