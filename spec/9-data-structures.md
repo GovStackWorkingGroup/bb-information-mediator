@@ -45,11 +45,12 @@ Schema reference is here: [member.json](https://github.com/GovStackWorkingGroup/
 
 #### 7.2.2.2 Application
 
-| Data Element     | Default format | description                                 |
-| ---------------- | -------------- | ------------------------------------------- |
-| code             | string         | unique name of application in member scope  |
-| connection\_type | string         | protocol used for connection: http or https |
-| certificate      | certificate    | TLS certificate                             |
+| Data Element     | Default format | description                                     |
+| ---------------- | -------------- | ----------------------------------------------- |
+| parent           | reference      | reference to member this application belongs to |
+| code             | string         | unique name of application in member scope      |
+| connection\_type | string         | protocol used for connection: http or https     |
+| certificate      | certificate    | TLS certificate                                 |
 
 Schema reference is here: [application.json](https://github.com/GovStackWorkingGroup/BuildingBlockAPI/blob/main/IM/schemas/application.json)&#x20;
 
@@ -57,12 +58,13 @@ Schema reference is here: [application.json](https://github.com/GovStackWorkingG
 
 Service:&#x20;
 
-| Data Element     | Default format | description                                    |
-| ---------------- | -------------- | ---------------------------------------------- |
-| code             | string         | unique name of OpenAPI in scope of application |
-| description\_url | url            | location of OpenAPI service description        |
-| service\_url     | url            | service provisioning network address           |
-| ACL              | object         | description of access rights                   |
+| Data Element     | Default format | description                                      |
+| ---------------- | -------------- | ------------------------------------------------ |
+| parent           | reference      | reference to application this service belongs to |
+| code             | string         | unique name of OpenAPI in scope of application   |
+| description\_url | url            | location of OpenAPI service description          |
+| service\_url     | url            | service provisioning network address             |
+| ACL              | object         | description of access rights                     |
 
 Schema reference is here: [service.json](https://github.com/GovStackWorkingGroup/BuildingBlockAPI/blob/main/IM/schemas/service.json)&#x20;
 
@@ -78,24 +80,48 @@ The Resource Model is an extension of the Access Layer model:
 
 #### 7.3.2.1 Event
 
-An event is a set of data described by event type. Each event has an id. The event corresponds to the message. Data elements of an event are described by event type OpenAPI description.
+An event is a message—a set of data sent to a topic. Each event has an id. The event corresponds to the message. Data elements of an event are described by event type OpenAPI description.
 
-#### 7.3.2.2 Event type
+#### 7.3.2.2 Event Type
 
-An event type is a service described by OpenAPI. Each event type is owned by a Room of a certain authority. (E.g. the Ministry of Health might own Room with the “new\_birth” event type and define its schema.)
+An event type is schema definition for an event. Each event type is owned by a Room of a certain authority. (E.g. the Ministry of Health might own Room with the “new\_birth” event type and define its schema.)
 
 #### 7.3.2.3 Publisher
 
-A publisher is a GovStack application that produces events and sends them to Rooms.
+A candidate application playing the role of **IM-Publisher** must be able to emit events to a specific Room.
+
+| Data Element | Default format | Description                      |
+| ------------ | -------------- | -------------------------------- |
+| id           | string         | application id of this publisher |
+| name         | string         | OPTIONAL                         |
 
 #### **7.3.2.4 Room**
 
-A room is a GovStack application that handles the distribution of events. Each Room has a set of connected event types (e.g., the “birth” room might contain three event types: “new\_birth”, “birth\_complication”, and “infant\_death”). A room is located in the member’s local Information Mediator Building Block implementation and the member is responsible for all types of events in that particular room.
+_(N.B., this is often called a "topic" and we may shift to that in later versions.)_
+
+A candidate application playing the role of **IM-Room** must handle the distribution of events. Each Room has a set of connected event types (e.g., the “birth” room might contain three event types: “new\_birth”, “birth\_complication”, and “infant\_death”). A room is located in the member’s local Information Mediator Building Block implementation and the member is responsible for all types of events in that particular room.
+
+| Data Element | Default format | Description                 |
+| ------------ | -------------- | --------------------------- |
+| id           | string         | application id of this room |
+| name         | string         | OPTIONAL                    |
 
 #### 7.3.2.5 Subscriber
 
-A subscriber is a GovStack application that can process events. Subscribers are independent of each other and their business logic differs (as a rule). Each subscriber processes events from their own perspective.
+A candidate application playing the role of **IM-Subscriber** must be able to process events. It is done by defining a Service that will be called by Room to deliver an event. Subscribers are independent of each other and their business logic differs (as a rule). Each subscriber processes events from their own perspective.
 
-Schema description:&#x20;
+| Data Element | Default format | Description                       |
+| ------------ | -------------- | --------------------------------- |
+| id           | string         | application id of this subscriber |
+| name         | string         | OPTIONAL                          |
 
-[broadcast.json](https://github.com/GovStackWorkingGroup/BuildingBlockAPI/blob/main/IM/schemas/broadcast.json)
+#### 7.3.2.6 Subscription
+
+| Data Element   | Default format | Description                                                                                                                                    |
+| -------------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| id             | string         | subscription id                                                                                                                                |
+| room\_id       | string         | room id                                                                                                                                        |
+| subscriber\_id | string         | subscriber id                                                                                                                                  |
+| event\_type    | string         | A filter expression that allows a subscriber to subscribe to only certain message\_types that are published to the room they're subscribed to. |
+| mode           | enum           | delivery mode                                                                                                                                  |
+| details        | object         | details of delivery, like time to live, repetition policy, etc.                                                                                |
