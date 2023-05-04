@@ -1,10 +1,22 @@
 openapi: 3.0.0
 servers:
-  - url: https://{securityserver}/r1
+  - url: https://{securityserver}/r1/{GovStackInstance}/{memberClass}/{memberCode}/{applicationCode}
     variables:
       securityserver:
-        default: ''
-        description: 'security server address'
+        default: SECURITYSERVER
+        description: security server address
+      GovStackInstance:
+        default: govstack
+        description: name of GovStack instance
+      memberClass:
+        default: GOV 
+        description: namespace for memberCode
+      memberCode:
+        default: ministry
+        description: name of Member
+      applicationCode:
+        default: room
+        description: name of Application
 info:
   description: This is GovStack Information Mediator PubSub API
   version: "1.0.0"
@@ -17,12 +29,8 @@ tags:
   - name: sub
     description: Operations available to Subscribers
 paths:
-  /{GovStackInstance}/{memberClass}/{memberCode}/{roomCode}/event/{id}:
+  /event/{id}:
     parameters:
-      - $ref: '#/components/parameters/GovStackInstance'
-      - $ref: '#/components/parameters/memberClass'
-      - $ref: '#/components/parameters/memberCode'
-      - $ref: '#/components/parameters/roomCode'
       - $ref: '#/components/parameters/X-GovStack-Client'
       - in: path
         name: id
@@ -56,12 +64,8 @@ paths:
           description: event processing stopped
         '404':
           description: event missing
-  /{GovStackInstance}/{memberClass}/{memberCode}/{roomCode}/subs:
+  /subs:
     parameters:
-      - $ref: '#/components/parameters/GovStackInstance'
-      - $ref: '#/components/parameters/memberClass'
-      - $ref: '#/components/parameters/memberCode'
-      - $ref: '#/components/parameters/roomCode'
       - $ref: '#/components/parameters/X-GovStack-Client'
     post:
       tags:
@@ -97,12 +101,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/SubscriptionItem'
-  /{GovStackInstance}/{memberClass}/{memberCode}/{roomCode}/subs/{id}:
+  /subs/{id}:
     parameters:
-      - $ref: '#/components/parameters/GovStackInstance'
-      - $ref: '#/components/parameters/memberClass'
-      - $ref: '#/components/parameters/memberCode'
-      - $ref: '#/components/parameters/roomCode'
       - $ref: '#/components/parameters/X-GovStack-Client'
       - in: path
         name: id
@@ -153,12 +153,8 @@ paths:
           description: subscription deleted
         '404':
           description: subscription missing
-  /{GovStackInstance}/{memberClass}/{memberCode}/{roomCode}/pull/{serviceCode}/{operationId}:
+  /pull/{serviceCode}/{operationId}:
     parameters:
-      - $ref: '#/components/parameters/GovStackInstance'
-      - $ref: '#/components/parameters/memberClass'
-      - $ref: '#/components/parameters/memberCode'
-      - $ref: '#/components/parameters/roomCode'
       - $ref: '#/components/parameters/X-GovStack-Client'
       - in: path
         name: serviceCode
@@ -189,12 +185,8 @@ paths:
           description: no event available
         '409':
           description: invalid request
-  /{GovStackInstance}/{memberClass}/{memberCode}/{roomCode}/pull/{serviceCode}/{operationId}/{eventId}:
+  /pull/{serviceCode}/{operationId}/{eventId}:
     parameters:
-      - $ref: '#/components/parameters/GovStackInstance'
-      - $ref: '#/components/parameters/memberClass'
-      - $ref: '#/components/parameters/memberCode'
-      - $ref: '#/components/parameters/roomCode'
       - $ref: '#/components/parameters/X-GovStack-Client'
       - in: path
         name: serviceCode
@@ -246,30 +238,6 @@ paths:
           description: invalid request
 components:
   parameters:
-    GovStackInstance:
-      name: GovStackInstance
-      required: true
-      in: path
-      schema:
-        type: string
-    memberClass:
-      name: memberClass
-      required: true
-      in: path
-      schema:
-        type: string
-    memberCode:
-      name: memberCode
-      required: true
-      in: path
-      schema:
-        type: string
-    roomCode:
-      name: roomCode
-      required: true
-      in: path
-      schema:
-        type: string
     X-GovStack-Client:
       name: X-GovStack-Client
       in: header
