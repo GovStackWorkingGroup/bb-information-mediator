@@ -12,29 +12,21 @@ The cross-cutting requirements described in this section are an extension of the
 
 Application APIs will contain POST endpoints which are not idempotent. GET/PUT/DELETE APIs are idempotent relative to Information Mediator Building Block, but the idempotents of intermediated services depend on the service provider and cannot be specified at this level.
 
-## **5.2** Use Secure Configuration (REQUIRED)
-
-Configuration MUST be done using secure processes, such as environment variables or a secure secret store. No configuration in the code.
-
-## **5.3** Databases should not Include Business Logic (RECOMMENDED)
+## **5.2** Databases should not Include Business Logic (RECOMMENDED)
 
 Databases should not include business logic. We propose that this is a design recommendation which intends to make business logic all live in a clearly visible and accessible location. This may not always be followed, as the benefits of stored procedures (e.g., in reducing database transaction round-trips, etc.) may sometimes outweigh this general design recommendation.
 
-## **5.4** Design for Asynchronous First (RECOMMENDED)
+## **5.3** Design for Asynchronous First (RECOMMENDED)
 
 The Service Access Layer of the Information Mediator is synchronous first. The Pub/Sub Layer is asynchronous.
 
-## **5.5** Use Standardized Data Formats for Interchange (REQUIRED)
+## **5.4** Use Standardized Data Formats for Interchange (REQUIRED)
 
 Standard formats are used for communication with other Building Blocks. Inside Building Block non-standard protocols can be used.&#x20;
 
-## **5.6** Use Web Hooks for Callbacks (REQUIRED)
+## **5.5** Use Web Hooks for Callbacks (REQUIRED)
 
 OpenAPI spec 3.0 is supported in the first version. Moving to OpenAPI 3.1 is planned for the future.
-
-## **5.7** Preference for TIOBE Top 25 Languages
-
-Should use TIOBE's top 25 languages. Shell may be used for scripting (Shell holds language ranks between 50 and 100).
 
 ## Performance Requirements
 
