@@ -6,28 +6,29 @@ description: >-
 
 # 5 Cross-Cutting Requirements
 
-The cross-cutting requirements described in this section are an extension of the cross-cutting requirements defined in the [Architecture Blueprint document](https://govstack.gitbook.io/specification/building-blocks/architecture-and-nonfunctional-requirements) and the [Security Requirements](https://govstack.gitbook.io/specification/security-requirements). This section will describe any additional cross-cutting requirements that apply to this Building Block or differences with the Architecture Blueprint.
+The cross-cutting requirements described in this section are an extension of the cross-cutting requirements defined in the [Architecture Blueprint document](https://govstack.gitbook.io/specification/v/1.0/architecture-and-nonfunctional-requirements) and the [Security Requirements](https://govstack.gitbook.io/specification/v/1.0/security-requirements). This section will describe any additional cross-cutting requirements for this Building Block or differences with the Architecture Blueprint.
 
-## **5.1 Architecture Blueprint**
+## **5.1** GET and PUT APIs must be Idempotent (REQUIRED)
 
-| Topic number in arch document | Name of requirement in arch document                    | Remarks                                                                                                                                                                                                                                                                                                                                                                                           |
-| ----------------------------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 5.5                           | MUST only use TIOBE top 25 languages                    | <p>SHOULD use TIOBE top 25 languages (Not MUST)</p><p>Shell may be used for scripting (Shell holds language ranks between 50 and 100).</p>                                                                                                                                                                                                                                                        |
-| 5.8                           | APIs MUST be idempotent                                 | <p>Application APIs will contain POST endpoints which are not idempotent.</p><p>GET/PUT/DELETE APIs are idempotent relative to Information Mediator Building Block, but idempotent-ness of intermediated services depend on the service provider and cannot be specified at this level.</p>                                                                                                       |
-| 5.17                          | MUST provide configuration only through the environment | <p>Configuration not only through environment</p><p>Configuration is mainly in configuration files. Environment variables could also be used. No configuration in code.</p>                                                                                                                                                                                                                       |
-| 5.21                          | Databases MUST not include business logic               | <p>Databases SHOULD not include business logic.</p><p>We propose that this is a design recommendation which intends to make business logic all live in a clearly visible and accessible location. This may not always be followed, as the benefits of stored procedures (e.g., in reducing database transaction round-trips, etc.) may sometimes outweigh this general design recommendation.</p> |
-| 5.26                          | MUST be asynchronous first                              | <p>SHOULD be asynchronous first</p><p>The Service Access Layer of Information Mediator is synchronous first.</p><p>The Pub/Sub Layer is asynchronous.</p>                                                                                                                                                                                                                                         |
-| 5.32                          | MUST use standardized configuration                     | See 3.17                                                                                                                                                                                                                                                                                                                                                                                          |
-| 5.34                          | MUST use standardized data formats for interchange      | Standard formats are used for communication with other Building Blocks. Inside Building Block non-standard protocols can be used.                                                                                                                                                                                                                                                                 |
-| 5.38                          | MUST use web hooks for callbacks                        | OpenAPI spec 3.0 supported in the first version. Moving to OpenAPI 3.1 is planned in the future.                                                                                                                                                                                                                                                                                                  |
+Application APIs will contain POST endpoints which are not idempotent. GET/PUT/DELETE APIs are idempotent relative to Information Mediator Building Block, but the idempotents of intermediated services depend on the service provider and cannot be specified at this level.
 
-## **5.2 Security Specification**
+## **5.2** Databases should not Include Business Logic (RECOMMENDED)
 
-| Topic number in Security specs document | Name of requirement in arch document                                                                            | Remarks |
-| --------------------------------------- | --------------------------------------------------------------------------------------------------------------- | ------- |
-|                                         | MUST allow the provisioning/management of admin users via the SSO/IAM application specified by the Security BB. |         |
+Databases should not include business logic. We propose that this is a design recommendation which intends to make business logic all live in a clearly visible and accessible location. This may not always be followed, as the benefits of stored procedures (e.g., in reducing database transaction round-trips, etc.) may sometimes outweigh this general design recommendation.
 
-## **5.3** Performance Requirements
+## **5.3** Design for Asynchronous First (RECOMMENDED)
+
+The Service Access Layer of the Information Mediator is synchronous first. The Pub/Sub Layer is asynchronous.
+
+## **5.4** Use Standardized Data Formats for Interchange (REQUIRED)
+
+Standard formats are used for communication with other Building Blocks. Inside Building Block non-standard protocols can be used.&#x20;
+
+## **5.5** Use Web Hooks for Callbacks (REQUIRED)
+
+OpenAPI spec 3.0 is supported in the first version. Moving to OpenAPI 3.1 is planned for the future.
+
+## Performance Requirements
 
 The Performance Requirements specify the basic parameters that an implementing government might use to establish performance requirements for scalability, throughput, and response times when reasonable/necessary. For example:
 
@@ -36,7 +37,7 @@ The Performance Requirements specify the basic parameters that an implementing g
 * Concurrency = 1000 concurrent requests.
 * All solutions MUST be able to monitor and report, including but not limited to, resource consumption, throughput, latency, average latency, queue depth/backlogs, etc.
   * All of these indicators MUST be available through an administrative API.
-  * Ideally, all Building Blocks should be able to run a “monitoring agent” which handles reporting out logs, requests, Building Block-specific indicators, etc. to a monitoring service (e.g., [Datadog](https://www.datadoghq.com/))
+  * Ideally, all Building Blocks should be able to run a “monitoring agent” which handles reporting out logs, requests, Building Block-specific indicators, etc. to a monitoring service (e.g. [Datadog](https://www.datadoghq.com/))
   * The local monitoring agent should be configurable via web interface.
 * Retries and back-off strategies must be configurable.
-* Specific “[Scaling/Throughput](6-functional-requirements.md#6.5-scaling-throughput)” requirements are in the functional requirements section.
+* Specific “[Scaling/Throughput](6-functional-requirements.md#6.6-scaling-throughput)” requirements are in the functional requirements section.
