@@ -128,3 +128,43 @@ The response is an **OpenAPI specification**, detailing the endpoints and requir
 At the debugging time, to learn about system performance or retrieve an audit log, an administrator may send a request to the reporting API.
 
 The response is \<audit trail>, \<metrics>, etc.
+
+### 8.6 Management API
+
+#### 8.6.1 Configuration Management
+
+{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml" path="/config" method="get" %}
+[https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml)
+{% endswagger %}
+
+{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml" path="/config" method="post" %}
+[https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml)
+{% endswagger %}
+
+{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml" path="/config" method="put" %}
+[https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml)
+{% endswagger %}
+
+{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml" path="/config" method="patch" %}
+[https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml)
+{% endswagger %}
+
+{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml" path="/status" method="get" %}
+[https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml)
+{% endswagger %}
+
+
+#### 8.6.2 Management of Access Rights
+
+{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml" path="/rights/allow" method="get" %}
+[https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml)
+{% endswagger %}
+
+{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml" path="/rights/allow" method="patch" %}
+[https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml)
+{% endswagger %}
+
+{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml" path="/rights/deny" method="patch" %}
+[https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API-1.0.0.yaml)
+{% endswagger %}
+

@@ -1,0 +1,61 @@
+{
+  "data": [
+    {
+      "GovStackInstance": "identifier",
+      "memberClass": "identifier",
+      "memberCode": "alp4aNum3r1c",
+      "applicationCode": "alp4aNum3r1c",
+      "service": [
+         {
+          "serviceId": "serviceId",
+          "instanceId": "instanceId",
+          "serviceCode": "alp4aNum3r1c"
+        },
+        {
+          "serviceId": "serviceId1",
+          "instanceId": "instanceId1",
+          "serviceCode": "alp4aNum3r1c"
+        }
+      ]
+    },
+    {
+      "GovStackInstance": "a11a11a11a",
+      "memberClass": "asd2211a",
+      "memberCode": "12as12",
+      "applicationCode": "m3mb3rc0d3",
+      "service": [
+        {
+          "serviceId": "serviceId2",
+          "instanceId": "instanceId2",
+          "serviceCode": "alp4aNum3r1c"
+        }
+      ]
+    },
+    {
+      "GovStackInstance": "a552example",
+      "memberClass": "zzz321a",
+      "memberCode": "m3mb3rc0d3",
+      "applicationCode": "aa15",
+      "service": [
+        {
+          "serviceId": "serviceId3",
+          "instanceId": "instanceId3",
+          "serviceCode": "alp4aNum3r1c"
+        }
+      ]
+    },
+    {
+      "GovStackInstance": "valid1dentifi3r",
+      "memberClass": "rand0mid3nt",
+      "memberCode": "str1ng",
+      "applicationCode": "azxcv55",
+      "service": [
+        {
+          "serviceId": "serviceId4",
+          "instanceId": "instanceId4",
+          "serviceCode": "alp4aNum3r1c"
+        }
+      ]
+    }
+  ]
+}

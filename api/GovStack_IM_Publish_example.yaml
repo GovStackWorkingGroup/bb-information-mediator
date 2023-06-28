@@ -1,0 +1,106 @@
+openapi: 3.0.0
+servers:
+  - url: https://{securityserver}/r1/{GovStackInstance}/{memberClass}/{memberCode}/{roomCode}
+    variables:
+      securityserver:
+        default: SECURITYSERVER
+        description: security server address
+      GovStackInstance:
+        default: govstack
+        description: name of GovStack instance where Room is located
+      memberClass:
+        default: GOV 
+        description: namespace for memberCode
+      memberCode:
+        default: ministry-of-health
+        description: name of Member responsible for Room
+      roomCode:
+        default: health-events
+        description: name of Room (Application)
+info:
+  description: This is GovStack Information Mediator Publish example
+  version: "1.0.0"
+  title: GovStack IM Publish example
+  contact:
+    email: bb-information-mediat-aaaafm2vhf6hnebpu3tizg3v74@govstack.slack.com
+paths:
+  /v1/newBirth:
+    parameters:
+      - $ref: '#/components/parameters/client-name'
+    post:
+      summary: Publish newBirth data
+      operationId: newBirth
+      description: Send data for publishing newBirth to all subscibers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/newBirthPayload'
+        description: Data structure of newBirth
+      responses:
+        '201':
+          description: newBirth accepted for publishing. Returning event id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PubResult'
+        '400':
+          description: 'invalid input, object invalid'
+        '409':
+          description: an item already exists
+components:
+  parameters:
+    client-name:
+      name: X-GovStack-Client
+      in: header
+      schema:
+        type: string
+        default: govstack:COM:hospital:midwife
+  schemas:
+    newBirthPayload:
+      type: object
+      required:
+        - date-time
+        - gender
+        - mother
+        - place
+        - id
+      properties:
+        date-time:
+          type: string
+          format: date-time
+          example: '2023-05-01T11:25:00+02:00'
+        gender:
+          type: string
+          enum: ['M', 'F']
+          example: M
+        mother:
+          type: string
+          example: Pamela Anderson
+        place:
+          type: string
+          example: City Hospital
+        id:
+          type: string
+          example: ABC001005678
+        details:
+          type: object
+          properties:
+            weight:
+              type: integer
+              default: 3200
+            length:
+              type: integer
+              default: 49
+            eyes-color:
+              type: string
+              default: brown
+    PubResult:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
