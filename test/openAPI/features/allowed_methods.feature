@@ -7,11 +7,11 @@ Feature: This endpoint is used to list allowed REST services and endpoints for a
   Scenario: Successfully retrieved the list of allowed REST services and endpoints for a service provider smoke type test
     
     Given Wants to retrieve the list of allowed REST services and endpoints for a service provider
-    When The GET request with given "serviceId1" as serviceId, "identifier" as GovStackInstance, "identifier" as memberClass, "alp4aNum3r1c" as memberCode and "alp4aNum3r1c" as applicationCode is sent
+    When The GET request with given Information-Mediator-Client header, "serviceId1" as serviceId, "identifier" as GovStackInstance, "identifier" as memberClass, "alp4aNum3r1c" as memberCode and "alp4aNum3r1c" as applicationCode is sent
     Then User receives a response from the allowedMethods endpoint
     And The allowedMethods endpoint response should be returned in a timely manner
     And The allowedMethods endpoint response should have status 200
-    And The allowedMethods endpoint response should have content-type: application/json header
+    And The allowedMethods response should have "content-type": "application/json" header
     And The allowedMethods endpoint response should match json schema
 
 
@@ -19,11 +19,11 @@ Feature: This endpoint is used to list allowed REST services and endpoints for a
   Scenario Outline: Successfully retrieved the list of allowed REST services and endpoints for a service provider
     
     Given Wants to retrieve the list of allowed REST services and endpoints for a service provider
-    When The GET request with given "<serviceId>" as serviceId, "<GovStackInstance>" as GovStackInstance, "<memberClass>" as memberClass, "<memberCode>" as memberCode and "<applicationCode>" as applicationCode is sent
+    When The GET request with given Information-Mediator-Client header, "<serviceId>" as serviceId, "<GovStackInstance>" as GovStackInstance, "<memberClass>" as memberClass, "<memberCode>" as memberCode and "<applicationCode>" as applicationCode is sent
     Then User receives a response from the allowedMethods endpoint
     And The allowedMethods endpoint response should be returned in a timely manner
     And The allowedMethods endpoint response should have status 200
-    And The allowedMethods endpoint response should have content-type: application/json header
+    And The allowedMethods response should have "content-type": "application/json" header
     And The allowedMethods endpoint response should match json schema
 
     Examples: Valid data

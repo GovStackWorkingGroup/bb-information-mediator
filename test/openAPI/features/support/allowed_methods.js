@@ -2,6 +2,7 @@ const chai = require('chai');
 const { spec } = require('pactum');
 const { Given, When, Then, Before, After } = require('@cucumber/cucumber');
 const {
+  header,
   localhost,
   responseSchema,
   allowedMethodsEndpoint,
@@ -27,10 +28,11 @@ Given(
 );
 
 When(
-  'The GET request with given {string} as serviceId, {string} as GovStackInstance, {string} as memberClass, {string} as memberCode and {string} as applicationCode is sent',
+  'The GET request with given Information-Mediator-Client header, {string} as serviceId, {string} as GovStackInstance, {string} as memberClass, {string} as memberCode and {string} as applicationCode is sent',
   (serviceId, GovStackInstance, memberClass, memberCode, applicationCode) =>
     specAllowedMethods
       .get(baseUrl)
+      .withHeaders(header.key, header.value)
       .withPathParams({
         GovStackInstance: GovStackInstance,
         memberClass: memberClass,
@@ -58,11 +60,11 @@ Then('The allowedMethods endpoint response should have status 200', () =>
 );
 
 Then(
-  'The allowedMethods endpoint response should have content-type: application\\/json header',
-  () =>
+  'The allowedMethods response should have {string}: {string} header',
+  (key, value) =>
     specAllowedMethods
       .response()
-      .should.have.header(acceptHeader.key, acceptHeader.value)
+      .should.have.headerContains(key, value)
 );
 
 Then('The allowedMethods endpoint response should match json schema', () =>

@@ -9,7 +9,7 @@ Feature: This endpoint is used to retrieve the list of clients from GovStack.
     Then User receives a response from the listClients endpoint
     And The listClients endpoint response should be returned in a timely manner
     And The listClients endpoint response should have status 200
-    And The listClients endpoint response should have content-type: application/json header
+    And The listClients response should have "content-type": "application/json" header
     And The listClients endpoint response should match json schema
 
   @unit @positive
@@ -20,7 +20,7 @@ Feature: This endpoint is used to retrieve the list of clients from GovStack.
     Then User receives a response from the listClients endpoint
     And The listClients endpoint response should be returned in a timely manner
     And The listClients endpoint response should have status 200
-    And The listClients endpoint response should have content-type: application/json header
+    And The listClients response should have "content-type": "application/json" header
     And The listClients endpoint response should match json schema
 
     Examples: Valid data

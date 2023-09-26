@@ -15,6 +15,10 @@ module.exports = {
     key: 'content-type',
     value: 'application/json; charset=utf-8',
   },
+  header: {
+    key: 'Information-Mediator-Client',
+    value: 'eGovStack/GOV/90000009/digitalregistries',
+  },
   responseSchema: {
     type: 'object',
     properties: {
