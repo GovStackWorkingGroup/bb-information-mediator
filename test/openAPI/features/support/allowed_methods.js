@@ -27,20 +27,26 @@ Given(
   () => 'Required route params were specified'
 );
 
-When(
-  'The GET request with given Information-Mediator-Client header, {string} as serviceId, {string} as GovStackInstance, {string} as memberClass, {string} as memberCode and {string} as applicationCode is sent',
-  (serviceId, GovStackInstance, memberClass, memberCode, applicationCode) =>
-    specAllowedMethods
-      .get(baseUrl)
-      .withHeaders(header.key, header.value)
-      .withPathParams({
-        GovStackInstance: GovStackInstance,
-        memberClass: memberClass,
-        memberCode: memberCode,
-        applicationCode: applicationCode,
-      })
-      .withQueryParams('serviceId', serviceId)
-);
+When('I send a GET request with:', function (dataTable) {
+  const headers = dataTable.rowsHash();
+  if (headers.Header) delete headers.Header;
+  
+  specAllowedMethods.get(baseUrl);
+  for (const key in headers) {
+    specAllowedMethods.withHeaders(key, headers[key]);
+  }
+});
+
+When('The payload contains:', function (dataTable) {
+  const payload = dataTable.rowsHash();
+  if (payload.Parameter) delete payload.Parameter;
+
+  const serviceId = payload.serviceId;
+  delete payload.serviceId;
+  specAllowedMethods
+      .withPathParams(payload)
+      .withQueryParams(serviceId, serviceId);
+});
 
 Then(
   'User receives a response from the allowedMethods endpoint',
