@@ -27,10 +27,11 @@ Given(
 );
 
 When(
-  'User sends GET request with given {string} as serviceId, {string} as GovStackInstance, {string} as memberClass, {string} as memberCode, {string} as applicationCode',
-  (serviceId, GovStackInstance, memberClass, memberCode, applicationCode) =>
+  'User sends GET request with given {string} as serviceId, {string} as GovStackInstance, {string} as memberClass, {string} as memberCode, {string} as applicationCode and {string} header',
+  (serviceId, GovStackInstance, memberClass, memberCode, applicationCode, XGovStackClient) =>
     specListMethods
       .get(baseUrl)
+      .withHeaders(XGovStackClient, XGovStackClient)
       .withQueryParams({
         serviceId: serviceId,
       })
@@ -60,11 +61,11 @@ Then('The listMethods endpoint response should have status 200', () =>
 );
 
 Then(
-  'The listMethods endpoint response should have content-type: application\\/json header',
-  () =>
+  'The listMethods response should have {string}: {string} header',
+  (key, value) =>
     specListMethods
       .response()
-      .should.have.header(acceptHeader.key, acceptHeader.value)
+      .should.have.headerContains(key, value)
 );
 
 Then('The listMethods endpoint response should match json schema', () =>

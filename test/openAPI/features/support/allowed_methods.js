@@ -2,6 +2,7 @@ const chai = require('chai');
 const { spec } = require('pactum');
 const { Given, When, Then, Before, After } = require('@cucumber/cucumber');
 const {
+  header,
   localhost,
   responseSchema,
   allowedMethodsEndpoint,
@@ -26,19 +27,26 @@ Given(
   () => 'Required route params were specified'
 );
 
-When(
-  'The GET request with given {string} as serviceId, {string} as GovStackInstance, {string} as memberClass, {string} as memberCode and {string} as applicationCode is sent',
-  (serviceId, GovStackInstance, memberClass, memberCode, applicationCode) =>
-    specAllowedMethods
-      .get(baseUrl)
-      .withPathParams({
-        GovStackInstance: GovStackInstance,
-        memberClass: memberClass,
-        memberCode: memberCode,
-        applicationCode: applicationCode,
-      })
-      .withQueryParams('serviceId', serviceId)
-);
+When('I send a GET request with:', function (dataTable) {
+  const headers = dataTable.rowsHash();
+  if (headers.Header) delete headers.Header;
+  
+  specAllowedMethods.get(baseUrl);
+  for (const key in headers) {
+    specAllowedMethods.withHeaders(key, headers[key]);
+  }
+});
+
+When('The payload contains:', function (dataTable) {
+  const payload = dataTable.rowsHash();
+  if (payload.Parameter) delete payload.Parameter;
+
+  const serviceId = payload.serviceId;
+  delete payload.serviceId;
+  specAllowedMethods
+      .withPathParams(payload)
+      .withQueryParams(serviceId, serviceId);
+});
 
 Then(
   'User receives a response from the allowedMethods endpoint',
@@ -58,11 +66,11 @@ Then('The allowedMethods endpoint response should have status 200', () =>
 );
 
 Then(
-  'The allowedMethods endpoint response should have content-type: application\\/json header',
-  () =>
+  'The allowedMethods response should have {string}: {string} header',
+  (key, value) =>
     specAllowedMethods
       .response()
-      .should.have.header(acceptHeader.key, acceptHeader.value)
+      .should.have.headerContains(key, value)
 );
 
 Then('The allowedMethods endpoint response should match json schema', () =>

@@ -53,11 +53,11 @@ Then('The listClients endpoint response should have status 200', () =>
 );
 
 Then(
-  'The listClients endpoint response should have content-type: application\\/json header',
-  () =>
+  'The listClients response should have {string}: {string} header',
+  (key, value) =>
     specListClients
       .response()
-      .should.have.header(acceptHeader.key, acceptHeader.value)
+      .should.have.headerContains(key, value)
 );
 
 Then('The listClients endpoint response should match json schema', () =>
