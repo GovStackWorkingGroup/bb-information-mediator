@@ -8,6 +8,9 @@ Feature: Retrieve openAPI description of the specified REST service
 
     Given User wants to retrieve the openAPI description of the specified REST service
     When User sends GET request with given "identifier" as GovStackInstance "identifier" as memberClass "alp4aNum3r1c" as memberCode "alp4aNum3r1c" as applicationCode
+    And The request contains headers:
+      | Header                     | Value                                       |
+      | Information-Mediator-Client| eGovStack/GOV/90000009/digitalregistries    |
     And User provides query parameter "alp4aNum3r1c" as serviceCode
     Then User receives a response
     And The response should be returned in a timely manner
@@ -20,6 +23,9 @@ Feature: Retrieve openAPI description of the specified REST service
 
     Given User wants to retrieve the openAPI description of the specified REST service
     When User sends GET request with given "<GovStackInstance>" as GovStackInstance "<memberClass>" as memberClass "<memberCode>" as memberCode "<applicationCode>" as applicationCode
+    And The request contains headers:
+      | Header                     | Value                                       |
+      | Information-Mediator-Client| eGovStack/GOV/90000009/digitalregistries    |
     And User provides query parameter "alp4aNum3r1c" as serviceCode
     Then User receives a response
     And The response should be returned in a timely manner
@@ -40,6 +46,9 @@ Feature: Retrieve openAPI description of the specified REST service
 
     Given User wants to retrieve the openAPI description of the specified REST service
     When User sends GET request with given "<GovStackInstance>" as GovStackInstance "<memberClass>" as memberClass "<memberCode>" as memberCode "<applicationCode>" as applicationCode
+    And The request contains headers:
+      | Header                     | Value                                       |
+      | Information-Mediator-Client| eGovStack/GOV/90000009/digitalregistries    |
     And User provides query parameter "alp4aNum3r1c" as serviceCode
     Then User receives a response
     And The response should be returned in a timely manner
@@ -60,6 +69,9 @@ Feature: Retrieve openAPI description of the specified REST service
 
     Given User wants to retrieve the openAPI description of the specified REST service
     When User sends GET request with given "identifier" as GovStackInstance "identifier" as memberClass "alp4aNum3r1c" as memberCode "alp4aNum3r1c" as applicationCode
+    And The request contains headers:
+      | Header                     | Value                                       |
+      | Information-Mediator-Client| eGovStack/GOV/90000009/digitalregistries    |
     And User provides query parameter "<serviceCode>" as serviceCode
     Then User receives a response
     And The response should be returned in a timely manner
@@ -77,6 +89,9 @@ Feature: Retrieve openAPI description of the specified REST service
 
     Given User wants to retrieve the openAPI description of the specified REST service
     When User sends GET request with given "identifier" as GovStackInstance "identifier" as memberClass "alp4aNum3r1c" as memberCode "alp4aNum3r1c" as applicationCode
+    And The request contains headers:
+      | Header                     | Value                                       |
+      | Information-Mediator-Client| eGovStack/GOV/90000009/digitalregistries    |
     Then User receives a response
     And The response should be returned in a timely manner
     And The response should have status 400
