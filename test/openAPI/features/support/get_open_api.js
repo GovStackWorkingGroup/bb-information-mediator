@@ -36,6 +36,15 @@ When(
     })
 );
 
+When('The request contains headers:', function (dataTable) {
+  const headers = dataTable.rowsHash();
+  if (headers.Header) delete headers.Header;
+
+  for (const key in headers) {
+    specGetOpenAPI.withHeaders(key, headers[key]);
+  }
+});
+
 When('User provides query parameter {string} as serviceCode', serviceCode => {
   specGetOpenAPI.withQueryParams('serviceCode', serviceCode);
 });
