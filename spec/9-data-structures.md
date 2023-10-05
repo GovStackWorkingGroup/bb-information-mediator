@@ -6,7 +6,7 @@ description: >-
 
 # 7 Data Structures
 
-The resource model shows the relationship between data objects that are used by the Information Mediator Building Block.  The data elements provide detail for the resource model. All data element schemas can be viewed, commented on, and modified in the [schemas section of the Information Mediator Building Block GitHub repository](https://github.com/GovStackWorkingGroup/bb-information-mediator/tree/1.0-QA/schemas).
+The resource model shows the relationship between data objects that are used by the Information Mediator Building Block. The data elements provide detail for the resource model. All data element schemas can be viewed, commented on, and modified in the [schemas section of the Information Mediator Building Block GitHub repository](https://github.com/GovStackWorkingGroup/bb-information-mediator/tree/1.0-QA/schemas).
 
 ## 7.1 Resource Model
 
@@ -116,4 +116,3 @@ A candidate application playing the role of **IM-Subscriber** must be able to pr
 | mode           | enum           | delivery mode                                                                                                                                  |
 | details        | object         | details of delivery, like time to live, repetition policy, etc.                                                                                |
 
-Schema reference [broadcast.json](../schemas/broadcast.json)
