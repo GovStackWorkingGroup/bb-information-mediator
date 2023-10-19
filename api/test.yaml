@@ -3,8 +3,7 @@ info:
   title: GovStack IM Service Metadata API
   version: '0.3'
 servers:
-  - url: 'https://{securityserver}/'
-  - url: https://{securityserver}/r1
+  - url: /r1
     variables:
       securityserver:
         default: ''
@@ -14,7 +13,7 @@ paths:
     get:
       tags:
         - metaservices
-      summary: List clients defined in the X-Road instance
+      summary: List clients defined in the instance
       operationId: listClients
       parameters:
         - name: xRoadInstance
