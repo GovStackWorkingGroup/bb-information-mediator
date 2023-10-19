@@ -8,17 +8,18 @@ paths:
       tags:
         - metaservices
       summary: List clients defined in the instance
-      description: >-
-        Security server clients can retrieve a list of all the potential service providers (i.e., members and applications)
-        of an GovStack instance.
+      description: |
+        Security server clients can retrieve a list of all the potential service providers
+        (i.e., members and applications) of an GovStack instance.
         This can be accomplished by making a HTTP GET request to the security server.
         The request URL is `http://SECURITYSERVER/listClients` or `https://SECURITYSERVER/listClients`
         depending on whether the HTTPS protocol is configured for interaction.
-        When making the request, the address `SECURITYSERVER` must be replaced with the actual address of the security server.
+        When making the request, the address `SECURITYSERVER` must be replaced with the actual address
+        of the security server.
         In addition, it is possible to retrieve a list of clients in other,
         federated GovStack instances by adding the following HTTP parameter:
 
-        * `instanceId` – code that identifies the instance.
+          `instanceId` – code that identifies the instance.
         
         Thus, to retrieve a list of clients defined in the instance `AA`, the request URL is
         `http://SECURITYSERVER/listClients?instanceId=AA`.
