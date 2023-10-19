@@ -2,21 +2,29 @@ openapi: 3.0.0
 info:
   title: GovStack IM Service Metadata API
   version: '0.3'
-servers:
-  - url: /r1
-    variables:
-      securityserver:
-        default: ''
-        description: 'security server address'
 paths:
   /listClients:
     get:
       tags:
         - metaservices
       summary: List clients defined in the instance
+      description: >-
+        Security server clients can retrieve a list of all the potential service providers (i.e., members and applications)
+        of an GovStack instance.
+        This can be accomplished by making a HTTP GET request to the security server.
+        The request URL is `http://SECURITYSERVER/listClients` or `https://SECURITYSERVER/listClients`
+        depending on whether the HTTPS protocol is configured for interaction.
+        When making the request, the address `SECURITYSERVER` must be replaced with the actual address of the security server.
+        In addition, it is possible to retrieve a list of clients in other,
+        federated GovStack instances by adding the following HTTP parameter:
+
+        * `instanceId` – code that identifies the instance.
+        
+        Thus, to retrieve a list of clients defined in the instance `AA`, the request URL is
+        `http://SECURITYSERVER/listClients?instanceId=AA`.
       operationId: listClients
       parameters:
-        - name: xRoadInstance
+        - name: instanceId
           in: query
           schema:
             type: string
@@ -27,7 +35,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/clientList'
-  /{xRoadInstance}/{memberClass}/{memberCode}/{subsystemCode}/listMethods:
+  /r1/{xRoadInstance}/{memberClass}/{memberCode}/{subsystemCode}/listMethods:
     parameters:
       - $ref: '#/components/parameters/xRoadInstance'
       - $ref: '#/components/parameters/memberClass'
