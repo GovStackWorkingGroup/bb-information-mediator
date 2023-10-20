@@ -6,7 +6,7 @@ description: >-
 
 # 8 Service APIs
 
-The [GovStack non-functional requirements document](https://govstack.gitbook.io/specification/v/1.0/architecture-and-nonfunctional-requirements/6-onboarding) provides additional information on how 'adaptors' may be used to translate an existing API to the patterns described here. This section also provides guidance on how candidate products are tested and how GovStack validates a product's API against the API specifications defined here.&#x20;
+The [GovStack non-functional requirements document](https://govstack.gitbook.io/specification/v/1.0/architecture-and-nonfunctional-requirements/6-onboarding) provides additional information on how 'adaptors' may be used to translate an existing API to the patterns described here. This section also provides guidance on how candidate products are tested and how GovStack validates a product's API against the API specifications defined here.
 
 The tests for the Information Mediator Building Block can be found in [this GitHub repository](https://github.com/GovStackWorkingGroup/bb-information-mediator/tree/main/test/openAPI).
 
@@ -21,13 +21,11 @@ The services can be accessed via the following Service APIs:
 
 ## 8.1 Service Access
 
-The full API definition of all available services can be produced from the set of all available OpenAPI descriptions. For that one need in all occurrences of:
+The full API definition of all available services is the set of all available OpenAPI descriptions.
 
-“path”: { “\<some-value>”: … }
+One can take any of the available OpenAPI descriptions and call service according to that description.
 
-prepend \<some-value> with
-
-{GovStackInstance}/{memberClass}/{member}/{application}/{service}/ extending this way the path with these details.
+This call must be forwarded to IM local Security Server and the called URL must begin with the address of service in the form `{GovStackInstance}/{memberClass}/{member}/{application}/{service}/` followed by the service path with possible query parameters. The address of the service may be already listed in the OpenAPI description or must be added to the path if not provided by OpenAPI.
 
 ## 8.2 Directory Services
 
@@ -47,20 +45,20 @@ At development time, an administrator at application A sends a GET request to th
 
 The response is an **array of services** (either all services or services that the requester is authorized to access via “allowedMethods”). API MAY implement paging of output.
 
-{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Directory_Services_API.yaml" path="/listMethods" method="get" %}
-[https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Directory_Services_API.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Directory_Services_API.yaml)
+{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Service_Metadata.yaml" path="/r1/{GovStackInstance}/{memberClass}/{memberCode}/{applicationCode}/listMethods" method="get" %}
+[https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Service_Metadata.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Service_Metadata.yaml)
 {% endswagger %}
 
-{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Directory_Services_API.yaml" path="/allowedMethods" method="get" %}
-[https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Directory_Services_API.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Directory_Services_API.yaml)
+{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Service_Metadata.yaml" path="/r1/{GovStackInstance}/{memberClass}/{memberCode}/{applicationCode}/allowedMethods" method="get" %}
+[https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Service_Metadata.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Service_Metadata.yaml)
 {% endswagger %}
 
 At development time, to learn about an available service, an administrator at application A sends a GET request to the security server: <mark style="background-color:purple;">url-of-local-information-mediator-security-server</mark>/r1/<mark style="background-color:orange;">INDIA</mark>/<mark style="background-color:blue;">GOV/MEMBER</mark>/<mark style="background-color:green;">APPLICATION</mark>/<mark style="background-color:yellow;">getOpenApi</mark>?serviceCode=SERVICE
 
 The response is an **OpenAPI specification**, detailing the endpoints and requirements for that service/API of the requested Service of Application.
 
-{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Directory_Services_API.yaml" path="/getOpenAPI" method="get" %}
-[https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Directory_Services_API.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Directory_Services_API.yaml)
+{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Service_Metadata.yaml" path="/r1/{GovStackInstance}/{memberClass}/{memberCode}/{applicationCode}/getOpenAPI" method="get" %}
+[https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Service_Metadata.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Service_Metadata.yaml)
 {% endswagger %}
 
 ## 8.3 Pub/Sub Service
@@ -115,13 +113,7 @@ To broadcast a message to a Room, the service access API must be followed and th
 
 ## 8.4 Logging Services
 
-At development time, to learn about an available service, an administrator at application A sends a GET request to the security server: <mark style="background-color:purple;">url-of-local-information-mediator-security-server</mark>/r1/<mark style="background-color:orange;">INDIA</mark>/<mark style="background-color:blue;">GOV/MEMBER</mark>/<mark style="background-color:green;">APPLICATION</mark>/<mark style="background-color:yellow;">getOpenApi</mark>?serviceCode=SERVICE
-
-The response is an **OpenAPI specification**, detailing the endpoints and requirements for that service/API of the requested Service of Application.
-
-{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/BuildingBlockAPI/main/IM/govstack_im_service_metadata_api-0.3-swagger.json" path="/{GovStackInstance}/{memberClass}/{memberCode}/{applicationCode}/getOpenAPI" method="get" %}
-[https://raw.githubusercontent.com/GovStackWorkingGroup/BuildingBlockAPI/main/IM/govstack_im_service_metadata_api-0.3-swagger.json](https://raw.githubusercontent.com/GovStackWorkingGroup/BuildingBlockAPI/main/IM/govstack_im_service_metadata_api-0.3-swagger.json)
-{% endswagger %}
+To get info from system log, an administrator may send a request to the logging API.&#x20;
 
 ## 8.5 Monitoring Services
 
@@ -153,7 +145,6 @@ The response is \<audit trail>, \<metrics>, etc.
 [https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API.yaml)
 {% endswagger %}
 
-
 #### 8.6.2 Management of Access Rights
 
 {% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API.yaml" path="/rights/allow" method="get" %}
@@ -167,4 +158,3 @@ The response is \<audit trail>, \<metrics>, etc.
 {% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API.yaml" path="/rights/deny" method="patch" %}
 [https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API.yaml)
 {% endswagger %}
-

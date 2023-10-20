@@ -8,7 +8,7 @@ description: >-
 
 A workflow provides a detailed view of how the Information Mediator Building Block will interact with other building blocks to support common use cases. This section lists workflows that this building block must support. Other workflows may be implemented in addition to those listed.
 
-### 9.1 Service Access&#x20;
+### 9.1 Service Access
 
 Example Sequence diagram for accessing service
 
@@ -105,15 +105,16 @@ participant SS1 as IM Security Server of Subscriber
 participant SS2 as IM Security Server of Room
 participant Room
 opt event type discovery (design time)
-Subscriber ->> SS1: request list of Members
-SS1 -->> Subscriber: list of Members
-Subscriber ->> Subscriber: chose Member
-Subscriber ->> SS1: request list of Rooms (Applications)
-SS1 -->> Subscriber: list of Rooms (Applications)
+Subscriber ->> SS1: request list of Members and Rooms
+SS1 -->> Subscriber: list of Members and Rooms
 Subscriber ->> Subscriber: chose Room
 Subscriber ->> SS1: request list of available event types (Services)
+SS1 ->> SS2: request list of available event types (Services)
+SS2 -->> SS1: list of event types
 SS1 -->> Subscriber: list of event types
 Subscriber ->> SS1: GET description of the event type
+SS1 ->> SS2: GET description of the event type
+SS2 -->> SS1: OpenAPI of the event type
 SS1 -->> Subscriber: OpenAPI of the event type
 Subscriber ->> SS1: register endpoint for receiving events
 SS1 -->> Subscriber: done
@@ -147,16 +148,20 @@ participant Publisher
 participant Room
 participant Subscriber
 Publisher ->> Room: POST event
-Room ->> Room: register event
+Room ->> Room: store event
 Room -->> Publisher: event id
-alt PUSH delivery mode
-  loop for all Subscribers
+loop for all Subscribers
+  alt PUSH delivery mode
     Room ->> Subscriber: POST event
     Subscriber -->> Room: done
+  else PULL delivery mode
+    Room ->> Room: Store event in Subscriber queue
+    opt asynchronous activity
+      Subscriber ->> Room: GET event of type
+      Room -->> Subscriber: event
+      Subscriber ->> Room: Acknowledge event
+    end
   end
-else PULL delivery mode
-  Subscriber ->> Room: GET event of type
-  Room -->> Subscriber: event
 end
 opt get details
   Subscriber -->> Publisher: request event details
@@ -182,8 +187,9 @@ end
      * (alt) If the mode is ‘pull’, enqueue an event for request from the Subscriber;
        * There is a queue of events waiting to be processed per the Subscriber, such that the Subscriber might periodically check to see events waiting in their own queue, process those events, and clear the queue.
        * A pull mechanism is essential for resilience to network dropouts and traffic load balance at servers and for differentiating urgent/emergency events from normal events (this can be decided during implementation).
-4. (OPTIONAL - if mode is PULL) The Subscriber pulls an event:
+4. (OPTIONAL - if mode is PULL) At some moment of time, the Subscriber pulls an event:
    * The Subscriber makes a GET call to the Room service of the particular event type.
+   * The Subscriber acknowledges receiving of event.
 5. (OPTIONAL) The Subscriber requests event details. Some event details may have more restricted regulations for handling and may be not included in event type. In this case, the Subscriber requests these details directly from the publisher by making a GET call to the referenced Publisher with event id as a parameter.
    * This call implies the existence of an associated contract between the Subscriber and the Publisher.
 
