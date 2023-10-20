@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
-  title: GovStack IM Service Metadata API
-  version: '0.3'
+  title: GovStack IM Directory Services API
+  version: '1.0'
 paths:
   /listClients:
     get:
@@ -46,9 +46,10 @@ paths:
           description: Error in request
         '500':
           description: Internal error
-  /r1/{GovStackInstance}/{memberClass}/{memberCode}/{applicationCode}/listMethods:
+  /r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/listMethods:
     parameters:
-      - $ref: '#/components/parameters/GovStackInstance'
+      - $ref: "#/components/parameters/clientId"
+      - $ref: '#/components/parameters/instanceId'
       - $ref: '#/components/parameters/memberClass'
       - $ref: '#/components/parameters/memberCode'
       - $ref: '#/components/parameters/applicationCode'
@@ -70,10 +71,6 @@ paths:
           in: query
           schema:
             type: string
-        - name: X-GovStack-Client
-          in: header
-          schema:
-            type: string
       responses:
         '200':
           description: List of REST services and endpoints for a service provider
@@ -85,9 +82,10 @@ paths:
           description: Error in request
         '500':
           description: Internal error
-  /r1/{GovStackInstance}/{memberClass}/{memberCode}/{applicationCode}/allowedMethods:
+  /r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/allowedMethods:
     parameters:
-      - $ref: '#/components/parameters/GovStackInstance'
+      - $ref: "#/components/parameters/clientId"
+      - $ref: '#/components/parameters/instanceId'
       - $ref: '#/components/parameters/memberClass'
       - $ref: '#/components/parameters/memberCode'
       - $ref: '#/components/parameters/applicationCode'
@@ -109,10 +107,6 @@ paths:
           in: query
           schema:
             type: string
-        - name: X-GovStack-Client
-          in: header
-          schema:
-            type: string
       responses:
         '200':
           description: List of allowed REST services and endpoints for a service provider
@@ -124,9 +118,10 @@ paths:
           description: Error in request
         '500':
           description: Internal error
-  /r1/{GovStackInstance}/{memberClass}/{memberCode}/{applicationCode}/getOpenAPI:
+  /r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/getOpenAPI:
     parameters:
-      - $ref: "#/components/parameters/GovStackInstance"
+      - $ref: "#/components/parameters/clientId"
+      - $ref: "#/components/parameters/instanceId"
       - $ref: "#/components/parameters/memberClass"
       - $ref: "#/components/parameters/memberCode"
       - $ref: "#/components/parameters/applicationCode"
@@ -144,11 +139,8 @@ paths:
       operationId: getOpenAPI
       parameters:
         - name: serviceCode
+          required: true
           in: query
-          schema:
-            type: string
-        - name: X-GovStack-Client
-          in: header
           schema:
             type: string
       responses:
@@ -167,8 +159,14 @@ paths:
           description: Internal error
 components:
   parameters:
-    GovStackInstance:
-      name: GovStackInstance
+    clientId:
+      name: X-GovStack-Client
+      required: true
+      in: header
+      schema:
+        type: string
+    instanceId:
+      name: instanceId
       required: true
       in: path
       schema:
@@ -213,7 +211,7 @@ components:
                 - MEMBER
                 - APPLICATION
                 - SERVICE
-            GovStackInstance:
+            instanceId:
               type: string
             memberClass:
               type: string
@@ -239,7 +237,7 @@ components:
             - SERVICE
         serviceType:
           type: string
-        GovStackInstance:
+        instanceId:
           type: string
         memberClass:
           type: string
