@@ -25,7 +25,7 @@ The full API definition of all available services is the set of all available Op
 
 One can take any of the available OpenAPI descriptions and call service according to that description.
 
-This call must be forwarded to IM local Security Server and the called URL must begin with the address of service in the form `{GovStackInstance}/{memberClass}/{member}/{application}/{service}/` followed by the service path with possible query parameters. The address of the service may be already listed in the OpenAPI description or must be added to the path if not provided by OpenAPI.
+This call must be forwarded to IM local Security Server and path part of the called URL must begin with the address of service in the form `/r1/{instanceId}/{memberClass}/{member}/{application}/{service}/` followed by the service path with possible query parameters. The address of the service may be already listed in the OpenAPI description or must be added to the path if not provided by OpenAPI.
 
 ## 8.2 Directory Services
 
@@ -45,11 +45,11 @@ At development time, an administrator at application A sends a GET request to th
 
 The response is an **array of services** (either all services or services that the requester is authorized to access via “allowedMethods”). API MAY implement paging of output.
 
-{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Service_Metadata.yaml" path="/r1/{GovStackInstance}/{memberClass}/{memberCode}/{applicationCode}/listMethods" method="get" %}
+{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Service_Metadata.yaml" path="/r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/listMethods" method="get" %}
 [https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Service_Metadata.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Service_Metadata.yaml)
 {% endswagger %}
 
-{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Service_Metadata.yaml" path="/r1/{GovStackInstance}/{memberClass}/{memberCode}/{applicationCode}/allowedMethods" method="get" %}
+{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Service_Metadata.yaml" path="/r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/allowedMethods" method="get" %}
 [https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Service_Metadata.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Service_Metadata.yaml)
 {% endswagger %}
 
@@ -57,7 +57,7 @@ At development time, to learn about an available service, an administrator at ap
 
 The response is an **OpenAPI specification**, detailing the endpoints and requirements for that service/API of the requested Service of Application.
 
-{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Service_Metadata.yaml" path="/r1/{GovStackInstance}/{memberClass}/{memberCode}/{applicationCode}/getOpenAPI" method="get" %}
+{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Service_Metadata.yaml" path="/r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/getOpenAPI" method="get" %}
 [https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Service_Metadata.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Service_Metadata.yaml)
 {% endswagger %}
 
