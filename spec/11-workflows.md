@@ -148,16 +148,20 @@ participant Publisher
 participant Room
 participant Subscriber
 Publisher ->> Room: POST event
-Room ->> Room: register event
+Room ->> Room: store event
 Room -->> Publisher: event id
-alt PUSH delivery mode
-  loop for all Subscribers
+loop for all Subscribers
+  alt PUSH delivery mode
     Room ->> Subscriber: POST event
     Subscriber -->> Room: done
+  else PULL delivery mode
+    Room ->> Room: Store event in Subscriber queue
+    opt asynchronous activity
+      Subscriber ->> Room: GET event of type
+      Room -->> Subscriber: event
+      Subscriber ->> Room: Acknowledge event
+    end
   end
-else PULL delivery mode
-  Subscriber ->> Room: GET event of type
-  Room -->> Subscriber: event
 end
 opt get details
   Subscriber -->> Publisher: request event details
@@ -183,8 +187,9 @@ end
      * (alt) If the mode is ‘pull’, enqueue an event for request from the Subscriber;
        * There is a queue of events waiting to be processed per the Subscriber, such that the Subscriber might periodically check to see events waiting in their own queue, process those events, and clear the queue.
        * A pull mechanism is essential for resilience to network dropouts and traffic load balance at servers and for differentiating urgent/emergency events from normal events (this can be decided during implementation).
-4. (OPTIONAL - if mode is PULL) The Subscriber pulls an event:
+4. (OPTIONAL - if mode is PULL) At some moment of time, the Subscriber pulls an event:
    * The Subscriber makes a GET call to the Room service of the particular event type.
+   * The Subscriber acknowledges receiving of event.
 5. (OPTIONAL) The Subscriber requests event details. Some event details may have more restricted regulations for handling and may be not included in event type. In this case, the Subscriber requests these details directly from the publisher by making a GET call to the referenced Publisher with event id as a parameter.
    * This call implies the existence of an associated contract between the Subscriber and the Publisher.
 
