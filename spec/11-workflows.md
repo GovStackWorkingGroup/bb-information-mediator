@@ -8,7 +8,7 @@ description: >-
 
 A workflow provides a detailed view of how the Information Mediator Building Block will interact with other building blocks to support common use cases. This section lists workflows that this building block must support. Other workflows may be implemented in addition to those listed.
 
-### 9.1 Service Access&#x20;
+### 9.1 Service Access
 
 Example Sequence diagram for accessing service
 
@@ -105,15 +105,16 @@ participant SS1 as IM Security Server of Subscriber
 participant SS2 as IM Security Server of Room
 participant Room
 opt event type discovery (design time)
-Subscriber ->> SS1: request list of Members
-SS1 -->> Subscriber: list of Members
-Subscriber ->> Subscriber: chose Member
-Subscriber ->> SS1: request list of Rooms (Applications)
-SS1 -->> Subscriber: list of Rooms (Applications)
+Subscriber ->> SS1: request list of Members and Rooms
+SS1 -->> Subscriber: list of Members and Rooms
 Subscriber ->> Subscriber: chose Room
 Subscriber ->> SS1: request list of available event types (Services)
+SS1 ->> SS2: request list of available event types (Services)
+SS2 -->> SS1: list of event types
 SS1 -->> Subscriber: list of event types
 Subscriber ->> SS1: GET description of the event type
+SS1 ->> SS2: GET description of the event type
+SS2 -->> SS1: OpenAPI of the event type
 SS1 -->> Subscriber: OpenAPI of the event type
 Subscriber ->> SS1: register endpoint for receiving events
 SS1 -->> Subscriber: done
