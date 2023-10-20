@@ -9,50 +9,68 @@ paths:
         - metaservices
       summary: List clients defined in the instance
       description: |
-        Security server clients can retrieve a list of all the potential service providers
-        (i.e., members and applications) of an GovStack instance.
-        This can be accomplished by making a HTTP GET request to the security server.
-        The request URL is `http://SECURITYSERVER/listClients` or `https://SECURITYSERVER/listClients`
-        depending on whether the HTTPS protocol is configured for interaction.
-        When making the request, the address `SECURITYSERVER` must be replaced with the actual address
-        of the security server.
-        In addition, it is possible to retrieve a list of clients in other,
-        federated GovStack instances by adding the following HTTP parameter:
+        Clients of the security server have the capability to obtain a list
+        of potential service providers within a GovStack instance, including
+        both members and applications.
+        To do so, they should initiate an HTTP GET request to the security
+        server.
+        The specific request URL will be either `http://SECURITYSERVER/listClients`
+        or `https://SECURITYSERVER/listClients`, depending on whether HTTPS
+        protocol usage is enabled for interaction.
 
-          `instanceId` – code that identifies the instance.
-        
-        Thus, to retrieve a list of clients defined in the instance `AA`, the request URL is
-        `http://SECURITYSERVER/listClients?instanceId=AA`.
+        When submitting this request, the placeholder `SECURITYSERVER` must be
+        replased with the actual address of the security server. One can also
+        retrieve a list of clients from other federated GovStack instances
+        by adding an additional HTTP parameter:
+
+          `instanceId` - a code of the instance.
+
+        For instance, if you wish to fetch the list of clients associated with the
+        instance labeled as `ABC`, your request URL should take the form of
+        `http://SECURITYSERVER/listClients?instanceId=ABC`.
       operationId: listClients
       parameters:
         - name: instanceId
+          required: false
           in: query
           schema:
             type: string
       responses:
         '200':
-          description: List of clients
+          description: List of Clients of GovStack
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/clientList'
-  /r1/{xRoadInstance}/{memberClass}/{memberCode}/{subsystemCode}/listMethods:
+                $ref: '#/components/schemas/restClientDetailsListType'
+        '400':
+          description: Error in request
+        '500':
+          description: Internal error
+  /r1/{GovStackInstance}/{memberClass}/{memberCode}/{applicationCode}/listMethods:
     parameters:
-      - $ref: '#/components/parameters/xRoadInstance'
+      - $ref: '#/components/parameters/GovStackInstance'
       - $ref: '#/components/parameters/memberClass'
       - $ref: '#/components/parameters/memberCode'
-      - $ref: '#/components/parameters/subsystemCode'
+      - $ref: '#/components/parameters/applicationCode'
     get:
       tags:
         - metaservices
       summary: List REST services and endpoints for a service provider
+      description: |
+        This function provides a list of all REST services and service endpoints
+        offered by a service provider.
+        It's important to note that the endpoints could potentially include
+        wildcard entries, and the actual number of specific endpoints might
+        exceed what's listed here.
+        Typically, retrieving the OpenAPI service description is the recommended
+        approach for discovering service endpoints.
       operationId: listMethods
       parameters:
         - name: serviceId
           in: query
           schema:
             type: string
-        - name: X-Road-Client
+        - name: X-GovStack-Client
           in: header
           schema:
             type: string
@@ -63,23 +81,35 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/restServiceDetailsListType'
-  /{xRoadInstance}/{memberClass}/{memberCode}/{subsystemCode}/allowedMethods:
+        '400':
+          description: Error in request
+        '500':
+          description: Internal error
+  /r1/{GovStackInstance}/{memberClass}/{memberCode}/{applicationCode}/allowedMethods:
     parameters:
-      - $ref: '#/components/parameters/xRoadInstance'
+      - $ref: '#/components/parameters/GovStackInstance'
       - $ref: '#/components/parameters/memberClass'
       - $ref: '#/components/parameters/memberCode'
-      - $ref: '#/components/parameters/subsystemCode'
+      - $ref: '#/components/parameters/applicationCode'
     get:
       tags:
         - metaservices
       summary: List of allowed REST services and endpoints for a service provider
+      description: |
+        This function provides a list of REST services and service endpoints
+        offered by a service provider that the caller has permission to invoke.
+        It's important to note that the endpoints could potentially include
+        wildcard entries, and the actual number of specific endpoints might
+        exceed what's listed here.
+        Typically, retrieving the OpenAPI service description is the recommended
+        approach for discovering service endpoints.
       operationId: allowedMethods
       parameters:
         - name: serviceId
           in: query
           schema:
             type: string
-        - name: X-Road-Client
+        - name: X-GovStack-Client
           in: header
           schema:
             type: string
@@ -90,23 +120,34 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/restServiceDetailsListType'
-  /{xRoadInstance}/{memberClass}/{memberCode}/{subsystemCode}/getOpenAPI:
+        '400':
+          description: Error in request
+        '500':
+          description: Internal error
+  /r1/{GovStackInstance}/{memberClass}/{memberCode}/{applicationCode}/getOpenAPI:
     parameters:
-      - $ref: "#/components/parameters/xRoadInstance"
+      - $ref: "#/components/parameters/GovStackInstance"
       - $ref: "#/components/parameters/memberClass"
       - $ref: "#/components/parameters/memberCode"
-      - $ref: "#/components/parameters/subsystemCode"
+      - $ref: "#/components/parameters/applicationCode"
     get:
       tags:
         - metaservices
       summary: Returns OpenAPI service description for a REST service
+      description: |
+        This metaservice is designed to retrieve service descriptions for
+        REST services.
+        It provides the OpenAPI service description for a specific REST service.
+        To use this service, the query parameters should include `serviceCode=xxx`,
+        where `xxx` corresponds to the service code of the particular REST service
+        for which you desire to obtain the service description.
       operationId: getOpenAPI
       parameters:
         - name: serviceCode
           in: query
           schema:
             type: string
-        - name: X-Road-Client
+        - name: X-GovStack-Client
           in: header
           schema:
             type: string
@@ -126,8 +167,8 @@ paths:
           description: Internal error
 components:
   parameters:
-    xRoadInstance:
-      name: xRoadInstance
+    GovStackInstance:
+      name: GovStackInstance
       required: true
       in: path
       schema:
@@ -144,21 +185,21 @@ components:
       in: path
       schema:
         type: string
-    subsystemCode:
-      name: subsystemCode
+    applicationCode:
+      name: applicationCode
       required: true
       in: path
       schema:
         type: string
   schemas:
-    clientList:
+    restClientDetailsListType:
       type: object
       properties:
         member:
           type: array
           items:
-            $ref: '#/components/schemas/xroadIdentifier'
-    xroadIdentifier:
+            $ref: '#/components/schemas/restClientDetailsType'
+    restClientDetailsType:
       type: object
       properties:
         name:
@@ -166,22 +207,19 @@ components:
         id:
           type: object
           properties:
-            object_type:
+            objectType:
               type: string
               enum:
                 - MEMBER
-                - SUBSYSTEM
-                - SERVER
-                - GLOBALGROUP
-                - LOCALGROUP
+                - APPLICATION
                 - SERVICE
-            xroad_instance:
+            GovStackInstance:
               type: string
-            member_class:
+            memberClass:
               type: string
-            member_code:
+            memberCode:
               type: string
-            subsystem_code:
+            applicationCode:
               type: string
     restServiceDetailsListType:
       type: object
@@ -189,31 +227,25 @@ components:
         member:
           type: array
           items:
-            $ref: '#/components/schemas/xroadRestServiceDetailsType'
-    xroadRestServiceDetailsType:
+            $ref: '#/components/schemas/restServiceDetailsType'
+    restServiceDetailsType:
       type: object
       properties:
         objectType:
-          type: object
-          properties:
-            object_type:
-              type: string
-              enum:
-                - MEMBER
-                - SUBSYSTEM
-                - SERVER
-                - GLOBALGROUP
-                - SERVICE
-                - LOCALGROUP
+          type: string
+          enum:
+            - MEMBER
+            - APPLICATION
+            - SERVICE
         serviceType:
           type: string
-        xRoadInstance:
+        GovStackInstance:
           type: string
         memberClass:
           type: string
         memberCode:
           type: string
-        subsystemCode:
+        applicationCode:
           type: string
         serviceCode:
           type: string
