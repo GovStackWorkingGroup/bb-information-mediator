@@ -6,7 +6,7 @@ description: >-
 
 # 8 Service APIs
 
-The [GovStack non-functional requirements document](https://govstack.gitbook.io/specification/v/1.0/architecture-and-nonfunctional-requirements/6-onboarding) provides additional information on how 'adaptors' may be used to translate an existing API to the patterns described here. This section also provides guidance on how candidate products are tested and how GovStack validates a product's API against the API specifications defined here.&#x20;
+The [GovStack non-functional requirements document](https://govstack.gitbook.io/specification/v/1.0/architecture-and-nonfunctional-requirements/6-onboarding) provides additional information on how 'adaptors' may be used to translate an existing API to the patterns described here. This section also provides guidance on how candidate products are tested and how GovStack validates a product's API against the API specifications defined here.
 
 The tests for the Information Mediator Building Block can be found in [this GitHub repository](https://github.com/GovStackWorkingGroup/bb-information-mediator/tree/main/test/openAPI).
 
@@ -21,13 +21,11 @@ The services can be accessed via the following Service APIs:
 
 ## 8.1 Service Access
 
-The full API definition of all available services can be produced from the set of all available OpenAPI descriptions. For that one need in all occurrences of:
+The full API definition of all available services is the set of all available OpenAPI descriptions.
 
-“path”: { “\<some-value>”: … }
+One can take any of the available OpenAPI descriptions and call service according to that description.
 
-prepend \<some-value> with
-
-{GovStackInstance}/{memberClass}/{member}/{application}/{service}/ extending this way the path with these details.
+This call must be forwarded to IM local Security Server and the called URL must begin with the address of service in the form `{GovStackInstance}/{memberClass}/{member}/{application}/{service}/` followed by the service path with possible query parameters. The address of the service may be already listed in the OpenAPI description or must be added to the path if not provided by OpenAPI.
 
 ## 8.2 Directory Services
 
@@ -153,7 +151,6 @@ The response is \<audit trail>, \<metrics>, etc.
 [https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API.yaml)
 {% endswagger %}
 
-
 #### 8.6.2 Management of Access Rights
 
 {% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API.yaml" path="/rights/allow" method="get" %}
@@ -167,4 +164,3 @@ The response is \<audit trail>, \<metrics>, etc.
 {% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API.yaml" path="/rights/deny" method="patch" %}
 [https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API.yaml)
 {% endswagger %}
-
