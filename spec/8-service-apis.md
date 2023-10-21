@@ -45,20 +45,20 @@ At development time, an administrator at application A sends a GET request to th
 
 The response is an **array of services** (either all services or services that the requester is authorized to access via “allowedMethods”). API MAY implement paging of output.
 
-{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Service_Metadata.yaml" path="/r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/listMethods" method="get" %}
-[https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Service_Metadata.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Service_Metadata.yaml)
+{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Directory_Services_API.yaml" path="/r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/listMethods" method="get" %}
+[https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Directory_Services_API.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Directory_Services_API.yaml)
 {% endswagger %}
 
-{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Service_Metadata.yaml" path="/r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/allowedMethods" method="get" %}
-[https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Service_Metadata.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Service_Metadata.yaml)
+{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Directory_Services_API.yaml" path="/r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/allowedMethods" method="get" %}
+[https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Directory_Services_API.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Directory_Services_API.yaml)
 {% endswagger %}
 
 At development time, to learn about an available service, an administrator at application A sends a GET request to the security server: <mark style="background-color:purple;">url-of-local-information-mediator-security-server</mark>/r1/<mark style="background-color:orange;">INDIA</mark>/<mark style="background-color:blue;">GOV/MEMBER</mark>/<mark style="background-color:green;">APPLICATION</mark>/<mark style="background-color:yellow;">getOpenApi</mark>?serviceCode=SERVICE
 
 The response is an **OpenAPI specification**, detailing the endpoints and requirements for that service/API of the requested Service of Application.
 
-{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Service_Metadata.yaml" path="/r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/getOpenAPI" method="get" %}
-[https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Service_Metadata.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Service_Metadata.yaml)
+{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Directory_Services_API.yaml" path="/r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/getOpenAPI" method="get" %}
+[https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Directory_Services_API.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Directory_Services_API.yaml)
 {% endswagger %}
 
 ## 8.3 Pub/Sub Service
@@ -113,7 +113,7 @@ To broadcast a message to a Room, the service access API must be followed and th
 
 ## 8.4 Logging Services
 
-To get info from system log, an administrator may send a request to the logging API.&#x20;
+To get info from system log, an administrator may send a request to the logging API.
 
 ## 8.5 Monitoring Services
 
