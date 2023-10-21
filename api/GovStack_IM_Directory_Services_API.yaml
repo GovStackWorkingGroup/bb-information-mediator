@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: GovStack IM Directory Services API
+  title: GovStack IM Service Metadata API
   version: '1.0'
 paths:
   /listClients:
@@ -60,11 +60,6 @@ paths:
       description: |
         This function provides a list of all REST services and service endpoints
         offered by a service provider.
-        It's important to note that the endpoints could potentially include
-        wildcard entries, and the actual number of specific endpoints might
-        exceed what's listed here.
-        Typically, retrieving the OpenAPI service description is the recommended
-        approach for discovering service endpoints.
       operationId: listMethods
       parameters:
         - name: serviceId
@@ -96,11 +91,6 @@ paths:
       description: |
         This function provides a list of REST services and service endpoints
         offered by a service provider that the caller has permission to invoke.
-        It's important to note that the endpoints could potentially include
-        wildcard entries, and the actual number of specific endpoints might
-        exceed what's listed here.
-        Typically, retrieving the OpenAPI service description is the recommended
-        approach for discovering service endpoints.
       operationId: allowedMethods
       parameters:
         - name: serviceId
