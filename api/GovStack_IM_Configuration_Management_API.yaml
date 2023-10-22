@@ -168,7 +168,7 @@ paths:
         <p>This API takes provided filters from query parameters and returns a subset of 
         access policies configured on the IM building block, based on the filters.</p>
         <p>The result is paged, with page size based on the number of service and allowed application
-        pairs. For example, when page_size = 10 and the IM BB defines three services: A, B and C, each
+        pairs. For example, when pageSize = 10 and the IM BB defines three services: A, B and C, each
         of which has 8 clients, the result will be split over 3 pages:<br/><br/>
         Page 1: Service A, with all of its 8 allowed applications, Service B with 2 allowed applications.<br/>
         Page 2: Service B, with 6 allowed applications left over, Service C with 4 applications.<br/>
@@ -232,7 +232,7 @@ paths:
                   - $ref: '#/components/schemas/PaginatedResult'
                   - type: object
                     properties:
-                      allow_list:
+                      allowList:
                         $ref: '#/components/schemas/ServiceAccessRights'
         '401':
           description: Caller does not have permissions to view access rights
@@ -392,13 +392,13 @@ components:
             type: string
             example: GOV
           memberCode:
-            description: Registration number (or identifier) of the organisation in {member_class} namespace
+            description: Registration number (or identifier) of the organisation in {memberClass} namespace
             type: string
             example: '7001'
           applicationId:
             type: string
             description: Name of application
-            example: Citizens_Registry
+            example: CitizensRegistry
           serviceId:
             description: Name of service/API
             type: string
