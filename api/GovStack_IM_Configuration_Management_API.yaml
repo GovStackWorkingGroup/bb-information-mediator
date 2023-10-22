@@ -1,55 +1,58 @@
 openapi: 3.0.0
 info:
-  title: GovStack IM configuration management API
-  version: 1.0.0
+  title: GovStack IM Configuration Management API
+  version: 1.0.1
   description: This is a GovStack Information Mediator Building Block Configuration Management API
   x-logo:
     url: ''
   contact:
     email: bb-information-mediat-aaaafm2vhf6hnebpu3tizg3v74@govstack.slack.com
-servers:
-  # Added by API Auto Mocking Plugin
-  #- description: SwaggerHub API Auto Mocking
-  #  url: https://virtserver.swaggerhub.com/t6nn/GovStack_IM_BB_Mgmt/1.0.0
-  - url: https://{securityserver}:{managment_port}/api/v1
-    variables:
-      securityserver:
-        default: 'SECURITYSERVER'
-        description: security server address
-      management_port:
-        default: xxxx
-        description: IM management port
-  - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/GovStack/GovStack_IM_Management_API/1.0.0
+# Commented out to unify spec with other GovStack BB-s
+#servers:
+#  - url: https://{securityserver}:{managmentPort}
+#    variables:
+#      securityserver:
+#        default: 'SECURITYSERVER'
+#        description: security server address
+#      managementPort:
+#        default: xxxx
+#        description: IM management port
 tags:
   - name: conf
     description: Configuration management
   - name: rights
     description: Access rights management
 paths:
-  /config:
+  /api/v1/config:
     get:
       tags:
         - conf
+      summary: List IM configuration
+      description: |
+        Configuration description of IM is returned in form of file
+      operationId: listIMconf
+      security:
+        - auth:
+            - read:conf
       responses:
         '200':
+          description: List of IM configuration
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/IMconf'
-          description: List of IM configuration
-      operationId: listIMconf
-      summary: List IM configuration
+        '500':
+          description: Internal error
     post:
-      requestBody:
-        description: configuration description file
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/IMconf'
-        required: true
       tags:
         - conf
+      summary: Initialize IM instance
+      description: |
+        Create new instance of IM
+      operationId: createIMconf
+      security:
+        - auth:
+            - write:conf
       parameters:
         - name: init
           description: Creates Central Servers if init=true
@@ -57,6 +60,16 @@ paths:
             type: boolean
             default: false
           in: query
+      requestBody:
+        description: configuration description file
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IMconf'
+          text/yaml:
+            schema:
+              $ref: '#/components/schemas/IMconf'
+        required: true
       responses:
         '201':
           content:
@@ -64,18 +77,30 @@ paths:
               schema:
                 $ref: '#/components/schemas/IMconfResponse'
           description: IM starts configuration creation
-      operationId: createIMconf
-      summary: Initialize IM instance
+        '400':
+          description: Error in request
+        '500':
+          description: Internal error
     patch:
+      tags:
+        - conf
+      summary: Update IM configuration
+      description: |
+        Update IM configuration. Not described parts are not changed
+      operationId: updateIMconf
+      security:
+        - auth:
+            - write:conf
       requestBody:
         description: configuration description file
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/IMconf'
+          text/yaml:
+            schema:
+              $ref: '#/components/schemas/IMconf'
         required: true
-      tags:
-        - conf
       responses:
         '201':
           content:
@@ -83,18 +108,30 @@ paths:
               schema:
                 $ref: '#/components/schemas/IMconfResponse'
           description: IM starts configuration update
-      operationId: updateIMconf
-      summary: Update IM configuration. Not described parts are not changed
+        '400':
+          description: Error in request
+        '500':
+          description: Internal error
     put:
+      tags:
+        - conf
+      summary: Replace IM configuration
+      description: |
+        Replace IM configuration. Not described parts are deleted
+      operationId: replaceIMconf
+      security:
+        - auth:
+            - create:conf
       requestBody:
         description: configuration description file
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/IMconf'
+          text/yaml:
+            schema:
+              $ref: '#/components/schemas/IMconf'
         required: true
-      tags:
-        - conf
       responses:
         '201':
           content:
@@ -102,18 +139,27 @@ paths:
               schema:
                 $ref: '#/components/schemas/IMconfResponse'
           description: IM starts configuration creation
-      operationId: replaceIMconf
-      summary: Replace IM configuration. Not described parts are deleted
-  /status:
+        '400':
+          description: Error in request
+        '500':
+          description: Internal error
+  /api/v1/status:
     get:
       tags:
         - conf
+      summary: Check status
+      description: |
+        Is IM configured. up and running?
+      operationId: checkIMconf
+      security:
+        - auth:
+            - read:conf
       responses:
         '200':
           description: IM is OK
-      operationId: checkIMconf
-      summary: Is IM configured. up and running?
-  /rights/allow:
+        '500':
+          description: Internal error
+  /api/v1/rights/allow:
     get:
       tags:
         - rights
@@ -132,40 +178,44 @@ paths:
         how next page tokens are implemented. It is expected that the next page token is not readable
         by API users and will be provided verbatim when querying the next page of results.
         </p>
+      operationId: getAllowed
+      security:
+        - auth:
+            - read:rights
       parameters:
         - in: query
-          name: member_class
+          name: memberClass
           description: 'Filter by member class'
           schema:
             type: string
           required: false
         - in: query
-          name: member_code
+          name: memberCode
           schema:
             type: string
           description: 'Filter by member code'
           required: false
         - in: query
-          name: application_id
+          name: applicationId
           schema:
             type: string
           description: 'Filter by application ID'
           required: false
         - in: query
-          name: service_id
+          name: serviceId
           schema:
             type: string
           description: 'Filter by service ID'
           required: false
         - in: query
-          name: page_size
+          name: pageSize
           description: 'Number of access rights returned on one page'
           schema:
             type: number
             default: 100
           required: false
         - in: query
-          name: next_page_token
+          name: nextPageToken
           description: >-
             Handle for the next page, if the result spans multiple pages.
             If not specified, there are no more results.
@@ -190,6 +240,10 @@ paths:
       tags:
         - rights
       summary: 'Allow access to services'
+      operationId: setAllowed
+      security:
+        - auth:
+            - write:rights
       requestBody:
         description: ''
         content:
@@ -202,11 +256,15 @@ paths:
           description: OK
         '401':
           description: Caller does not have the necessary permissions to update access rights
-  /rights/deny:
+  /api/v1/rights/deny:
     patch:
       tags:
         - rights
       summary: 'Deny access to services'
+      operationId: setDenied
+      security:
+        - auth:
+            - write:rights
       requestBody:
         description: ''
         content:
@@ -269,7 +327,7 @@ components:
                     id:
                       type: string
                       description: Name of application
-                      example: Citizens_Registry
+                      example: CitizensRegistry
                     connection:
                       type: string
                       description: Connection protocol of application
@@ -282,19 +340,19 @@ components:
                         type: object
                         required:
                           - id
-                          - spec_url
-                          - service_url
+                          - specUrl
+                          - serviceUrl
                         properties:
                           id:
                             description: Name of service/API
                             type: string
                             example: registration
-                          spec_url:
+                          specUrl:
                             description: Location of OpenAPI spec file
                             type: string
                             format: uri
                             example: https://raw.githubusercontent.com/GovStackWorkingGroup/bb-example/api/registration.json
-                          service_url:
+                          serviceUrl:
                             description: Location of service endpoints
                             type: string
                             format: uri
@@ -311,11 +369,11 @@ components:
                                 member:
                                   description: Name of Member
                                   type: string
-                                  example: Local_Municipality
+                                  example: LocalMunicipality
                                 application:
                                   description: Name of application
                                   type: string
-                                  example: Registration_portal
+                                  example: RegistrationPortal
     IMconfResponse:
       type: string 
     ServiceAccessRights:
@@ -323,25 +381,25 @@ components:
       items:
         type: object
         required:
-          - member_class
-          - member_code
-          - application_id
-          - service_id
+          - memberClass
+          - memberCode
+          - applicationId
+          - serviceId
           - rights
         properties:
-          member_class:
+          memberClass:
             description: Kind of organisation. Namespace for organisation {code}
             type: string
             example: GOV
-          member_code:
+          memberCode:
             description: Registration number (or identifier) of the organisation in {member_class} namespace
             type: string
             example: '7001'
-          application_id:
+          applicationId:
             type: string
             description: Name of application
             example: Citizens_Registry
-          service_id:
+          serviceId:
             description: Name of service/API
             type: string
             example: registration
@@ -360,41 +418,36 @@ components:
         - member
         - application
       properties:
-        member_class:
+        memberClass:
           description: Member or member group identifier to whom access is granted
           type: string
-        member_code:
+        memberCode:
           description: Member or member group identifier to whom access is granted
           type: string
-        application_id:
+        applicationId:
           description: Application of the member that to whom access is granted
           type: string
     PaginatedResult:
       type: object
       properties:
-        next_page_token:
+        nextPageToken:
           type: string
     
   securitySchemes:
-    # OpenIDAuth:
-    #   openIdConnectUrl: https://{public_gateway_oidc_config}
-    #   type: openIdConnect
-    #   description: >-
-    #     OpenID Connect (OIDC) is an identity layer built on top of the OAuth 2.0
-    #     protocol.
-    OAuth2:
+    auth:
       type: oauth2
       flows:
         authorizationCode:
           authorizationUrl: https://example.com/oauth/authorize
           tokenUrl: https://example.com/oauth/token
           scopes:
-            read: Grants read access
-            write: Grants write access
-            admin: Grants access to admin operations
+            read:conf: Grants read access to IM configuration
+            create:conf: Grants permission to create IM configuration
+            write:conf: Grants write access to IM configuration
+            read:rights: Grants permission to see what services are allowed
+            write:rights: Grants permission to allow/deny IM services
   headers: {}
   responses: {}
   parameters: {}
 security:
-  #- OpenIDAuth: []
-  - OAuth2: []
+  - auth: []
