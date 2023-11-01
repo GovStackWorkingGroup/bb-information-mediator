@@ -1,37 +1,151 @@
-openapi: 3.0.0
-servers:
-  - url: https://{securityserver}/r1/{GovStackInstance}/{memberClass}/{memberCode}/{applicationCode}
-    variables:
-      securityserver:
-        default: SECURITYSERVER
-        description: security server address
-      GovStackInstance:
-        default: govstack
-        description: name of GovStack instance
-      memberClass:
-        default: GOV 
-        description: namespace for memberCode
-      memberCode:
-        default: ministry
-        description: name of Member
-      applicationCode:
-        default: room
-        description: name of Application
+openapi: 3.1.0
 info:
-  description: This is GovStack Information Mediator PubSub API
-  version: "1.0.0"
   title: GovStack IM PubSub
+  version: '2.0.0'
+  description: |
+    This is GovStack Information Mediator PubSub API.
+    OAS 3.1 used since 3.0 does not support 'mutualTLS'.
   contact:
     email: bb-information-mediat-aaaafm2vhf6hnebpu3tizg3v74@govstack.slack.com
 tags:
-  - name: pub
-    description: Operations available to Publishers
   - name: sub
     description: Operations available to Subscribers
+  - name: pub
+    description: Operations available to Publishers
+  - name: admin
+    description: Operations available to a room manager
 paths:
-  /event/{id}:
+  /r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/eventType:
     parameters:
-      - $ref: '#/components/parameters/X-GovStack-Client'
+      - $ref: "#/components/parameters/clientId"
+      - $ref: '#/components/parameters/instanceId'
+      - $ref: '#/components/parameters/memberClass'
+      - $ref: '#/components/parameters/memberCode'
+      - $ref: '#/components/parameters/applicationCode'
+    post:
+      tags:
+        - admin
+      summary: create event type
+      operationId: createEventType
+      description: |
+        Publish event in the room {applicationCode}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventType'
+      responses:
+        '200':
+          description: Event type created
+        '400':
+          description: Invalid request
+        '409':
+          description: Event type already exists
+        '500':
+          description: Internal error
+    get:
+      tags:
+        - admin
+      summary: get list of event types
+      operationId: getEventTypeList
+      description: |
+        Return list of event types located in the room {applicationCode}
+      responses:
+        '200':
+          description: Event type list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EventType'
+        '500':
+          description: Internal error
+  /r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/eventType/{id}:
+    parameters:
+      - $ref: "#/components/parameters/clientId"
+      - $ref: '#/components/parameters/instanceId'
+      - $ref: '#/components/parameters/memberClass'
+      - $ref: '#/components/parameters/memberCode'
+      - $ref: '#/components/parameters/applicationCode'
+      - in: path
+        name: id
+        description: event type
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - admin
+      summary: get event type details
+      operationId: getEventType
+      description: |
+        Return event type description.
+        Event type is located in the room {applicationCode}
+      responses:
+        '200':
+          description: Event type details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventType'
+        '404':
+          description: Event type missing
+        '500':
+          description: Internal error
+    delete:
+      tags:
+        - admin
+      summary: delete event type
+      operationId: deleteEventType
+      description: |
+        Delete event type in the room {applicationId}
+      responses:
+        '204':
+          description: Event type deleted
+        '404':
+          description: Event type missing
+        '500':
+          description: Internal error
+  /r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/pub:
+    parameters:
+      - $ref: "#/components/parameters/clientId"
+      - $ref: '#/components/parameters/instanceId'
+      - $ref: '#/components/parameters/memberClass'
+      - $ref: '#/components/parameters/memberCode'
+      - $ref: '#/components/parameters/applicationCode'
+    post:
+      tags:
+        - pub
+      summary: publish event
+      operationId: publishEvent
+      description: |
+        Publish event in the room {applicationCode}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublishEvent'
+      responses:
+        '201':
+          description: Event accepted for publishing. Returning event id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublishEventResult'
+        '400':
+          description: Invalid request
+        '404':
+          description: Unknown event type
+        '500':
+          description: Internal error
+  /r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/pub/{id}:
+    parameters:
+      - $ref: "#/components/parameters/clientId"
+      - $ref: '#/components/parameters/instanceId'
+      - $ref: '#/components/parameters/memberClass'
+      - $ref: '#/components/parameters/memberCode'
+      - $ref: '#/components/parameters/applicationCode'
       - in: path
         name: id
         description: event id of event
@@ -41,45 +155,59 @@ paths:
     get:
       tags:
         - pub
-      summary: get status
+      summary: get published event status
       operationId: getStatus
-      description: Return event status info
+      description: |
+        Return event status info.
+        Event is located in the room {applicationCode}
       responses:
         '200':
-          description: event status
+          description: Event status
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/EventItem'
         '404':
-          description: event missing
+          description: Event missing
+        '500':
+          description: Internal error
     delete:
       tags:
         - pub
-      summary: delete event
+      summary: delete event publication
       operationId: deleteEvent
-      description: Stop processing event
+      description: |
+        Stop processing event
+        Event is located in the room {applicationId}
       responses:
-        '200':
-          description: event processing stopped
+        '204':
+          description: Event processing stopped
         '404':
-          description: event missing
-  /subs:
+          description: Event missing
+        '500':
+          description: Internal error
+  /r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/subs:
     parameters:
-      - $ref: '#/components/parameters/X-GovStack-Client'
+      - $ref: "#/components/parameters/clientId"
+      - $ref: '#/components/parameters/instanceId'
+      - $ref: '#/components/parameters/memberClass'
+      - $ref: '#/components/parameters/memberCode'
+      - $ref: '#/components/parameters/applicationCode'
     post:
       tags:
         - sub
       summary: add subscription
       operationId: addSub
-      description: Subscribe caller to event type
+      description: Subscribe caller to event type in the room {applicationCode}
       responses:
-        '201':
-          description: subscription created
+        '200':
+          description: Subscription created
         '400':
-          description: 'invalid input, object invalid'
+          description: Invalid request
         '409':
-          description: an existing item already exists
+          description: Subscription already exists
+        '500':
+          description: Internal error
       requestBody:
         content:
           application/json:
@@ -89,21 +217,28 @@ paths:
     get:
       tags:
         - sub
-      summary: list subscriptions
+      summary: list my subscriptions
       operationId: listSub
-      description: Return list of my subscriptions
+      description: |
+        Return list of my subscriptions in the room {applicationCode}
       responses:
         '200':
-          description: list of my subscriptions
+          description: List of my subscriptions
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/SubscriptionItem'
-  /subs/{id}:
+        '500':
+          description: Internal error
+  /r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/subs/{id}:
     parameters:
-      - $ref: '#/components/parameters/X-GovStack-Client'
+      - $ref: "#/components/parameters/clientId"
+      - $ref: '#/components/parameters/instanceId'
+      - $ref: '#/components/parameters/memberClass'
+      - $ref: '#/components/parameters/memberCode'
+      - $ref: '#/components/parameters/applicationCode'
       - in: path
         name: id
         description: subscription id
@@ -115,33 +250,39 @@ paths:
         - sub
       summary: get subscription details
       operationId: getSub
-      description: Return details of subscription
+      description: Return details of subscription in the room {applicationCode}
       responses:
         '200':
-          description: subscription details
+          description: Subscription details
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/SubscriptionItem'
         '404':
-          description: subscription missing
+          description: Subscription missing
+        '500':
+          description: Internal error
     patch:
       tags:
         - sub
       summary: update subscription details
       operationId: patchSub
-      description: Update details of subscription
+      description: Update details of subscription in the room {applicationCode}
       responses:
         '201':
-          description: subscription details
+          description: Subscription details
+        '400':
+          description: Invalid request
         '404':
-          description: subscription missing
+          description: Subscription missing
+        '500':
+          description: Internal error
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/SubscriptionItem'
-        description: new details of subscription
+        description: New details of subscription
     delete:
       tags:
         - sub
@@ -149,22 +290,22 @@ paths:
       operationId: deleteSub
       description: Unsubscribe
       responses:
-        '201':
-          description: subscription deleted
+        '204':
+          description: Subscription deleted
         '404':
-          description: subscription missing
-  /pull/{serviceCode}/{operationId}:
+          description: Subscription missing
+        '500':
+          description: Internal error
+  /r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/pull/{eventType}:
     parameters:
-      - $ref: '#/components/parameters/X-GovStack-Client'
+      - $ref: "#/components/parameters/clientId"
+      - $ref: '#/components/parameters/instanceId'
+      - $ref: '#/components/parameters/memberClass'
+      - $ref: '#/components/parameters/memberCode'
+      - $ref: '#/components/parameters/applicationCode'
       - in: path
-        name: serviceCode
-        description: component of event type
-        required: true
-        schema:
-          type: string
-      - in: path
-        name: operationId
-        description: component of event type
+        name: eventType
+        description: event type
         required: true
         schema:
           type: string
@@ -173,108 +314,195 @@ paths:
         - sub
       summary: get next unacknowledged event
       operationId: pullEvent
-      description: Return next unacknowledged event of type defined by {serviceCode}:{operationId}
+      description: |
+        Return next unacknowledged event of type defined by
+        {eventType} and located in the room {applicationCode}
       responses:
         '200':
-          description: event
+          description: Event
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/EventItem'
         '404':
-          description: no event available
+          description: No event available
         '409':
-          description: invalid request
-  /pull/{serviceCode}/{operationId}/{eventId}:
+          description: Invalid request
+        '500':
+          description: Internal error
+  /r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/event/{eventId}:
     parameters:
-      - $ref: '#/components/parameters/X-GovStack-Client'
-      - in: path
-        name: serviceCode
-        description: component of event type
-        required: true
-        schema:
-          type: string
-      - in: path
-        name: operationId
-        description: component of event type
-        required: true
-        schema:
-          type: string
+      - $ref: "#/components/parameters/clientId"
+      - $ref: '#/components/parameters/instanceId'
+      - $ref: '#/components/parameters/memberClass'
+      - $ref: '#/components/parameters/memberCode'
+      - $ref: '#/components/parameters/applicationCode'
       - in: path
         name: eventId
         description: event id
         required: true
         schema:
           type: string
-    get:
-      tags:
-        - sub
-      summary: get event by id
-      operationId: pullEventById
-      description: Return event of type by id
-      responses:
-        '200':
-          description: event
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EventItem'
-        '404':
-          description: no event available
-        '409':
-          description: invalid request
     delete:
       tags:
         - sub
       summary: confirm event
       operationId: confirmEvent
-      description: Acknowledge receiving of event
+      description: |
+        Acknowledge receiving of event from the room {applicationCode}
       responses:
-        '200':
-          description: event acknowledged
+        '204':
+          description: Event acknowledged
         '404':
           description: no event available
         '409':
           description: invalid request
 components:
   parameters:
-    X-GovStack-Client:
+    clientId:
       name: X-GovStack-Client
+      required: true
       in: header
       schema:
         type: string
+    instanceId:
+      name: instanceId
+      required: true
+      in: path
+      schema:
+        type: string
+    memberClass:
+      name: memberClass
+      required: true
+      in: path
+      schema:
+        type: string
+    memberCode:
+      name: memberCode
+      required: true
+      in: path
+      schema:
+        type: string
+    applicationCode:
+      name: applicationCode
+      required: true
+      in: path
+      schema:
+        type: string
   schemas:
+    EventType:
+      required:
+        - eventType
+        - schema
+      properties: 
+        eventType:
+          type: string
+          examples:
+            - newBirth
+        schema:
+          type: object 
+          examples:
+            - >-
+              {
+              "$schema": "http://json-schema.org/draft-07/schema#",
+              "type": "object",
+              "properties": {
+                "dateTime": {
+                   "type": "string",
+                   "format": "date-time"
+                 },
+                 "gender": {
+                   "type": "string",
+                   "enum": ["M", "F"]
+                 },
+                 "mother": {
+                   "type": "string"
+                 },
+                 "place": {
+                   "type": "string"
+                 },
+                 "id": {
+                   "type": "integer"
+                 },
+                 "details": {
+                   "type": "object",
+                   "properties": {
+                     "weight": {
+                       "type": "number"
+                     },
+                     "length": {
+                       "type": "number"
+                     },
+                     "eyesColor": {
+                       "type": "string"
+                     }
+                  },
+                  "required": ["weight", "length", "eyesColor"]
+                }
+              },
+              "required": ["dateTime", "gender", "mother", "place"]
+              }
+    PublishEvent:
+      required:
+        - eventType
+        - event
+      properties: 
+        eventType:
+          type: string
+          examples:
+            - newBirth
+        event:
+          type: object
+          examples:
+            - {dateTime: 2023-05-01T11:25:00+02:00
+              ,gender: M
+              ,mother: Pamela Anderson
+              ,place: City Hospital
+              ,details:
+                {weight: 3200
+                ,length: 49
+                ,eyesColor: brown
+                }
+              }
+    PublishEventResult:
+      required:
+        - id
+      properties: 
+        id:
+          type: string
+          format: uuid
     SubscriptionItem:
       type: object
       required:
-        - id
-        - srcServiceCode
-        - srcOperationId
-        - dstServiceCode
-        - dstOperationId
+        - eventType
       properties:
         id:
           type: string
           format: uuid
-          example: d290f1ee-6c54-4b01-90e6-d701748f0851
-        roomClass:
+        subscriberId:
+          type: object
+          properties:
+            instanceId:
+              type: string
+              examples:
+                - neverland
+            memberClass:
+              type: string
+              examples:
+                - GOV
+                - COM
+            memberCode:
+              type: string
+              examples:
+                - capitalCity
+            applicationCode:
+              type: string
+              examples:
+                - police
+        eventType:
           type: string
-          example: GOV
-        roomCode:
-          type: string
-          example: healthcare-hub
-        srcServiceCode:
-          type: string
-          example: midwife
-        srcOperationId:
-          type: string
-          example: newBirth
-        dstServiceCode:
-          type: string
-          example: citizens-registry
-        dstOperationId:
-          type: string
-          example: newRecord
+          examples:
+            - newBirth
         delivery:
           type: string
           enum:
@@ -296,37 +524,61 @@ components:
       properties:
         id:
           type: string
-          example: ABC00500012345
+          format: uuid
         sequence:
           type: integer
-          example: 42
-        publisher:
+          examples:
+            - 42
+        publisherId:
           type: object
           properties:
-            GovStackInstance:
+            instanceId:
               type: string
-              example: neverland
+              examples:
+                - neverland
             memberClass:
               type: string
-              example: GOV
+              examples:
+                - GOV
+                - COM
             memberCode:
               type: string
-              example: capital-city
+              examples:
+                - capital-city
             applicationCode:
               type: string
-              example: police
-        srcServiceCode:
+              examples:
+                - police
+        eventType:
           type: string
-          example: documents-registry
-        srcOperationID:
-          type: string
-          example: invalidate-id
-        path:
-          type: string
-          example: /lost/id
-        query:
+          examples:
+            - newBirth
+        event:
           type: object
-          example: { "name": "John Smith" }
-        payload:
-          type: object
-          example: { "nr": 54321 }
+          examples:
+            - {dateTime: 2023-05-01T11:25:00+02:00
+              ,gender: M
+              ,mother: Pamela Anderson
+              ,place: City Hospital
+              ,details:
+                {weight: 3200
+                ,length: 49
+                ,eyesColor: brown
+                }
+              }
+  securitySchemes:
+    certs:
+      type: mutualTLS
+      description: |
+        Certs are exchanged between parties and stored in configuration
+        to have fixed one-to-one connection
+security:
+  - certs: [] # Check must be forced. How to express it?
+
+# Commented out to unify spec with other GovStack BB-s
+#servers:
+#  - url: https://{securityserver}
+#    variables:
+#      securityserver:
+#        default: SECURITYSERVER
+#        description: security server address
