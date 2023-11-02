@@ -12,10 +12,9 @@ The tests for the Information Mediator Building Block can be found in [this GitH
 
 The majority of functions provided by the Information Mediator Building Block are either defined in the “service access flow” or configured by the administrator via the web User Interface. There is, however, a “Directory Service” which can provide listings of clients, methods, and available API specifications for services on the Information Mediator. The directory is managed by admins of members. The directory service centralizes and offers knowledge of all enrolled members and their services along with the information necessary to bind a third-party application as a consumer of that service. These services are described here:
 
-* [API metadata](../api/govstack\_im\_service\_metadata\_api-0.3-swagger.json)
+* [API metadata](../api/GovStack\_IM\_Directory\_Services\_API.yaml)
 
-and changes to the API definitions can be made by submitting a pull request on this repository. Additional APIs may be implemented by the Building Block, but the listed APIs define a minimal set of functionality that should be provided by any implementation of this Building Block.[\
-](https://github.com/GovStackWorkingGroup/BuildingBlockAPI/blob/main/IM/govstack\_im\_service\_metadata\_api-0.3-swagger.jsonhttps://github.com/GovStackWorkingGroup/BuildingBlockAPI/tree/main/IM)The [Swagger variant](https://app.swaggerhub.com/apis/GovStack/gov-stack\_im\_service\_metadata\_api/0.3) is available.
+and changes to the API definitions can be made by submitting a pull request on this repository. Additional APIs may be implemented by the Building Block, but the listed APIs define a minimal set of functionality that should be provided by any implementation of this Building Block.
 
 The services can be accessed via the following Service APIs:
 
@@ -67,47 +66,65 @@ To broadcast a message to a Room, the service access API must be followed and th
 
 #### 8.3.1 Subscriber API
 
-{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml" path="/subs" method="get" %}
+{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml" path="/r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/api/v1/subs" method="get" %}
 [https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml)
 {% endswagger %}
 
-{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml" path="/subs" method="post" %}
+{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml" path="/r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/api/v1/subs/{eventType}" method="post" %}
 [https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml)
 {% endswagger %}
 
-{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml" path="/subs/{id}" method="get" %}
+{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml" path="/r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/api/v1/subs/{eventType}" method="get" %}
 [https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml)
 {% endswagger %}
 
-{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml" path="/subs/{id}" method="delete" %}
+{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml" path="/r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/api/v1/subs/{eventType}" method="patch" %}
 [https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml)
 {% endswagger %}
 
-{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml" path="/subs/{id}" method="patch" %}
+{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml" path="/r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/api/v1/subs/{eventType}" method="delete" %}
 [https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml)
 {% endswagger %}
 
 #### 8.3.2 PULL delivery mode API
 
-{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml" path="/pull/{serviceCode}/{operationId}" method="get" %}
+{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml" path="/r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/pull/v1/{eventType}" method="get" %}
 [https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml)
 {% endswagger %}
 
-{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml" path="/pull/{serviceCode}/{operationId}/{eventId}" method="get" %}
-[https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml)
-{% endswagger %}
-
-{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml" path="/pull/{serviceCode}/{operationId}/{eventId}" method="delete" %}
+{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml" path="/r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/pull/v1/{eventType}/{eventId}" method="delete" %}
 [https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml)
 {% endswagger %}
 
 #### 8.3.3 Publisher API
 
-{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml" path="/event/{id}" method="get" %}
+{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml" path="/r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/pub/v1/{eventType}" method="post" %}
 [https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml)
 {% endswagger %}
 
-{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml" path="/event/{id}" method="delete" %}
+{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml" path="/r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/pub/v1/{eventType}/{eventId}" method="get" %}
+[https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml)
+{% endswagger %}
+
+{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml" path="/r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/pub/v1/{eventType}/{eventId}" method="delete" %}
+[https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml)
+{% endswagger %}
+
+#### 8.3.4 Event Type API
+
+{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml" path="/r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/api/v1/eventType" method="post" %}
+[https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml)
+{% endswagger %}
+
+{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml" path="/r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/api/v1/eventType" method="get" %}
+[https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml)
+{% endswagger %}
+
+{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml" path="/r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/api/v1/eventType/{eventType}" method="get" %}
+[https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml)
+{% endswagger %}
+
+{% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml" path="/r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/api/v1/eventType/{eventType}" method="delete" %}
 [https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml)
 {% endswagger %}
 
