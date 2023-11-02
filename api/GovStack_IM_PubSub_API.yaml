@@ -15,7 +15,7 @@ tags:
   - name: admin
     description: Operations available to a room manager
 paths:
-  /r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/eventType:
+  /r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/api/v1/eventType:
     parameters:
       - $ref: "#/components/parameters/clientId"
       - $ref: '#/components/parameters/instanceId'
@@ -28,7 +28,7 @@ paths:
       summary: create event type
       operationId: createEventType
       description: |
-        Publish event in the room {applicationCode}
+        Create new event type in the room {applicationCode}
       requestBody:
         content:
           application/json:
@@ -58,22 +58,21 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/EventType'
+                  type: string
+                  examples:
+                    - newBirth
+        '204':
+          description: Event types does not defined
         '500':
           description: Internal error
-  /r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/eventType/{id}:
+  /r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/api/v1/eventType/{eventType}:
     parameters:
       - $ref: "#/components/parameters/clientId"
       - $ref: '#/components/parameters/instanceId'
       - $ref: '#/components/parameters/memberClass'
       - $ref: '#/components/parameters/memberCode'
       - $ref: '#/components/parameters/applicationCode'
-      - in: path
-        name: id
-        description: event type
-        required: true
-        schema:
-          type: string
+      - $ref: '#/components/parameters/eventType'
     get:
       tags:
         - admin
@@ -89,8 +88,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EventType'
-        '404':
-          description: Event type missing
+        '204':
+          description: Event type does not defined
         '500':
           description: Internal error
     delete:
@@ -107,13 +106,14 @@ paths:
           description: Event type missing
         '500':
           description: Internal error
-  /r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/pub:
+  /r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/pub/v1/{eventType}:
     parameters:
       - $ref: "#/components/parameters/clientId"
       - $ref: '#/components/parameters/instanceId'
       - $ref: '#/components/parameters/memberClass'
       - $ref: '#/components/parameters/memberCode'
       - $ref: '#/components/parameters/applicationCode'
+      - $ref: '#/components/parameters/eventType'
     post:
       tags:
         - pub
@@ -139,15 +139,16 @@ paths:
           description: Unknown event type
         '500':
           description: Internal error
-  /r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/pub/{id}:
+  /r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/pub/v1/{eventType}/{eventId}:
     parameters:
       - $ref: "#/components/parameters/clientId"
       - $ref: '#/components/parameters/instanceId'
       - $ref: '#/components/parameters/memberClass'
       - $ref: '#/components/parameters/memberCode'
       - $ref: '#/components/parameters/applicationCode'
+      - $ref: '#/components/parameters/eventType'
       - in: path
-        name: id
+        name: eventId
         description: event id of event
         required: true
         schema:
@@ -177,7 +178,7 @@ paths:
       summary: delete event publication
       operationId: deleteEvent
       description: |
-        Stop processing event
+        Stop processing of the event.
         Event is located in the room {applicationId}
       responses:
         '204':
@@ -186,19 +187,47 @@ paths:
           description: Event missing
         '500':
           description: Internal error
-  /r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/subs:
+  /r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/api/v1/subs:
     parameters:
       - $ref: "#/components/parameters/clientId"
       - $ref: '#/components/parameters/instanceId'
       - $ref: '#/components/parameters/memberClass'
       - $ref: '#/components/parameters/memberCode'
       - $ref: '#/components/parameters/applicationCode'
+    get:
+      tags:
+        - sub
+      summary: list my subscriptions
+      operationId: listSub
+      description: |
+        Return list of my subscriptions in the room {applicationCode}
+      responses:
+        '200':
+          description: List of my subscriptions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SubscriptionItem'
+        '404':
+          description: Subscription missing
+        '500':
+          description: Internal error
+  /r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/api/v1/subs/{eventType}:
+    parameters:
+      - $ref: "#/components/parameters/clientId"
+      - $ref: '#/components/parameters/instanceId'
+      - $ref: '#/components/parameters/memberClass'
+      - $ref: '#/components/parameters/memberCode'
+      - $ref: '#/components/parameters/applicationCode'
+      - $ref: '#/components/parameters/eventType'
     post:
       tags:
         - sub
       summary: add subscription
       operationId: addSub
-      description: Subscribe caller to event type in the room {applicationCode}
+      description: Subscribe caller to {eventType} in the room {applicationCode}
       responses:
         '200':
           description: Subscription created
@@ -217,40 +246,11 @@ paths:
     get:
       tags:
         - sub
-      summary: list my subscriptions
-      operationId: listSub
-      description: |
-        Return list of my subscriptions in the room {applicationCode}
-      responses:
-        '200':
-          description: List of my subscriptions
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/SubscriptionItem'
-        '500':
-          description: Internal error
-  /r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/subs/{id}:
-    parameters:
-      - $ref: "#/components/parameters/clientId"
-      - $ref: '#/components/parameters/instanceId'
-      - $ref: '#/components/parameters/memberClass'
-      - $ref: '#/components/parameters/memberCode'
-      - $ref: '#/components/parameters/applicationCode'
-      - in: path
-        name: id
-        description: subscription id
-        required: true
-        schema:
-          type: string
-    get:
-      tags:
-        - sub
       summary: get subscription details
       operationId: getSub
-      description: Return details of subscription in the room {applicationCode}
+      description: |
+        Return details of subscription to {eventType}
+        in the room {applicationCode}
       responses:
         '200':
           description: Subscription details
@@ -267,7 +267,9 @@ paths:
         - sub
       summary: update subscription details
       operationId: patchSub
-      description: Update details of subscription in the room {applicationCode}
+      description: |
+        Update details of subscription to {eventType}
+        in the room {applicationCode}
       responses:
         '201':
           description: Subscription details
@@ -296,13 +298,14 @@ paths:
           description: Subscription missing
         '500':
           description: Internal error
-  /r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/pull/{eventType}:
+  /r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/pull/v1/{eventType}:
     parameters:
       - $ref: "#/components/parameters/clientId"
       - $ref: '#/components/parameters/instanceId'
       - $ref: '#/components/parameters/memberClass'
       - $ref: '#/components/parameters/memberCode'
       - $ref: '#/components/parameters/applicationCode'
+      - $ref: '#/components/parameters/eventType'
       - in: path
         name: eventType
         description: event type
@@ -330,13 +333,14 @@ paths:
           description: Invalid request
         '500':
           description: Internal error
-  /r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/event/{eventId}:
+  /r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/pull/v1/{eventType}/{eventId}:
     parameters:
       - $ref: "#/components/parameters/clientId"
       - $ref: '#/components/parameters/instanceId'
       - $ref: '#/components/parameters/memberClass'
       - $ref: '#/components/parameters/memberCode'
       - $ref: '#/components/parameters/applicationCode'
+      - $ref: '#/components/parameters/eventType'
       - in: path
         name: eventId
         description: event id
@@ -385,6 +389,12 @@ components:
         type: string
     applicationCode:
       name: applicationCode
+      required: true
+      in: path
+      schema:
+        type: string
+    eventType:
+      name: eventType
       required: true
       in: path
       schema:
@@ -454,7 +464,7 @@ components:
         event:
           type: object
           examples:
-            - {dateTime: 2023-05-01T11:25:00+02:00
+            - {dateTime: "2023-05-01T11:25:00+02:00"
               ,gender: M
               ,mother: Pamela Anderson
               ,place: City Hospital
@@ -556,7 +566,7 @@ components:
         event:
           type: object
           examples:
-            - {dateTime: 2023-05-01T11:25:00+02:00
+            - {dateTime: "2023-05-01T11:25:00+02:00"
               ,gender: M
               ,mother: Pamela Anderson
               ,place: City Hospital
@@ -573,7 +583,7 @@ components:
         Certs are exchanged between parties and stored in configuration
         to have fixed one-to-one connection
 security:
-  - certs: [] # Check must be forced. How to express it?
+  - certs: [] # Check must be forced
 
 # Commented out to unify spec with other GovStack BB-s
 #servers:
