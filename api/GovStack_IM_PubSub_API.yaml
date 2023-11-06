@@ -466,7 +466,7 @@ components:
           examples:
             - {dateTime: "2023-05-01T11:25:00+02:00"
               ,gender: M
-              ,mother: Pamela Anderson
+              ,mother: Jane Doe
               ,place: City Hospital
               ,details:
                 {weight: 3200
@@ -568,7 +568,7 @@ components:
           examples:
             - {dateTime: "2023-05-01T11:25:00+02:00"
               ,gender: M
-              ,mother: Pamela Anderson
+              ,mother: Jane Doe
               ,place: City Hospital
               ,details:
                 {weight: 3200
