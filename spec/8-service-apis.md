@@ -162,7 +162,7 @@ The response is \<audit trail>, \<metrics>, etc.
 [OpenAPI configuration-management](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API.yaml)
 {% endopenapi-operation %}
 
-#### 8.6.2 Management of Access Rights
+### 8.6.2 Management of Access Rights
 
 {% openapi-operation spec="configuration-management" path="/api/v1/rights/allow" method="get" %}
 [OpenAPI configuration-management](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API.yaml)
