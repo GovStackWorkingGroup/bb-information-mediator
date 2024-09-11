@@ -28,7 +28,7 @@ This call must be forwarded to IM local Security Server and path part of the cal
 
 ## 8.2 Directory Services
 
-#### 8.2.1 Member Discovery
+### 8.2.1 Member Discovery
 
 At development time, to see which organizations are available on GovStack, an administrator of application A sends a GET request to the security server: <mark style="background-color:purple;">url-of-local-information-mediator-security-server</mark>/r1/<mark style="background-color:yellow;">listClients</mark>
 
@@ -38,7 +38,7 @@ The response is an **array of organizations** with descriptions. API MAY impleme
 [https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Directory_Services_API.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Directory_Services_API.yaml)
 {% endswagger %}
 
-#### 8.2.2 Service Discovery
+### 8.2.2 Service Discovery
 
 At development time, an administrator at application A sends a GET request to the security server: <mark style="background-color:purple;">url-of-local-information-mediator-security-server</mark>/r1/<mark style="background-color:orange;">INDIA</mark>/<mark style="background-color:blue;">GOV/MEMBER</mark>/<mark style="background-color:green;">APPLICATION</mark>/<mark style="background-color:yellow;">{listMethods || allowedMethods}</mark>
 
@@ -64,7 +64,7 @@ The response is an **OpenAPI specification**, detailing the endpoints and requir
 
 To broadcast a message to a Room, the service access API must be followed and the service requested must be the service implementing event type.
 
-#### 8.3.1 Subscriber API
+### 8.3.1 Subscriber API
 
 {% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml" path="/r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/api/v1/subs" method="get" %}
 [https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml)
@@ -86,7 +86,7 @@ To broadcast a message to a Room, the service access API must be followed and th
 [https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml)
 {% endswagger %}
 
-#### 8.3.2 PULL delivery mode API
+### 8.3.2 PULL delivery mode API
 
 {% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml" path="/r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/pull/v1/{eventType}" method="get" %}
 [https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml)
@@ -96,7 +96,7 @@ To broadcast a message to a Room, the service access API must be followed and th
 [https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml)
 {% endswagger %}
 
-#### 8.3.3 Publisher API
+### 8.3.3 Publisher API
 
 {% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml" path="/r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/pub/v1/{eventType}" method="post" %}
 [https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml)
@@ -110,7 +110,7 @@ To broadcast a message to a Room, the service access API must be followed and th
 [https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml)
 {% endswagger %}
 
-#### 8.3.4 Event Type API
+### 8.3.4 Event Type API
 
 {% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml" path="/r1/{instanceId}/{memberClass}/{memberCode}/{applicationCode}/api/v1/eventType" method="post" %}
 [https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_PubSub_API.yaml)
@@ -138,9 +138,9 @@ At the debugging time, to learn about system performance or retrieve an audit lo
 
 The response is \<audit trail>, \<metrics>, etc.
 
-### 8.6 Management API
+## 8.6 Management API
 
-#### 8.6.1 Configuration Management
+### 8.6.1 Configuration Management
 
 {% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API.yaml" path="/api/v1/config" method="get" %}
 [https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API.yaml)
@@ -162,7 +162,7 @@ The response is \<audit trail>, \<metrics>, etc.
 [https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API.yaml)
 {% endswagger %}
 
-#### 8.6.2 Management of Access Rights
+### 8.6.2 Management of Access Rights
 
 {% swagger src="https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API.yaml" path="/api/v1/rights/allow" method="get" %}
 [https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API.yaml](https://raw.githubusercontent.com/GovStackWorkingGroup/bb-information-mediator/main/api/GovStack_IM_Configuration_Management_API.yaml)

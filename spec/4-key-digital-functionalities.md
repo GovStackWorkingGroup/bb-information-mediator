@@ -8,7 +8,7 @@ description: >-
 
 The Information Mediator Building Block should provide the following functionalities, organized across 6 different components or layers
 
-### 4.1 Service Access
+## 4.1 Service Access
 
 Service access is the facility through which different GovStack Building Blocks and applications may communicate securely with each other.
 
@@ -16,27 +16,27 @@ The service access layer should provide an administrative interface that can be 
 
 The Service Access layer will also provide functionality to allow or restrict secure access to various resources, route requests to the correct providers, connect service requestors to providers, and enforce access privileges and security policies
 
-### 4.2 Directory Services
+## 4.2 Directory Services
 
 The Directory service allows applications to discover resources or functionalities that are made available by the system. An application may query the Directory service to discover organizations, services, and APIs that are available to them
 
-### 4.3 Pub/Sub Service
+## 4.3 Pub/Sub Service
 
 The Pub/Sub service is a facility through which applications may publish and subscribe to different events identified by unique message types, enabling more efficient and resilient communication and application design. It should provide broadcast/multicast capabilities to facilitate faster, more resilient application design.&#x20;
 
-### 4.4 Logging Services
+## 4.4 Logging Services
 
 The Information Mediator will manage a message log which will provide comprehensive audit trails for all services requests and access.
 
-### 4.5 Monitoring Services
+## 4.5 Monitoring Services
 
 The Monitoring services will provide both operational and environmental reporting and dashboards, allowing users to discover the volume of requests to particular services or organizations as well as environmental reports on hardware/network usage.
 
-### 4.6 Scaling/Throughput Services
+## 4.6 Scaling/Throughput Services
 
 The Information Mediator should support scaling services such as load balancers and allow for the addition of additional servers to manage increased system use.
 
-### Out-of-scope requirements
+## Out-of-scope requirements
 
 Note that the Information Mediator is not responsible for manipulating the payloads sent to and from various applications—in a sense, it is both the postal service and the roads/bridges/train tracks—but it does not read the contents of your mail.
 
@@ -56,6 +56,6 @@ The following requirements have been identified as “out of scope” because th
 * Provide an API for both systems to access – and execute all necessary steps for that transaction (including error handling, retries, and notifications).
 * Provide an API for external systems to access GovStack Building Blocks.
 
-### **Future Scope**
+## Future Scope
 
 In future iterations of this specification, we may take into consideration more broad API-management standards which include multiple domains, such as those proposed by the United Kingdom's Government in their [Defining an API management strategy](https://www.gov.uk/guidance/defining-an-api-management-strategy) and the section on [Gov.UK’s API Management Strategy Document](4-key-digital-functionalities.md#4.3.3.2-gov.uks-api-management-strategy-document).
