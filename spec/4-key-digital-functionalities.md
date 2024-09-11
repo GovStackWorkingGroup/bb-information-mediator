@@ -40,9 +40,9 @@ The Information Mediator should support scaling services such as load balancers 
 
 Note that the Information Mediator is not responsible for manipulating the payloads sent to and from various applications—in a sense, it is both the postal service and the roads/bridges/train tracks—but it does not read the contents of your mail.
 
-The Information Mediator Building Blocking does not handle communication between human users and applications.
+The Information Mediator Building Block does not handle communication between human users and applications.
 
-The Information Mediator Building Blocking does not handle ingress and egress access from external applications to and from GovStack’s internal components (This may be handled by a public API Gateway in the domain of the Security Building Block).
+The Information Mediator Building Block does not handle ingress and egress access from external applications to and from GovStack’s internal components (This may be handled by a public API Gateway in the domain of the Security Building Block).
 
 The current specification does not assume the possibility of different Information Mediator implementations working together. In one instance of the GovStack ecosystem, only one implementation of the Information Mediator Building Block can exist.
 
