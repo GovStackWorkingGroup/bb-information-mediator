@@ -51,16 +51,16 @@ These functional requirements do not define specific APIs, they provide a list o
           ***
 
       **Example Only**\
-      _Sample GET Request:_\
+      &#xNAN;_&#x53;ample GET Request:_\
       <mark style="background-color:purple;">url-of-local-information-mediator-security-server</mark>/r1/<mark style="background-color:orange;">INDIA</mark>/<mark style="background-color:blue;">GOV/ministry-of-agriculture-karnataka</mark>/<mark style="background-color:green;">market-linkages-app</mark>/<mark style="background-color:red;">inventory-service</mark>/v1/<mark style="background-color:yellow;">check-level/apples?fresh=true</mark>\
-      _Response_: { data: 7 }\
+      &#xNAN;_&#x52;esponse_: { data: 7 }\
       \
-      _Sample POST Request:_\
+      &#xNAN;_&#x53;ample POST Request:_\
       <mark style="background-color:purple;">url-of-local-information-mediator-security-server</mark>/r1/<mark style="background-color:orange;">INDIA</mark>/<mark style="background-color:blue;">PVT/tata-buyers-corp-karnataka</mark>/<mark style="background-color:green;">small-farmer-buyers-app</mark>/<mark style="background-color:red;">inventory-service</mark>/v1/<mark style="background-color:yellow;">supply/apples</mark>\
-      _With body_: {“qtyAvailable”: 4}\
-      _Response_: { result: “Stock level report created.” }\
+      &#xNAN;_&#x57;ith body_: {“qtyAvailable”: 4}\
+      &#xNAN;_&#x52;esponse_: { result: “Stock level report created.” }\
       \
-      _How to interpret the above request paths:_\
+      &#xNAN;_&#x48;ow to interpret the above request paths:_\
       <mark style="background-color:purple;">SECURITY-SERVER-URL</mark>/r1/<mark style="background-color:orange;">INSTANCE</mark>/<mark style="background-color:blue;">DOMAIN/MEMBER</mark>/<mark style="background-color:green;">APPLICATION</mark>/<mark style="background-color:red;">SERVICE</mark>/<mark style="background-color:yellow;">PATH</mark>
   * Note that all applications are making requests to the security server, which runs over the private network segment, rather than making requests to other applications directly over the public internet. (This is one of the main points of the security server and Information Mediator architecture.)
 

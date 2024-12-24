@@ -12,7 +12,7 @@ The resource model shows the relationship between data objects that are used by 
 
 The Mediator Building Block key element is Service. The Service is used by a consuming Building Block or an application and offered by a provider Building Block or Application. Both Provider and Consumer must be Members of the Mediator Building Block. Members of the Information Mediator Building Block can be an organization (governmental or not, business or not) or a person (citizen as a rule).
 
-![Diagram source](../diagrams/Mediator-BB-entities.drawio.png)
+![Diagram source](.gitbook/assets/Mediator-BB-entities.drawio.png)
 
 To become a Member of Mediator Building Block participants must fulfill declared requirements and apply for onboarding. In the process of onboarding a Member is registered with Mediator Building Block and gets credentials to connect to Mediator Building Block. Normally it is done the way that a Member provides a certificate of recognized Certification Authority (CA), and requests signed with this certificate are considered legitimate requests of the Member. A member entity can access the Pub/Sub configuration and register a room to publish its own event type as a publisher through its own admin.
 
@@ -64,7 +64,7 @@ Schema reference [service.json](../schemas/service.json)
 
 The Resource Model is an extension of the Access Layer model:
 
-![Diagram source](../diagrams/Mediator-BB-PubSub-entities.drawio.png)
+![Diagram source](.gitbook/assets/Mediator-BB-PubSub-entities.drawio.png)
 
 ### 7.3.2 Data Elements
 
