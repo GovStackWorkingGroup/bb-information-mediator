@@ -58,7 +58,7 @@ Schema reference [application.json](../schemas/application.json)
 
 Schema reference [service.json](../schemas/service.json)
 
-## **7.3 PubSub Layer**
+## 7.3 PubSub Layer
 
 ### 7.3.1 Resource Model
 
@@ -85,7 +85,7 @@ A candidate application playing the role of **IM-Publisher** must be able to emi
 | id           | string         | application id of this publisher |
 | name         | string         | OPTIONAL                         |
 
-#### **7.3.2.4 Room**
+#### 7.3.2.4 Room
 
 _(N.B., this is often called a "topic" and we may shift to that in later versions.)_
 

@@ -8,7 +8,7 @@ description: >-
 
 A workflow provides a detailed view of how the Information Mediator Building Block will interact with other building blocks to support common use cases. This section lists workflows that this building block must support. Other workflows may be implemented in addition to those listed.
 
-### 9.1 Service Access
+## 9.1 Service Access
 
 Example Sequence diagram for accessing service
 
@@ -53,9 +53,9 @@ The results of steps marked with '\*' can be cached and reused between calls. In
 7. The security server for the application A validates the signature and forwards the response to application A.
 8. This is all synchronous. Application A’s request is open/unresponded until step 6.
 
-### 9.2 Pub/Sub <a href="#docs-internal-guid-911e5942-7fff-642b-4c6a-5b48f3133e80" id="docs-internal-guid-911e5942-7fff-642b-4c6a-5b48f3133e80"></a>
+## 9.2 Pub/Sub <a href="#docs-internal-guid-911e5942-7fff-642b-4c6a-5b48f3133e80" id="docs-internal-guid-911e5942-7fff-642b-4c6a-5b48f3133e80"></a>
 
-#### 9.2.1 Registering a Room
+### 9.2.1 Registering a Room
 
 ```mermaid
 sequenceDiagram
@@ -78,7 +78,7 @@ Room for Pub/Sub must be created before events can be described and processed. R
 
 Creation request should be confirmed by GovStack administrator.
 
-#### 9.2.2 Defining event type
+### 9.2.2 Defining event type
 
 ```mermaid
 sequenceDiagram
@@ -96,7 +96,7 @@ Event type corresponds to a service description of a service accepting events fo
 
 E.g. in India, "The Ministry Of Home Affairs" can be the "Owner" of a Room where events of type "emergency" are published by "citizens" or "entities" and entities such as "ambulance services", "Fire-fighting services", Hospitals, etc., can be Subscribers to this Room. In this scenario, an event of type "Fire emergency" can be published by any citizen enrolled in this Room. The Ministry can choose to have one "emergency" Room in each town and enroll Subscribers relevant to respective regions.
 
-#### 9.2.3 Subscribing to events of a certain type
+### 9.2.3 Subscribing to events of a certain type
 
 ```mermaid
 sequenceDiagram
@@ -140,7 +140,7 @@ Three endpoints to be declared per event type Pub/Sub instance:
 * (OPTIONAL) an endpoint URL on the Pub/Sub where all pull requests come from various Subscribers.
 * an endpoint in the Room to send messages for publication.
 
-#### 9.2.4 Event delivery
+### 9.2.4 Event delivery
 
 ```mermaid
 sequenceDiagram
