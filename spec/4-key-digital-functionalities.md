@@ -22,7 +22,7 @@ The Directory service allows applications to discover resources or functionaliti
 
 ### 4.3 Pub/Sub Service
 
-The Pub/Sub service is a facility through which applications may publish and subscribe to different events identified by unique message types, enabling more efficient and resilient communication and application design. It should provide broadcast/multicast capabilities to facilitate faster, more resilient application design.&#x20;
+The Pub/Sub service is a facility through which applications may publish and subscribe to different events identified by unique message types, enabling more efficient and resilient communication and application design. It should provide broadcast/multicast capabilities to facilitate faster, more resilient application design.
 
 ### 4.4 Logging Services
 
